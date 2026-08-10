@@ -1,0 +1,64 @@
+\begin{circuitikz}[
+        american, 
+        %>={Latex[length=5mm, width=2mm]},
+        >=latex,
+        alt={}
+    ]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    coordinate(sTop)
+    -- ++(2,0)
+    coordinate(left)
+    to[D*, color=BakerBlack, *-*] ++(3,3)
+    coordinate(top)
+    -- ++(6,0)
+    node[
+        right,
+        circle,
+        draw=BakerBlack,
+        minimum size=0.125cm
+    ](outTop){};
+
+    \draw[
+        BakerBlack
+    ]
+    (0,-4)
+    coordinate(sBottom)
+    -- ++(9,0)
+    -- ++(0,4)
+    -- ++(-1,0)
+    coordinate(right)
+    to[D*, color=BakerBlack, *-*] ++(-3,3);
+
+    \node[
+        draw=BakerBlack,
+        circle,
+        minimum size=0.125cm
+    ](outBottom)
+    at ($(outTop)-(0,6)$)
+    {};
+
+    \draw[
+        BakerBlack
+    ]
+    (outBottom.west)
+    -- ++(-6,0)
+    coordinate(bottom)
+    to[D*, color=BakerBlack, *-*] ++(3,3);
+
+    \draw[
+        BakerBlack
+    ]
+    (bottom)
+    to[D*, color=BakerBlack] (left);
+
+    \draw[
+        BakerBlack
+    ]
+    (sBottom)
+    to[sV, color=BakerBlack] (sTop);
+
+\end{circuitikz}

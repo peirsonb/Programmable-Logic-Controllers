@@ -1,0 +1,270 @@
+% ============================================================================
+% Accessibility
+% ============================================================================
+\DocumentMetadata{
+  lang = en-US, 
+  pdfstandard = ua-2, 
+  tagging = on, 
+  tagging-setup = {math/setup=mathml-SE}
+}
+
+%Document format
+\documentclass[letterpaper,12pt]{article}
+
+%Set table of contents depth 1=sections, 2=subsections
+\setcounter{tocdepth}{2}
+
+%Margin sizing
+\usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%Prevent objects from moving into a different section than where it's placed
+\usepackage[section]{placeins}
+
+%Allows pictures to be placed in document
+\usepackage{graphicx}
+
+\usepackage{booktabs}
+
+\usepackage{multirow}
+
+\usepackage{multicol}
+
+\usepackage{float}
+
+%Allows attaching of pdf documents
+%\usepackage{pdfpages}
+
+%Allows the line spacing to be changed
+\usepackage{setspace}
+
+%Package plus the option places a blank line between paragraphs
+\usepackage[parfill]{parskip}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+%allows verbatim tags
+%\usepackage{verbatim}
+
+%gives more color options for hyperlinks/bookmarks
+\usepackage[table]{xcolor}
+
+%Define colors from the Baker College Style Guide
+\definecolor{BakerRed}{RGB}{239, 0, 48}%#EF0030
+\definecolor{BakerADARed}{RGB}{231, 0, 46}%#E7002E
+\definecolor{BakerBlack}{RGB}{31, 34, 40}%#1F2228
+\definecolor{BakerWhite}{RGB}{255, 255, 255}%#FFFFFF
+\definecolor{HoneyYellow}{RGB}{255, 196, 0}%#FFC400
+\definecolor{UpNorthGreen}{RGB}{114, 191, 68}%#72BF44
+\definecolor{LakeBlue}{RGB}{134, 183, 227}%#86B7E3
+\definecolor{Abbey}{RGB}{80, 82, 88}%#505258
+\definecolor{RollingStone}{RGB}{121, 124, 126}%#797C7E
+\definecolor{HitGray}{RGB}{165, 169, 172}%#A5A9AC
+\definecolor{Iron1}{RGB}{201, 206, 209}%#C9CED1
+\definecolor{Iron}{RGB}{222, 225, 226}%#DEE1E2
+\definecolor{BlackHaze1}{RGB}{237, 240, 240}%#EDF0F0
+\definecolor{BlackHaze}{RGB}{245, 247, 247}%#F5F7F7
+
+%Package for creating an index
+\usepackage{imakeidx}
+
+%Package that allows the creation of bibliographies
+\usepackage[
+    backend=biber,
+    style=numeric-comp,
+    sorting=nty,
+    ]{biblatex}
+
+%Load the bibliography file
+\addbibresource{./Backmatter/reference.bib}
+
+\usepackage[acronym]{glossaries}
+
+\usepackage{fontspec}
+
+\setmainfont{NHaasGroteskTXPro-}[
+    Path=./NeueHaasGroteskFiles/,
+    Scale=1.0,
+    Extension = .ttf,
+    UprightFont=*55Rg,
+    BoldFont=*75Bd,
+    ItalicFont=*56It,
+    BoldItalicFont=*76BdIt
+    ]
+
+%Places bookmarks in the pdf file
+\usepackage[luatex]{hyperref}
+
+\hypersetup{
+    bookmarks = true,
+    colorlinks = true,
+    linkcolor = BakerADARed,
+    linkbordercolor = white,
+    citecolor = BakerADARed,
+    citebordercolor = white,
+    urlcolor = LakeBlue,
+    urlbordercolor = white,
+    pdfauthor = {Brad Peirson},
+    pdftitle = {Mechatronics Memorandum of Understanding},
+    pdfsubject = {Mechatronics},
+    pdfkeywords = {},
+    pdfcreator = {LaTeX with hyperref package},
+    pdfproducer = {LuaLaTeX}
+    }
+
+    % Leaving the graphics path commented out so that it can be customized per presentation
+% %All of the graphics are in a separate folder, this makes it so the folder doesn't have to be repeated every time
+% \graphicspath{
+%     {../../assets/images}
+%     {../../assets/diagrams}
+%     {../../assets/plots}
+% }
+
+%Tells LaTeX to generate the files necessary for an index
+%\makeindex
+
+%Set the line spacing
+%\onehalfspacing
+
+%Adds a source element that can be used for pictures
+\newcommand{\source}[1]{\vspace{-2ex} \caption{\scriptsize{Source: {#1}}} }
+
+\usepackage[americanvoltages]{circuitikz}
+\usepackage{pgfplots}
+\usepackage{pgf-pie}
+\usepackage{standalone}
+
+\usetikzlibrary{
+    intersections, 
+    fillbetween,
+    patterns,
+    decorations.pathreplacing,
+    decorations.pathmorphing,
+    decorations.text,
+    decorations.markings,
+    arrows.meta,
+    arrows,
+    shapes,
+    shapes.geometric,
+    shadows,
+    calligraphy,
+    backgrounds,
+    intersections,
+    calc,
+    math,
+    positioning
+    }
+
+\tikzset{middlearrow/.style={
+        decoration={markings, 
+        mark= at position 0.5 with {\arrow{#1}},
+        },
+        postaction={decorate}
+    }
+}
+
+\pgfplotsset{compat=1.18}
+
+\pgfdeclarelayer{ft}
+\pgfdeclarelayer{bg}
+\pgfsetlayers{bg, main, ft}
+
+% --- POWERFLEX 40 INLINE KEYPAD BUTTONS ---
+
+% Base style for the circular buttons
+\tikzset{
+    pf40button/.style={
+        draw=BakerBlack, 
+        minimum height=1.75em,
+        minimum width=3em,
+        rounded corners=10pt,
+        inner sep=0pt, 
+        font=\bfseries,
+        baseline=-0.6ex
+    }
+}
+
+% --- POWERFLEX 40 INLINE KEYPAD BUTTONS ---
+
+% Base style for the circular buttons
+\tikzset{
+    pf40button/.style={
+        draw=BakerBlack, 
+        minimum height=1.75em,
+        minimum width=3em,
+        rounded corners=10pt,
+        inner sep=0pt, 
+        font=\bfseries,
+        baseline=-0.6ex
+    }
+}
+
+% 1. ESCAPE BUTTON
+\newcommand{\pfEsc}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Escape button. A rounded blue rectangle with white Esc inside.}]
+        \node[pf40button, fill=LakeBlue, text=white] {Esc};
+    \end{tikzpicture}%
+}
+
+% 2. SELECT BUTTON
+\newcommand{\pfSel}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Select button. A rounded blue rectangle with white Sel inside.}]
+        \node[pf40button, fill=LakeBlue, text=white] {Sel};
+    \end{tikzpicture}%
+}
+
+% 3. ENTER BUTTON
+\newcommand{\pfEnter}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Enter button. A rounded blue rectangle with white arrow inside.}]
+        % Draw the base gray circle button
+        \node(btn)[pf40button, fill=LakeBlue] {};
+        
+        % Draw the carriage return / elbow arrow inside the button
+        \draw[-{Stealth[length=8pt, width=8pt]}, white, line width=3pt] 
+            (btn.center) ++(0.65em, 0.4em) -- ++(0,-0.5em) -- ++(-1.2em,0);;
+    \end{tikzpicture}%
+}
+
+% 4. UP ARROW BUTTON
+\newcommand{\pfUp}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Up button. A rounded blue rectangle with white triangle inside. The triangle is oriented with one point up.}]
+        \node(btn)[pf40button, fill=LakeBlue] {};
+        \node(tri)[draw=white, fill=white, regular polygon, regular polygon sides=3,minimum size=1em, inner sep=0, outer sep=0]{};
+    \end{tikzpicture}%
+}
+
+% 5. DOWN ARROW BUTTON
+\newcommand{\pfDown}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Down button. A rounded blue rectangle with white triangle inside. The triangle is oriented with one point down.}]
+        \node(btn)[pf40button, fill=LakeBlue] {};
+        \node(tri)[draw=white, fill=white, regular polygon, regular polygon sides=3,minimum size=1em, inner sep=0, outer sep=0,rotate=180]{};
+    \end{tikzpicture}%
+}
+
+% 6. START BUTTON (Green Circle with White Triangle)
+\newcommand{\pfStart}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Up button. A rounded green rectangle with a thick, vertical white line inside.}]
+        \node(btn)[pf40button, fill=UpNorthGreen, draw=BakerBlack] {};
+        \draw[white, line width=4pt](btn.center) ++(0,0.5em) -- ++(0,-1em);
+    \end{tikzpicture}%
+}
+
+% 7. REVERSE BUTTON (Blue Circle with White Directional Arrow)
+\newcommand{\pfRev}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Reverse button. A rounded grey rectangle with an arc inside. The arc has arrows on each end.}]
+        \node(btn)[pf40button, fill=blue!60!black, draw=blue!40!black] {};
+        % Recreates the small hooked rotation arrow icon
+        \draw[white, line width=0.8pt, ->, >=stealth] (btn.center) ++(-0.2em, 0.1em) arc (135:-135:0.2em and 0.15em);
+    \end{tikzpicture}%
+}
+
+% 8. STOP BUTTON (Red Circle with White Square)
+\newcommand{\pfStop}{%
+    \begin{tikzpicture}[alt={PowerFlex 40 Stop button. A rounded red rectangle with white circle inside.}]
+        \node(btn)[pf40button, fill=BakerADARed, draw=BakerBlack, rounded corners=6pt] {}; % slightly larger like the real VFD
+        \node[draw=white, ultra thick, circle, minimum size=1em, inner sep=0, outer sep=0] at (btn.center) {};
+    \end{tikzpicture}%
+}

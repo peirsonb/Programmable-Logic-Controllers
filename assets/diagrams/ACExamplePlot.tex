@@ -1,0 +1,20 @@
+\begin{circuitikz}[american,>=latex]
+
+    \draw[BakerBlack, ultra thick, <->] (0,-2) -- (0,2) node[text=BakerBlack, anchor=south, align=center]{Volts};
+    \draw[BakerBlack, ultra thick, ->] (0,0) node[text=BakerBlack, anchor=east, align=right]{0} -- (5,0) node[BakerBlack, anchor=west, align=left]{Time};
+    
+    \draw[BakerADARed, thick] (0,0) sin (1,1.5) cos (2,0) sin (3,-1.5) cos (4,0);
+
+    \node[BakerBlack, anchor=east, align=right] at (0,1.5){$+$};
+    \node[BakerBlack, anchor=east, align=right] at (0,-1.5){$-$};
+
+    \node[LakeBlue, draw, circle, ultra thick, inner sep=0, outer sep=0, minimum size=0.5cm, anchor=center, align=center] at (1,0.5){$+$};
+    \node[BakerADARed, draw, circle, ultra thick, inner sep=0, outer sep=0, minimum size=0.5cm, anchor=center, align=center] at (3,-0.5){$-$};
+
+    \node[UpNorthGreen, draw, circle, inner sep=0, outer sep=0, minimum size=0.25cm](Pos) at (-2,1.5){};
+    \node[UpNorthGreen, draw, circle, inner sep=0, outer sep=0, minimum size=0.25cm](Neg) at (-2,-1.5){};
+    \draw[UpNorthGreen] (Pos.south) to[sV, v=$E$] (Neg.north);
+
+    \node[LakeBlue, anchor=center, align=center] at (3.5,1){AC Voltage};
+
+\end{circuitikz}

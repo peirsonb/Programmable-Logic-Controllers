@@ -1,0 +1,103 @@
+\begin{circuitikz}[
+        american, 
+        %>={Latex[length=5mm, width=2mm]},
+        >=latex,
+        electron/.style={
+            circle, 
+            draw=BakerADARed,
+            ultra thick,
+            fill=BakerADARed!50,
+            fill opacity=0.4,
+            text=BakerADARed,
+            font=\bfseries,
+            minimum size=10pt, 
+            anchor=center
+        },
+        alt={}
+    ]
+
+    \begin{pgfonlayer}{bg}
+
+        \node[
+            cylinder,
+            cylinder uses custom fill, 
+            cylinder body fill = HoneyYellow!50,
+            cylinder end fill = HoneyYellow,
+            fill opacity=0.3,
+            draw=BakerBlack,
+            minimum height=12cm,
+            minimum width=3cm
+        ]
+        (wire)
+        at (0,0)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            fill=HoneyYellow,
+            fill opacity=0.2,
+            ellipse,
+            minimum width=0.25cm,
+            minimum height=3cm,
+            label={above:{$dQ / dt$}}
+        ]
+        (p1)
+        at (0,0)
+        {};
+
+        % \fill[
+        %     fill opacity=0.2, 
+        %     fill=HoneyYellow, 
+        %     draw=BakerBlack
+        % ] 
+        % (0,0) 
+        % ellipse [x radius=0.1875cm, y radius=1.5cm];
+
+        \node[
+            text=BakerBlack, 
+            left
+        ]
+        (-Q) 
+        at (wire.west)
+        {$-Q$};
+
+        \node[
+            text=BakerBlack,
+            right
+        ]
+        (+Q) 
+        at (wire.east)
+        {$+Q$};
+
+        \draw[
+        BakerBlack
+        ]
+        (wire.after top)
+        to[short, *-, color=BakerBlack] ++(0,-1cm) coordinate(bBottom)
+        to[battery, color=BakerBlack, v={$V$}] (bBottom -| wire.before bottom)
+        to[short, -*, color=BakerBlack] (wire.before bottom);
+
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{main}
+    
+        \foreach \x/\y [count=\i] in {
+            -5.4/-0.5,
+            -4.4/0.5, 
+            -3.4/-0.5, 
+            -2.4/0.5, 
+            -1.4/-0.5, 
+            -0.4/0.5,  
+            0.6/-0.5,  
+            1.6/0.5,  
+            2.6/-0.5, 
+            3.6/0.5,
+            4.6/-0.5
+        } {
+            \node[electron] (E\i) at (\x,\y) {--};
+            \draw[LakeBlue, ultra thick, ->] (E\i.east) -- ++(0.75,0);
+        }
+
+    \end{pgfonlayer}    
+    
+\end{circuitikz}

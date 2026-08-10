@@ -1,0 +1,83 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    alt={}]
+
+    \def\ystep{2}
+    \def\out{2}
+
+    \draw[
+        BakerBlack,
+    ] 
+    (0,0) 
+    -- (12.5,0) 
+    node[
+        text=BakerBlack, 
+        anchor=west,
+    ]
+    {$t$};
+
+    \draw[
+        BakerBlack
+    ] 
+    (0,-2.5) 
+    -- (0,2.5) 
+    node[
+        BakerBlack, 
+        anchor=east
+    ]
+    {$V$};
+
+    \draw[
+        LakeBlue, 
+        ultra thick, 
+        dashed
+    ] 
+    (0,0) 
+    sin (1,\ystep) 
+    cos (2,0) 
+    sin (3,-\ystep) 
+    cos (4,0) 
+    sin (5,\ystep) 
+    cos (6,0) 
+    sin (7,-\ystep) 
+    cos (8,0) 
+    sin (9,\ystep) 
+    cos (10,0) 
+    sin (11,-\ystep) 
+    cos (12,0);
+
+    \draw[BakerADARed] (0,0) sin (1,\out) cos (2,0);
+    \draw[BakerADARed] (2,0) sin (3,\out) cos (4,0);
+    \draw[BakerADARed] (4,0) sin (5,\out) cos (6,0);
+    \draw[BakerADARed] (6,0) sin (7,\out) cos (8,0);
+    \draw[BakerADARed] (8,0) sin (9,\out) cos (10,0);
+    \draw[BakerADARed] (10,0) sin (11,\out) cos (12,0);
+
+    \draw[
+        UpNorthGreen, 
+        thick, 
+        <-
+    ] 
+    (1,\ystep) 
+    to[out=30,in=180] (2,3) 
+    node[
+        BakerBlack, 
+        anchor=west
+    ]
+    {$E_{in}$};
+
+    \draw[
+        UpNorthGreen, 
+        thick, 
+        <-
+    ] 
+    (3,\out) 
+    to[out=60,in=180] (4,3) 
+    node[
+        BakerBlack, 
+        anchor=west
+    ]
+    {$E_{out}$};
+    
+\end{circuitikz}

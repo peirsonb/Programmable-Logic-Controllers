@@ -1,0 +1,49 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    alt={}
+    ]
+
+    \draw[
+        BakerBlack, 
+        ultra thick, 
+        <->
+    ] 
+    (0,5) 
+    node[
+        above,
+        text=BakerBlack
+    ]{Volts}
+    -- (0,0)
+    -- (5,0)
+    node[
+        right,
+        text=BakerBlack,
+    ]{Time};
+
+    \draw[
+        BakerADARed, 
+        thick
+    ] 
+    (0,3)
+    -- (4,3)
+    node[
+        pos=0,
+        anchor=east,
+        text=BakerBlack
+    ]{$E$}
+    node[
+        above,
+        pos=0.5,
+        text=LakeBlue
+    ]{+DC Voltage};
+
+    \draw[
+        draw=UpNorthGreen,
+        fill=UpNorthGreen,
+        text=UpNorthGreen,
+    ]
+    (-2,4.5)
+    to[battery, v=$E$, *-*] (-2,0.5);
+
+\end{circuitikz}

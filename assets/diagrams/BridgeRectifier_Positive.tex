@@ -1,0 +1,87 @@
+\begin{circuitikz}[
+        american, 
+        %>={Latex[length=5mm, width=2mm]},
+        >=latex,
+        alt={}
+    ]
+
+    \begin{pgfonlayer}{main}
+
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        coordinate(sTop)
+        -- ++(2,0)
+        coordinate(left)
+        to[D*, color=LakeBlue, *-*] ++(3,3)
+        coordinate(top)
+        -- ++(6,0)
+        node[
+            right,
+            circle,
+            draw=LakeBlue,
+            minimum size=0.125cm,
+            text=LakeBlue,
+            font=\bfseries,
+            label={right:+}
+        ](outTop){};
+
+        % \draw[
+        %     BakerBlack
+        % ]
+        % (0,-4)
+        % coordinate(sBottom)
+        % -- ++(9,0)
+        % -- ++(0,4)
+        % -- ++(-1,0)
+        % coordinate(right)
+        % to[D*, color=BakerBlack] ++(-3,3);
+
+        \node[
+            draw=BakerADARed,
+            circle,
+            minimum size=0.125cm,
+            text=BakerADARed,
+            font=\bfseries,
+            label={right:{--}}
+        ](outBottom)
+        at ($(outTop)-(0,6)$)
+        {};
+
+        \draw[
+            BakerADARed
+        ]
+        (outBottom.west)
+        -- ++(-6,0)
+        coordinate(bottom)
+        to[D*, color=BakerADARed, *-*] ++(-3,3)
+        coordinate(right)
+        -- ++(-2,0)
+        coordinate(sTop);
+
+        \draw[
+            BakerBlack
+        ]
+        (sBottom)
+        to[sV, color=BakerBlack, name=source] (sTop);
+
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{bg}
+
+        \draw[
+            BakerBlack
+        ]
+        (right)
+        to[D*, color=BakerBlack] (top);
+
+        \draw[
+            BakerBlack
+        ]
+        (bottom)
+        to[D*, color=BakerBlack] (left);
+
+    \end{pgfonlayer}    
+
+\end{circuitikz}

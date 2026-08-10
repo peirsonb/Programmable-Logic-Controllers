@@ -1,0 +1,37 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    alt={}
+]
+
+    \begin{axis}[
+        width=6in,
+        height=4in,
+        axis lines=middle,
+        color=BakerBlack,           % Sets default draw/text color for the axis
+        axis line style={BakerBlack},
+        tick style={BakerBlack},
+        label style={BakerBlack},
+        tick label style={BakerBlack},
+        scaled x ticks=false,
+        xlabel={{Time (s)}},
+        xlabel style={at={(ticklabel* cs:1)}, anchor=west},
+        ylabel={{Voltage (V)}},
+        ylabel near ticks,
+        xmin=0, xmax=370,
+        ymin=-200, ymax=200,
+        xtick={0, 90, 180, 270, 360},
+        xticklabels={0, {1/240}, {1/120}, {1/80}, {1/60}},
+        ytick={-169.706, 0, 169.706},
+        yticklabels={},
+        grid=none,
+        %grid style={dashed, gray!30},
+        enlargelimits=false,
+        clip=false
+    ]
+        % pgfplots trig functions expect degrees by default
+        \addplot[domain=0:360, samples=200, ultra thick, LakeBlue] {169.706 * sin(x)};
+
+    \end{axis}
+
+\end{circuitikz}

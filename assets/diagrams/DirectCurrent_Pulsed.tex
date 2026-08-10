@@ -1,0 +1,46 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    alt={}
+    ]
+
+    \draw[
+        BakerBlack, 
+        ultra thick, 
+        <->
+    ] 
+    (0,5) 
+    node[
+        above,
+        text=BakerBlack
+    ]{Volts}
+    -- (0,0)
+    -- (5,0)
+    node[
+        right,
+        text=BakerBlack,
+    ]{Time};
+
+    \draw[
+        BakerADARed, 
+        thick
+    ] 
+    (0,0.5) 
+    -- (1,0.5) 
+    -- (1,3.5) 
+    -- (2,3.5) 
+    -- (2,0.5) 
+    -- (3,0.5) 
+    -- (3,3.5) 
+    -- (4,3.5) 
+    -- (4,0.5) 
+    -- (4.5,0.5);
+
+    \draw[
+        draw=UpNorthGreen,
+        text=UpNorthGreen,
+    ]
+    (-2,4.5)
+    to[sqV, v=$E$, *-*] (-2,0.5);
+
+\end{circuitikz}
