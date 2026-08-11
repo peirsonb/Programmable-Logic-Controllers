@@ -11,7 +11,7 @@
 % ============================================================================
 % Document Properties - used on title slide and PDF metadata fields
 % ============================================================================
-\def\PresTitle{PLCs and Electrical Safety}  % Required - top line of title slide
+\def\PresTitle{Electricity and Electrical Safety}  % Required - top line of title slide
 \def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
 \def\PresAuthor{Brad Peirson}               % Required - below dividing line
 \def\PresInstitute{College of Information Technology and Engineering}       % Optional
@@ -30,228 +30,228 @@
 
 \maketitle              % Redefined in the preamble to generate a full frame
 
-% \begin{frame}
-%     \frametitle{Agenda}
-%     \begingroup
-%         % Tighten the spacing between paragraphs/TOC lines
-%         \setlength{\parskip}{0.3em} 
+\begin{frame}
+    \frametitle{Agenda}
+    \begingroup
+        % Tighten the spacing between paragraphs/TOC lines
+        \setlength{\parskip}{0.3em} 
         
-%         % Optionally tighten the line spacing within an entry
-%         %\baselineskip=1.2em 
+        % Optionally tighten the line spacing within an entry
+        %\baselineskip=1.2em 
         
-%         \setcounter{tocdepth}{1} % Show only sections
-%     \tableofcontents
-%     \setcounter{tocdepth}{2} % Reset back to default so subsections are tracked
-%     \endgroup
-% \end{frame}
+        \setcounter{tocdepth}{1} % Show only sections
+    \tableofcontents
+    \setcounter{tocdepth}{2} % Reset back to default so subsections are tracked
+    \endgroup
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Student Learning Outcomes}
-%     \begin{itemize}[<+- | alert@+>]
-%         \item[1.]{Create programs in Ladder Logic using the following instructions in an application}
-%         \item[2.]{Program PLC timers and counters}
-%     \end{itemize}
-% \end{frame}
+\begin{frame}
+    \frametitle{Student Learning Outcomes}
+    \begin{itemize}[<+- | alert@+>]
+        \item[1.]{Create programs in Ladder Logic using the following instructions in an application}
+        \item[2.]{Program PLC timers and counters}
+    \end{itemize}
+\end{frame}
 
-% \section{Electricity Review}
+\section{Electricity Review}
 
-% \begin{frame}
-%     \frametitle{Electricity}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=0.375\columnwidth, alt={A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}]{Arc_electrique_double}
+\begin{frame}
+    \frametitle{Electricity}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.375\columnwidth, alt={A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}]{Arc_electrique_double}
         
-%         {\tiny Attribution: Celeda, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Arc_\%C3\%A9lectrique_double.jpg}{Wikimedia Commons}\par}
-%         {\footnotesize \textbf{Electricity} is a form of energy resulting from the existence of charged particles (protons or electrons)\par}
-%     \end{figure}
-% \end{frame}
+        {\tiny Attribution: Celeda, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Arc_\%C3\%A9lectrique_double.jpg}{Wikimedia Commons}\par}
+        {\footnotesize \textbf{Electricity} is a form of energy resulting from the existence of charged particles (protons or electrons)\par}
+    \end{figure}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Current Defined}
+\begin{frame}
+    \frametitle{Current Defined}
 
-%     \begin{figure}
-%         \centering
-%         %\resizebox{0.75\linewidth}{!}{
-%             \input{../../assets/diagrams/CurrentThroughWire.tex}
-%         %}
+    \begin{figure}
+        \centering
+        %\resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/CurrentThroughWire.tex}
+        %}
 
-%         {\footnotesize Current is the \emph{flow rate} (speed) of electric charge through a conductor\par}
-%     \end{figure}
+        {\footnotesize Current is the \emph{flow rate} (speed) of electric charge through a conductor\par}
+    \end{figure}
 
     
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Ampere Defined}
+\begin{frame}
+    \frametitle{Ampere Defined}
 
-%     \begin{figure}
-%         \centering
-%         %\resizebox{0.75\linewidth}{!}{
-%             \input{../../assets/diagrams/CurrentThroughWire.tex}
-%         %}
+    \begin{figure}
+        \centering
+        %\resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/CurrentThroughWire.tex}
+        %}
 
-%         {\footnotesize One \emph{ampere} is 1 coloumb of charge ($6.24 \times 10^{18}$ electrons) flowing past a single point in 1 second\par}
-%     \end{figure}
+        {\footnotesize One \emph{ampere} is 1 coloumb of charge ($6.24 \times 10^{18}$ electrons) flowing past a single point in 1 second\par}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Direct Current Defined}
+\begin{frame}
+    \frametitle{Direct Current Defined}
 
-%     \begin{figure}
-%         \centering
-%         %\resizebox{0.75\linewidth}{!}{
-%             \input{../../assets/diagrams/DirectCurrent.tex}
-%         %}
+    \begin{figure}
+        \centering
+        %\resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/DirectCurrent.tex}
+        %}
 
-%         {\footnotesize \emph{Direct current} is an electric current that maintains its polarity (flows in only one direction)\par}
+        {\footnotesize \emph{Direct current} is an electric current that maintains its polarity (flows in only one direction)\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Pulsed DC}
+\begin{frame}
+    \frametitle{Pulsed DC}
 
-%     \begin{figure}
-%         \centering
-%         %\resizebox{0.75\linewidth}{!}{
-%             \input{../../assets/diagrams/DirectCurrent_Pulsed.tex}
-%         %}
+    \begin{figure}
+        \centering
+        %\resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/DirectCurrent_Pulsed.tex}
+        %}
 
-%         {\footnotesize Direct current \textbf{does not} need to be a steady voltage -- it can be \emph{pulsed}. As long as it maintains polarity it is still DC.\par}
+        {\footnotesize Direct current \textbf{does not} need to be a steady voltage -- it can be \emph{pulsed}. As long as it maintains polarity it is still DC.\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Alternating Current Defined}
+\begin{frame}
+    \frametitle{Alternating Current Defined}
 
-%     \begin{figure}
-%         \centering
-%         \resizebox{0.75\linewidth}{!}{
-%             \input{../../assets/plots/120VACSineWave_ACSource.tex}
-%         }
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/plots/120VACSineWave_ACSource.tex}
+        }
 
-%         {\footnotesize \emph{Alternating current} is an electric current that reverses polarity. It \textbf{does not} need to be a sine wave, but the sine wave is the most common.\par}
+        {\footnotesize \emph{Alternating current} is an electric current that reverses polarity. It \textbf{does not} need to be a sine wave, but the sine wave is the most common.\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{AC Voltage - Sine Wave}
+\begin{frame}
+    \frametitle{AC Voltage - Sine Wave}
 
-%     \begin{figure}
-%         \centering
-%         \resizebox{0.5\linewidth}{!}{
-%             \input{../../assets/diagrams/ACVoltage_SineWave.tex}
-%         }
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/ACVoltage_SineWave.tex}
+        }
 
-%         {\tiny \textbf{Attribution:} Adapted from \href{https://commons.wikimedia.org/wiki/File:Electric-generator-animation.gif}{``Electric Generator Animation''} (frames 5 and 17 extracted) by MikeRun, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via Wikimedia Commons.\\[0.5em]}
+        {\tiny \textbf{Attribution:} Adapted from \href{https://commons.wikimedia.org/wiki/File:Electric-generator-animation.gif}{``Electric Generator Animation''} (frames 5 and 17 extracted) by MikeRun, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via Wikimedia Commons.\\[0.5em]}
 
-%         {\footnotesize The sine wave is caused by the physical layout of an AC generator -- as the coil spins inside the magnetic field it cuts the field in different directions, leading to a reverse in polarity\par}
+        {\footnotesize The sine wave is caused by the physical layout of an AC generator -- as the coil spins inside the magnetic field it cuts the field in different directions, leading to a reverse in polarity\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{AC Voltage - Alternation}
+\begin{frame}
+    \frametitle{AC Voltage - Alternation}
 
-%     \begin{figure}
-%         \centering
-%         \resizebox{0.5\linewidth}{!}{
-%             \input{../../assets/diagrams/ACVoltage_SineWave.tex}
-%         }
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/ACVoltage_SineWave.tex}
+        }
 
-%         {\tiny \textbf{Attribution:} Adapted from \href{https://commons.wikimedia.org/wiki/File:Electric-generator-animation.gif}{``Electric Generator Animation''} (frames 5 and 17 extracted) by MikeRun, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via Wikimedia Commons.\\[0.5em]}
+        {\tiny \textbf{Attribution:} Adapted from \href{https://commons.wikimedia.org/wiki/File:Electric-generator-animation.gif}{``Electric Generator Animation''} (frames 5 and 17 extracted) by MikeRun, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via Wikimedia Commons.\\[0.5em]}
 
-%         {\footnotesize An \emph{alternation} is 1/2 of a rotation of the coil--the point at which the polarity changes\par}
+        {\footnotesize An \emph{alternation} is 1/2 of a rotation of the coil--the point at which the polarity changes\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{AC Voltage - Cycle}
+\begin{frame}
+    \frametitle{AC Voltage - Cycle}
 
-%     \begin{figure}
-%         \centering
-%         \resizebox{0.5\linewidth}{!}{
-%             \input{../../assets/diagrams/ACVoltage_SineWave.tex}
-%         }
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/ACVoltage_SineWave.tex}
+        }
 
-%         {\tiny \textbf{Attribution:} Adapted from \href{https://commons.wikimedia.org/wiki/File:Electric-generator-animation.gif}{``Electric Generator Animation''} (frames 5 and 17 extracted) by MikeRun, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via Wikimedia Commons.\\[0.5em]}
+        {\tiny \textbf{Attribution:} Adapted from \href{https://commons.wikimedia.org/wiki/File:Electric-generator-animation.gif}{``Electric Generator Animation''} (frames 5 and 17 extracted) by MikeRun, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via Wikimedia Commons.\\[0.5em]}
 
-%         {\footnotesize A \emph{cycle} is a full rotation of the coil\par}
+        {\footnotesize A \emph{cycle} is a full rotation of the coil\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{AC Voltage - Frequency}
+\begin{frame}
+    \frametitle{AC Voltage - Frequency}
 
-%     \begin{figure}
-%         \centering
-%         \resizebox{0.75\linewidth}{!}{
-%             \input{../../assets/plots/120VACSineWave_OneCycle.tex}
-%         }
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/plots/120VACSineWave_OneCycle.tex}
+        }
 
-%         {\footnotesize The frequency is the number of cycles per second (Hz)--the U.S. standard is 60 Hz (60 cycles per second)\par}
+        {\footnotesize The frequency is the number of cycles per second (Hz)--the U.S. standard is 60 Hz (60 cycles per second)\par}
 
-%     \end{figure}
+    \end{figure}
 
-% \end{frame}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{Visualizing Frequency}
-%     \begin{columns}
-%         \begin{column}{0.5\linewidth}
-%             \begin{figure}
-%                 \centering
-%                 \resizebox{\columnwidth}{!}{
-%                     \input{../../assets/plots/120VACSineWave_OneCycle.tex}
-%                 }
-%             \end{figure}
-%         \end{column}
-%         \begin{column}{0.5\linewidth}
-%             \begin{figure}
-%                 \centering
-%                 \resizebox{\columnwidth}{!}{
-%                     \input{../../assets/plots/120VACSineWave_1second.tex}
-%                 }
-%             \end{figure}
-%         \end{column}
-%     \end{columns}
-%     \centering
-%     {\footnotesize We often use one cycle (left) to visualize the curve, but remember that that one cycle is happening 60 times every second (right)\par}
-% \end{frame}
+\begin{frame}
+    \frametitle{Visualizing Frequency}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_OneCycle.tex}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_1second.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+    \centering
+    {\footnotesize We often use one cycle (left) to visualize the curve, but remember that that one cycle is happening 60 times every second (right)\par}
+\end{frame}
 
-% \begin{frame}
-%     \frametitle{AC Voltage - Phases}
-%     \begin{columns}
-%         \begin{column}{0.5\linewidth}
-%             \begin{figure}
-%                 \centering
-%                 \resizebox{\columnwidth}{!}{
-%                     \input{../../assets/plots/120VACSineWave_Blank.tex}
-%                 }
-%             \end{figure}
-%         \end{column}
-%         \begin{column}{0.5\linewidth}
-%             \begin{figure}
-%                 \centering
-%                 \resizebox{\columnwidth}{!}{
-%                     \input{../../assets/plots/480VACSineWave_Blank.tex}
-%                 }
-%             \end{figure}
-%         \end{column}
-%     \end{columns}
-% \end{frame}
+\begin{frame}
+    \frametitle{AC Voltage - Phases}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_Blank.tex}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/480VACSineWave_Blank.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
 
 \begin{frame}
     \frametitle{Bridge Rectifier}
@@ -262,6 +262,8 @@
             \input{../../assets/diagrams/BridgeRectifier_AllBlack.tex}
         }
 
+        {\footnotesize A \emph{bridge rectifier} is commonly used in controls applications to convert AC to DC}
+
     \end{figure}
 
 \end{frame}
@@ -269,22 +271,85 @@
 \begin{frame}
     \frametitle{Bridge Rectifier}
 
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.9\columnwidth}{!}{
+                    \input{../../assets/diagrams/BridgeRectifier_Positive.tex}
+                }
+
+                {\tiny Positive AC Cycle\par}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/BridgeRectifier_Negative.tex}
+                }
+                
+                {\tiny Negative AC Cycle\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize As the polarity of the AC voltages changes the the rectifier forces the output to the same polarity\par}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rectified Alternating Current}
+
     \begin{figure}
         \centering
-        \resizebox{0.5\linewidth}{!}{
-            \input{../../assets/diagrams/BridgeRectifier_Positive.tex}
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/plots/120VACSineWave_Rectified.tex}
         }
+
+        {\footnotesize The rectifier redirects current so the output is always the same polarity, but it \emph{does not} affect the voltage value--the resulting wave is DC, but not very useful DC\par}
 
     \end{figure}
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{Test Todo}
+    \frametitle{Rectified Alternating Current}
 
-    % Usage: \tikztodo[width]{height}{description/notes}
-    \tikztodo[0.7\textwidth]{4cm}{Convert block diagram of feedback loop}
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/BridgeRectifier_AllBlack_WithCap.tex}
+        }
+
+        {\footnotesize Smoothing capacitors are added to help maintain the voltage level between cycles, which helps keep the DC at a more consistent value\par}
+
+    \end{figure}
+
 \end{frame}
+
+\begin{frame}
+    \frametitle{Rectified Alternating Current}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/plots/120VACSineWave_RectifiedSmoothed.tex}
+        }
+
+        {\footnotesize The result is a fairly smooth DC wave--the \emph{ripple} will always be there, but can be tweaked by changing the capacitor value\par}
+    \end{figure}
+
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{Test Todo}
+
+%     % Usage: \tikztodo[width]{height}{description/notes}
+%     \tikztodo[0.7\textwidth]{4cm}{Convert block diagram of feedback loop}
+% \end{frame}
 
 % \begin{frame}
 %     \frametitle{Primary Properties of Electricity}

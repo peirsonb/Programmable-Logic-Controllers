@@ -1,0 +1,65 @@
+\begin{circuitikz}[
+    american,
+    %>=latex,
+    >={Latex[length=3mm, width=1.5mm]},
+    alt={Line graph showing full wave rectification of a 120 volt RMS AC sine wave over three full cycles, plotted with voltage on the vertical axis against time on the horizontal axis. A dashed blue curve represents the input alternating current voltage oscillating smoothly between positive 169.7 volts and negative 169.7 volts. Overlaid on top is a solid red curve representing the output rectified voltage, where the positive half-cycles follow the blue sine wave and the negative half-cycles are inverted upwards into positive pulses, resulting in continuous positive voltage peaks. A label points to a negative trough of the input sine wave as Vin, and another label points to an inverted positive crest of the rectified wave as Vout.}
+]
+
+    \begin{axis}[
+        name=SinglePhasePlot,
+        width=6in,
+        height=4in,
+        axis lines=middle,
+        color=BakerBlack,           % Sets default draw/text color for the axis
+        axis line style={BakerBlack},
+        tick style={BakerBlack},
+        label style={BakerBlack},
+        tick label style={BakerBlack},
+        xlabel={Time ($t$)},        
+        xlabel style={at={(ticklabel* cs:1)}, anchor=west},
+        ylabel={Voltage ($V$)},
+        ylabel near ticks,
+        xmin=0, xmax=1100,
+        ymin=-200, ymax=200,
+        xtick={},
+        xticklabels={},
+        ytick={},
+        yticklabels={},
+        grid=none,
+        %grid style={dashed, gray!30},
+        enlargelimits=false,
+        clip=false
+    ]
+        % pgfplots trig functions expect degrees by default
+        \addplot[domain=0:1080, samples=600, line width=2.5pt, dashed, LakeBlue] {169.706 * sin(x)};
+
+        \addplot[domain=0:1080, samples=600, ultra thin, BakerADARed] {169.706 * sin(x) > 0 ? 169.706 * sin(x) : -169.706 * sin(x)};
+
+        \draw[
+            UpNorthGreen,
+            <-
+        ]
+        (270,-170)
+        to[out=300, in=180] (320,-190)
+        node[
+            text=BakerBlack,
+            anchor=west
+        ]{$V_{\text{in}}$};
+
+        \draw[
+            UpNorthGreen,
+            <-
+        ]
+        (270,170)
+        to[out=60, in=180] (320,190)
+        node[
+            text=BakerBlack,
+            anchor=west
+        ]{$V_{\text{out}}$};
+
+    \end{axis}
+
+    
+
+
+\end{circuitikz}

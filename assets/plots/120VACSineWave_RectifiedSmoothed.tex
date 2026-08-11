@@ -1,0 +1,46 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    alt={Line graph showing full wave rectification with capacitor smoothing over three cycles, plotted with voltage on the vertical axis against time on the horizontal axis. A dashed blue curve shows the input alternating current voltage oscillating between positive 169.7 volts and negative 169.7 volts. A fine black dotted curve outlines the underlying full wave rectified positive pulses. Overlaid on top is a solid red output voltage curve demonstrating the smoothing effect of a filter capacitor. On startup, the red curve rises from zero volts along the initial sine wave to the first peak of 169.7 volts. From there, it gradually decays downward exponentially as the capacitor discharges, before intercepting the rising edge of the next rectified peak and charging back up to maximum voltage. This cycle repeats continuously across subsequent peaks, creating a smoothed direct current output with a slight voltage ripple near maximum amplitude.}
+]
+
+    \begin{axis}[
+        name=SinglePhasePlot,
+        width=6in,
+        height=4in,
+        axis lines=middle,
+        color=BakerBlack,           % Sets default draw/text color for the axis
+        axis line style={BakerBlack},
+        tick style={BakerBlack},
+        label style={BakerBlack},
+        tick label style={BakerBlack},
+        xlabel={Time ($t$)},        
+        xlabel style={at={(ticklabel* cs:1)}, anchor=west},
+        ylabel={Voltage ($V$)},
+        ylabel near ticks,
+        xmin=0, xmax=1100,
+        ymin=-200, ymax=200,
+        xtick={},
+        xticklabels={},
+        ytick={},
+        yticklabels={},
+        grid=none,
+        %grid style={dashed, gray!30},
+        enlargelimits=false,
+        clip=false
+    ]
+        % pgfplots trig functions expect degrees by default
+        \addplot[domain=0:1080, samples=600, line width=2.5pt, dashed, LakeBlue] {169.706 * sin(x)};
+
+        \addplot[domain=0:1080, samples=600, thin, dotted, BakerBlack] {169.706 * sin(x) > 0 ? 169.706 * sin(x) : -169.706 * sin(x)};
+
+        \addplot[BakerADARed, ultra thin, domain=0:1080,samples=600] {
+            169.706 * max(
+                abs(sin(x)), 
+                (x < 90 ? 0 : exp(-0.001 * mod(x - 90, 180)))
+            )
+        };
+
+    \end{axis}
+
+\end{circuitikz}

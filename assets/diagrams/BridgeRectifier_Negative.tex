@@ -2,7 +2,7 @@
         american, 
         %>={Latex[length=5mm, width=2mm]},
         >=latex,
-        alt={Circuit schematic of a full wave bridge rectifier highlighting the conduction path during the positive half cycle of the AC input voltage. The active current path from the top of the AC source, through diode D1 at the top left, to the positive output node labeled with a plus sign is highlighted in blue. The return path from the negative output node labeled with a minus sign, through diode D2 at the bottom right, to the bottom of the AC source is highlighted in red. Diodes D3 and D4 remain inactive and are drawn in black.}
+        alt={Circuit schematic of a full wave bridge rectifier highlighting the conduction path during the negative half cycle of the AC input voltage. The active current path from the bottom of the AC source, through diode D3 at the top right, to the positive output node labeled with a plus sign is highlighted in blue. The return path from the negative output node labeled with a minus sign, through diode D4 at the bottom left, to the top of the AC source is highlighted in red. Diodes D1 and D2 remain inactive and are drawn in black.}
     ]
 
     % Coordinates for the bridge
@@ -19,20 +19,6 @@
 
     % Colored components on main layer, black items will go below on the bg layer
     \begin{pgfonlayer}{main}
-
-
-        \draw[
-            LakeBlue
-        ]
-        (psTop)
-        -- ++(0,-1.5)
-        to[sV=$V$, color=LakeBlue, name=source] ++(0,-1);
-
-        \draw[
-            BakerADARed
-        ]
-        (source)
-        -- (psBottom);
 
         % Output nodes
         \node[
@@ -59,42 +45,53 @@
         at (minus)
         {};
 
-        % Draw from power supply top, upper left diode, positive output
         \draw[
             LakeBlue
         ]
-        (psTop)
-        -- (left)
-        to[D*=$D_1$, color=LakeBlue, *-*] (top)
+        (psBottom)
+        -- (rB)
+        -- (rT)
+        -- (right)
+        to[D*=$D_3$, color=LakeBlue, *-*] (top)
         -- (pOut.west);
 
-        % Draw back from minus output, lower right diode, back to power supply bottom
         \draw[
             BakerADARed
         ]
         (mOut.west)
         -- (bottom)
-        to[D*=$D_2$, color=BakerADARed, *-*] (right)
-        -- (rT)
-        -- (rB)
-        -- (psBottom);        
+        to[D*=$D_4$, color=BakerADARed, *-*] (left)
+        -- (psTop);
+
+        \draw[
+            LakeBlue
+        ]
+        (psBottom)
+        -- ++(0,1.5)
+        coordinate(sVbottom);
+
+        \draw[
+            BakerADARed
+        ]
+        (sVbottom)
+        to[sV=$V$, color=BakerADARed] ++(0,1)
+        -- (psTop);
     
     \end{pgfonlayer}
 
     \begin{pgfonlayer}{bg}
         
-        % Upper right diode
         \draw[
             BakerBlack
         ]
-        (right)
-        to[D*=$D_3$, color=BakerBlack] (top);
+        (left)
+        to[D*=$D_1$, color=BakerBlack] (top);
 
         \draw[
             BakerBlack
         ]
         (bottom)
-        to[D*=$D_4$, color=BakerBlack] (left);
+        to[D*=$D_2$, color=BakerBlack] (right);
 
     \end{pgfonlayer}    
 

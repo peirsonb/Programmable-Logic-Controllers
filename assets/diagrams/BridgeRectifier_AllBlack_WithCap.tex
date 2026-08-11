@@ -2,7 +2,7 @@
         american, 
         %>={Latex[length=5mm, width=2mm]},
         >=latex,
-        alt={Circuit schematic of a full wave bridge rectifier with an AC sinusoidal voltage source connected across the left and right AC input terminals of a diamond-shaped diode bridge. The bridge contains four semiconductor diodes: D1 at top left, D2 at bottom right, D3 at top right, and D4 at bottom left. The diodes are arranged so that current flows in one direction to the output terminals. The top node of the diode bridge connects to a positive output terminal marked with a plus sign, and the bottom node connects to a negative output terminal marked with a minus sign.}
+        alt={Circuit schematic of a full wave bridge rectifier circuit with a filter capacitor. An alternating current sinusoidal voltage source is connected to the input terminals of a diamond-shaped diode bridge consisting of four diodes labeled D1, D2, D3, and D4. The top output node of the diode bridge connects to a positive output terminal marked with a plus sign, while the bottom output node connects to a negative output terminal marked with a minus sign. Connected in parallel across the positive and negative output DC rails between the diode bridge and the output terminals is a capacitor, which serves to filter and smooth the rectified direct current voltage delivered to the load.}
     ]
 
     % Coordinates for the bridge
@@ -36,7 +36,7 @@
             label={right:+}
         ]
         (pOut)
-        at (plus)
+        at ($(plus)+(2,0)$)
         {};
 
         \node[
@@ -47,8 +47,14 @@
             label={right:{--}}
         ]
         (mOut)
-        at (minus)
+        at ($(minus)+(2,0)$)
         {};
+
+        \draw[
+            BakerBlack
+        ]
+        (plus)
+        to[C, color=BakerBlack] (minus);
 
         % Draw back from minus output, through lower left diode, to power supply top
         \draw[
