@@ -5,60 +5,89 @@
         alt={}
     ]
 
-    \draw[
-        BakerBlack
-    ]
-    (0,0)
-    coordinate(sTop)
-    -- ++(2,0)
-    coordinate(left)
-    to[D*, color=BakerBlack, *-*] ++(3,3)
-    coordinate(top)
-    -- ++(6,0)
-    node[
-        right,
-        circle,
-        draw=BakerBlack,
-        minimum size=0.125cm
-    ](outTop){};
+    % Coordinates for the bridge
+    \coordinate (psBottom) at (0,-1);
+    \coordinate (psTop) at (0,3);
+    \coordinate (left) at (2,3);
+    \coordinate (top) at (4.5,5.5);
+    \coordinate (right) at (7,3);
+    \coordinate (bottom) at (4.5,0.5);
+    \coordinate (rB) at (8,-1);
+    \coordinate (rT) at (8,3);
+    \coordinate (plus) at (10,5.5);
+    \coordinate (minus) at (10,0.5);
 
-    \draw[
-        BakerBlack
-    ]
-    (0,-4)
-    coordinate(sBottom)
-    -- ++(9,0)
-    -- ++(0,4)
-    -- ++(-1,0)
-    coordinate(right)
-    to[D*, color=BakerBlack, *-*] ++(-3,3);
+    % Colored components on main layer, black items will go below on the bg layer
+    \begin{pgfonlayer}{main}
 
-    \node[
-        draw=BakerBlack,
-        circle,
-        minimum size=0.125cm
-    ](outBottom)
-    at ($(outTop)-(0,6)$)
-    {};
+        % Power supply
+        \draw[
+            BakerBlack
+        ]
+        (psBottom)
+        to[sV, color=BakerBlack] (psTop);
 
-    \draw[
-        BakerBlack
-    ]
-    (outBottom.west)
-    -- ++(-6,0)
-    coordinate(bottom)
-    to[D*, color=BakerBlack, *-*] ++(3,3);
+        % Output nodes
+        \node[
+            draw=BakerBlack,
+            text=BakerBlack,
+            circle,
+            minimum size=0.25,
+            label={right:+}
+        ]
+        (pOut)
+        at (plus)
+        {};
 
-    \draw[
-        BakerBlack
-    ]
-    (bottom)
-    to[D*, color=BakerBlack] (left);
+        \node[
+            draw=BakerBlack,
+            text=BakerBlack,
+            circle,
+            minimum size=0.25,
+            label={right:{--}}
+        ]
+        (mOut)
+        at (minus)
+        {};
 
-    \draw[
-        BakerBlack
-    ]
-    (sBottom)
-    to[sV, color=BakerBlack] (sTop);
+        % Draw back from minus output, through lower left diode, to power supply top
+        \draw[
+            BakerBlack
+        ]
+        (mOut.west)
+        to[short,-*] (bottom)
+        to[D*, color=BakerBlack, -*] (left)
+        -- (psTop);
+
+        % Draw from power supply bottom, through upper right diode, to positive output
+        \draw[
+            BakerBlack
+        ]
+        (psBottom)
+        -- (rB)
+        -- (rT)
+        -- (right)
+        to[D*, color=BakerBlack, *-*] (top)
+        -- (pOut.west);
+    
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{bg}
+        
+        % Upper left diode
+        \draw[
+            BakerBlack
+        ]
+        (left)
+        to[D*, color=BakerBlack] (top);
+
+        % Lower right diode
+        \draw[
+            BakerBlack
+        ]
+        (bottom)
+        to[D*, color=BakerBlack] (right);
+
+    \end{pgfonlayer}    
 
 \end{circuitikz}

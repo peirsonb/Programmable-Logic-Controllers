@@ -473,3 +473,17 @@
 }
 
 \usepackage{animate}
+
+\usepackage{calc} % Optional, but helpful for layout
+
+\newcommand{\tikztodo}[3][0.8\textwidth]{%
+  \begin{center}
+    \fbox{%
+      \parbox[c][#2][c]{#1}{%
+        \centering
+        \textbf{\textcolor{red}{TODO: TikZ Diagram}}\\[0.5em]
+        \small #3%
+      }%
+    }%
+  \end{center}%
+}

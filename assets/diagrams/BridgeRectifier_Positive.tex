@@ -5,71 +5,76 @@
         alt={}
     ]
 
+    % Coordinates for the bridge
+    \coordinate (psBottom) at (0,-1);
+    \coordinate (psTop) at (0,3);
+    \coordinate (left) at (2,3);
+    \coordinate (top) at (4.5,5.5);
+    \coordinate (right) at (7,3);
+    \coordinate (bottom) at (4.5,0.5);
+    \coordinate (rB) at (8,-1);
+    \coordinate (rT) at (8,3);
+    \coordinate (plus) at (10,5.5);
+    \coordinate (minus) at (10,0.5);
+
+    % Colored components on main layer, black items will go below on the bg layer
     \begin{pgfonlayer}{main}
 
+        % Power supply
         \draw[
-            BakerBlack
+            LakeBlue
         ]
-        (0,0)
-        coordinate(sTop)
-        -- ++(2,0)
-        coordinate(left)
-        to[D*, color=LakeBlue, *-*] ++(3,3)
-        coordinate(top)
-        -- ++(6,0)
-        node[
-            right,
-            circle,
-            draw=LakeBlue,
-            minimum size=0.125cm,
-            text=LakeBlue,
-            font=\bfseries,
-            label={right:+}
-        ](outTop){};
+        (psBottom)
+        to[sV, color=LakeBlue, l=V] (psTop);
 
-        % \draw[
-        %     BakerBlack
-        % ]
-        % (0,-4)
-        % coordinate(sBottom)
-        % -- ++(9,0)
-        % -- ++(0,4)
-        % -- ++(-1,0)
-        % coordinate(right)
-        % to[D*, color=BakerBlack] ++(-3,3);
+        % Output nodes
+        \node[
+            draw=LakeBlue,
+            text=LakeBlue,
+            circle,
+            minimum size=0.25,
+            label={right:+}
+        ]
+        (pOut)
+        at (plus)
+        {};
 
         \node[
             draw=BakerADARed,
-            circle,
-            minimum size=0.125cm,
             text=BakerADARed,
-            font=\bfseries,
+            circle,
+            minimum size=0.25,
             label={right:{--}}
-        ](outBottom)
-        at ($(outTop)-(0,6)$)
+        ]
+        (mOut)
+        at (minus)
         {};
 
+        % Draw from power supply top, upper left diode, positive output
+        \draw[
+            LakeBlue
+        ]
+        (psTop)
+        -- (left)
+        to[D*, color=LakeBlue, *-*] (top)
+        -- (pOut.west);
+
+        % Draw back from minus output, lower right diode, back to power supply bottom
         \draw[
             BakerADARed
         ]
-        (outBottom.west)
-        -- ++(-6,0)
-        coordinate(bottom)
-        to[D*, color=BakerADARed, *-*] ++(-3,3)
-        coordinate(right)
-        -- ++(-2,0)
-        coordinate(sTop);
-
-        \draw[
-            BakerBlack
-        ]
-        (sBottom)
-        to[sV, color=BakerBlack, name=source] (sTop);
-
+        (mOut.west)
+        -- (bottom)
+        to[D*, color=BakerADARed, *-*] (right)
+        -- (rT)
+        -- (rB)
+        -- (psBottom);        
+    
     \end{pgfonlayer}
 
     \begin{pgfonlayer}{bg}
-
+        
+        % Upper right diode
         \draw[
             BakerBlack
         ]
