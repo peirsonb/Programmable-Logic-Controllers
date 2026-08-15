@@ -9,6 +9,8 @@
         width=6in,
         height=4in,
         axis lines=middle,
+        x axis line style={-},
+        y axis line style={-},  
         color=BakerBlack,           % Sets default draw/text color for the axis
         axis line style={BakerBlack},
         tick style={BakerBlack},
@@ -20,9 +22,9 @@
         ylabel near ticks,
         xmin=0, xmax=1100,
         ymin=-200, ymax=200,
-        xtick={},
+        xtick={0,180,360,540,720,1080},
         xticklabels={},
-        ytick={},
+        ytick={-169.7,0,169.7},
         yticklabels={},
         grid=none,
         %grid style={dashed, gray!30},
@@ -30,9 +32,9 @@
         clip=false
     ]
         % pgfplots trig functions expect degrees by default
-        \addplot[domain=0:1080, samples=600, line width=2.5pt, dashed, LakeBlue] {169.706 * sin(x)};
+        \addplot[domain=0:1080, samples=600, thin, dotted, BakerBlack] {169.706 * sin(x)};
 
-        \addplot[domain=0:1080, samples=600, thin, dotted, BakerBlack] {169.706 * sin(x) > 0 ? 169.706 * sin(x) : -169.706 * sin(x)};
+        \addplot[domain=0:1080, samples=600, line width=2.5pt, dashed, LakeBlue] {169.706 * sin(x) > 0 ? 169.706 * sin(x) : -169.706 * sin(x)};
 
         \addplot[BakerADARed, ultra thin, domain=0:1080,samples=600] {
             169.706 * max(

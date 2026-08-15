@@ -1,0 +1,17 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[battery, v<=$V$, invert, color=BakerBlack] ++(0,3)
+    to[R=$R_1$, color=BakerBlack] ++(3,0)
+    to[R=$R_2$, color=BakerBlack] ++(0,-3)
+    to[R=$R_3$, color=BakerBlack] (0,0);
+
+\end{circuitikz}

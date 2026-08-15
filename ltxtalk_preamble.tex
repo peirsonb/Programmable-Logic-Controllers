@@ -336,37 +336,6 @@
   \end{tikzpicture}
 }
 
-% % ============================================================================
-% % Progress Bar Logic 
-% % ============================================================================
-% \makeatletter               
-% \AddToHook{shipout/background}{%
-%   \ifprogressbar
-%     % Read ltx-talk's internal frame counters safely
-%     \edef\currentframe{\@framenumber}%
-%     \edef\totalframes{\@totalframes}%
-    
-%     % Fallback checks: If the document hasn't fully compiled yet, default to 1
-%     \ifx\currentframe\empty\def\currentframe{1}\fi
-%     \ifx\totalframes\empty\def\totalframes{1}\fi
-    
-%     % Draw the progress bar if we have a valid total frame count
-%     \ifnum\totalframes>1\relax
-%       % Compute fraction width: (current - 1) / (total - 1)
-%       \edef\pbfraction{\fpeval{(\currentframe - 1) / (\totalframes - 1)}}%
-%       \edef\completewidth{\fpeval{\pbfraction * \paperwidth}}%
-%       \edef\incompletewidth{\fpeval{\paperwidth - \completewidth}}%
-      
-%       % Render full-width progress bar at the top edge
-%       \put(0cm, -0.1cm){%
-%         \color{pbcomplete}\rule{\completewidth pt}{2pt}%
-%         \color{pbincomplete}\rule{\incompletewidth pt}{2pt}%
-%       }%
-%     \fi
-%   \fi
-% }
-% \makeatother
-
 \pretocmd{\tableofcontents}{\begin{minipage}{\textwidth} \linespread{1.4}}{}{}
 \apptocmd{\tableofcontents}{\end{minipage}}{}{}
 
@@ -476,6 +445,7 @@
 
 \usepackage{calc} % Optional, but helpful for layout
 
+% Usage: \tikztodo[width]{height}{description/notes}
 \newcommand{\tikztodo}[3][0.8\textwidth]{%
   \begin{center}
     \fbox{%

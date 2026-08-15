@@ -1,0 +1,53 @@
+\begin{tikzpicture}
+
+    %Volts
+    \draw[BakerBlack, fill=UpNorthGreen] (0,1) arc (90:0:1cm) -- ++(0.5,0) arc (0:90:1.5cm) -- ++(0,-0.5);
+    \draw[BakerBlack, fill=LakeBlue] (0,1.5) -- (0,3.5) arc (90:60:3.5cm) -- ++(240:2cm) arc (60:90:1.5cm);
+    \draw[BakerBlack] (60:1.5cm) -- (60:3.5cm) arc (60:30:3.5cm) -- (30:1.5cm) arc (30:60:1.5cm);
+    \draw[BakerBlack, fill=LakeBlue] (1.5,0) arc (0:30:1.5cm) -- (30:3.5cm) arc (30:0:3.5cm) -- (1.5,0);
+    \draw[BakerBlack] (0,0) -- (0,1);
+    \draw[BakerBlack] (0,0) -- (1,0);
+    \node[text=BakerBlack, anchor=center, align=center] at (45:0.5cm){$E$};
+    \node[text=BakerBlack, anchor=center, align=center] at (15:2.5cm){$\sqrt{P \times R}$};
+    \node[text=BakerBlack, anchor=center, align=center] at (45:2.5cm){$\dfrac{P}{I}$};
+    \node[text=BakerBlack, anchor=center, align=center] at (75:2.5cm){$I \times R$};
+    \path[postaction={decorate},decoration={text along path, text={Volts},text align=center}] (0,1.0625) arc (90:0:1.125cm);
+
+    %Ohms
+    \draw[BakerBlack] (1.5,0) -- (3.5,0) arc (360:330:3.5cm) -- (330:1.5) arc (330:360:1.5);
+    \draw[BakerBlack, fill=LakeBlue] (330:1.5) -- (330:3.5) arc (330:300:3.5) -- (300:1.5) arc (300:330:1.5);
+    \draw[BakerBlack] (300:1.5) arc (300:270:1.5) -- (270:3.5) arc (270:300:3.5) -- (300:1.5);
+    \draw[BakerBlack] (1,0) arc (360:270:1cm);
+    \draw[BakerBlack] (0,0) -- (0,-1);
+    \draw[BakerBlack] (0,-1) -- (0,-1.5);
+    \node[text=BakerBlack, anchor=center, align=center] at (315:0.5cm){$R$};
+    \node[text=BakerBlack, anchor=center, align=center] at (345:2.5cm){$\dfrac{E}{I}$};
+    \node[text=BakerBlack, anchor=center, align=center] at (315:2.5cm){$\dfrac{P}{I^2}$};
+    \node[text=BakerBlack, anchor=center, align=center] at (285:2.5cm){$\dfrac{E^2}{P}$};
+    \path[postaction={decorate},decoration={text along path, text={Ohms},text align=center}] (1.0625,0) arc (360:270:1.125cm);
+
+    %Amps
+    \draw[BakerBlack, fill=UpNorthGreen] (0,-1) arc (270:180:1) -- (180:1.5) arc (180:270:1.5) -- (0,-1);
+    \draw[BakerBlack, fill=LakeBlue] (270:1.5) -- (270:3.5) arc (270:240:3.5) -- (240:1.5) arc (240:270:1.5);
+    \draw[BakerBlack] (240:1.5) -- (240:3.5) arc (240:210:3.5) -- (210:1.5) arc (210:240:1.5);
+    \draw[BakerBlack, fill=LakeBlue] (210:1.5) -- (210:3.5) arc (210:180:3.5) -- (180:1.5) arc (180:210:1.5);
+    \draw[BakerBlack] (0,0) -- (-1,0);
+    \node[text=BakerBlack, anchor=center, align=center] at (225:0.5cm){$I$};
+    \node[text=BakerBlack, anchor=center, align=center] at (255:2.5cm){$\dfrac{E}{R}$};
+    \node[text=BakerBlack, anchor=center, align=center] at (225:2.5cm){$\dfrac{P}{E}$};
+    \node[text=BakerBlack, anchor=center, align=center] at (195:2.5cm){$\sqrt{\dfrac{P}{R}}$};
+    \path[postaction={decorate},decoration={text along path, text={Amps},text align=center}] (0,-1.0625) arc (270:180:1.125cm);
+
+    %Watts
+    \draw[BakerBlack] (90:1) arc (90:180:1);
+    \draw[BakerBlack] (180:1.5) -- (180:3.5) arc (180:150:3.5) -- (150:1.5) arc (150:180:1.5);
+    \draw[BakerBlack, fill=LakeBlue] (150:1.5) -- (150:3.5) arc (150:120:3.5) -- (120:1.5) arc (120:150:1.5);
+    \draw[BakerBlack] (120:1.5) -- (120:3.5) arc (120:90:3.5) -- (90:1.5) arc (90:120:1.5);
+    \node[text=BakerBlack, anchor=center, align=center] at (135:0.5cm){$P$};
+    \node[text=BakerBlack, anchor=center, align=center] at (165:2.5cm){$R \times I^2$};
+    \node[text=BakerBlack, anchor=center, align=center] at (135:2.5cm){$I \times E$};
+    \node[text=BakerBlack, anchor=center, align=center] at (105:2.5cm){$\dfrac{E^2}{R}$};
+    \path[postaction={decorate},decoration={text along path, text={Watts},text align=center}] (-1.0625,0) arc (180:90:1.125cm);
+
+    
+\end{tikzpicture}

@@ -59,12 +59,246 @@
     \frametitle{Electricity}
     \begin{figure}
         \centering
-        \includegraphics[width=0.375\columnwidth, alt={A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}]{Arc_electrique_double}
+
+        \hexpic[]{0.375\linewidth}{A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}{Arc_electrique_double}
+        %\includegraphics[width=0.375\columnwidth, alt={A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}]{Arc_electrique_double}
         
         {\tiny Attribution: Celeda, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Arc_\%C3\%A9lectrique_double.jpg}{Wikimedia Commons}\par}
         {\footnotesize \textbf{Electricity} is a form of energy resulting from the existence of charged particles (protons or electrons)\par}
     \end{figure}
 \end{frame}
+
+\begin{frame}
+    \frametitle{Primary Properties of Electricity}
+	\begin{columns}
+	\begin{column}{0.5\linewidth}
+        \begin{enumerate}[<+- | alert@+>]
+            \item{Voltage}
+            \item{Current}
+            \item{Resistance}
+        \end{enumerate}
+	\end{column}
+	\begin{column}{0.5\linewidth}
+		\begin{figure}
+            \centering
+            \hexpic[]{0.75\linewidth}{A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}{Arc_electrique_double}
+
+            {\tiny Attribution: Celeda, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Arc_\%C3\%A9lectrique_double.jpg}{Wikimedia Commons}\par}
+        \end{figure}
+	\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{Voltage}
+
+\begin{frame}
+    \frametitle{Voltage as Potential Energy}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{itemize}
+                \item{Voltage is potential energy}
+                \item{The difference between the number of electrons in the positive and negative terminals}
+                \item{Potential energy + difference = \emph{potential difference}}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{figure}
+                \centering
+                \begin{circuitikz}
+                    \draw[
+                        BakerBlack
+                    ]
+                    (0,0)
+                    to[battery=$V$, color=BakerBlack] ++(0,-3);
+                \end{circuitikz}
+            \end{figure}
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Voltage as Electromotive Force}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{itemize}
+                \item{Voltage acts like a pressure--on its own it's a pressurized tank}
+                \item{When connected to a circuit it propels electrons through the circuit}
+                \item{\emph{Electromotive force (EMF)}}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{figure}
+                \centering
+                \begin{circuitikz}[alt={A circuit diagram consisting of a single voltage source, labeled E, and a resistor. The source has its positive terminal pointed up and its negative terminal pointed down.}]
+                    \draw[
+                        BakerBlack
+                    ]
+                    (0,0)
+                    to[battery=$E$, color=BakerBlack] ++(0,-3)
+                    -- ++(3,0)
+                    to[R, color=BakerBlack] ++(0,3)
+                    -- (0,0);
+                \end{circuitikz}
+            \end{figure}
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Voltage Generates Current}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{itemize}
+                \item{Voltage pushed electrons around the circuit, creating \emph{current}}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{figure}
+                \centering
+                \begin{circuitikz}[>=latex, alt={A circuit diagram consisting of a single voltage source, labeled E, and a resistor. The source has its positive terminal pointed up and its negative terminal pointed down.}]
+                    \draw[
+                        BakerBlack
+                    ]
+                    (0,0)
+                    to[battery=$E$, color=BakerBlack] ++(0,-3)
+                    -- ++(3,0)
+                    to[R, color=BakerBlack] ++(0,3)
+                    -- (0,0);
+
+                    \draw[
+                        UpNorthGreen,
+                        thick,
+                        dashed,
+                        rounded corners=0.5cm,
+                        ->
+                    ]
+                    (0.25,-2)
+                    -- ++(0,-0.75)
+                    -- ++(1,0);
+                \end{circuitikz}
+            \end{figure}
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Electron Flow}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{itemize}
+                \item{Law of physics: things move from high concentration to low concentration}
+                \item{Current flows from high concentration of electrons (negative) to low concentration (positive)}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{figure}
+                \centering
+                \begin{circuitikz}[>=latex, alt={A circuit diagram consisting of a single voltage source, labeled E, and a resistor. The source has its positive terminal pointed up and its negative terminal pointed down.}]
+                    \draw[
+                        BakerBlack
+                    ]
+                    (0,0)
+                    to[battery=$E$, color=BakerBlack] ++(0,-3)
+                    -- ++(3,0)
+                    to[R, color=BakerBlack] ++(0,3)
+                    -- (0,0);
+
+                    \draw[
+                        UpNorthGreen,
+                        thick,
+                        dashed,
+                        rounded corners=0.5cm,
+                        ->
+                    ]
+                    (0.25,-2)
+                    -- ++(0,-0.75)
+                    -- ++(1,0);
+                \end{circuitikz}
+            \end{figure}
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conventional Flow}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{itemize}
+                \item{Current is traditionally drawn \emph{flowing from positive to negative}}
+                \item{\emph{Passive sign convention}}
+                \item{Mathematically fine as long as directions and polarities are always maintained}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            
+            \begin{figure}
+                \centering
+                \begin{circuitikz}[>=latex, alt={A circuit diagram consisting of a single voltage source, labeled E, and a resistor. The source has its positive terminal pointed up and its negative terminal pointed down.}]
+                    \draw[
+                        BakerBlack
+                    ]
+                    (0,0)
+                    to[battery=$E$, color=BakerBlack] ++(0,-3)
+                    -- ++(3,0)
+                    to[R, color=BakerBlack] ++(0,3)
+                    -- (0,0);
+
+                    \draw[
+                        UpNorthGreen,
+                        thick,
+                        dashed,
+                        rounded corners=0.5cm,
+                        ->
+                    ]
+                    (0.25,-2)
+                    -- ++(0,-0.75)
+                    -- ++(1,0);
+
+                    \draw[
+                        UpNorthGreen,
+                        thick,
+                        rounded corners=0.5cm,
+                        ->
+                    ]
+                    (0.25,-1)
+                    -- ++(0,0.75)
+                    -- ++(1,0);
+                \end{circuitikz}
+            \end{figure}
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\subsection{Current}
 
 \begin{frame}
     \frametitle{Current Defined}
@@ -76,9 +310,7 @@
         %}
 
         {\footnotesize Current is the \emph{flow rate} (speed) of electric charge through a conductor\par}
-    \end{figure}
-
-    
+    \end{figure}    
 
 \end{frame}
 
@@ -231,27 +463,29 @@
     {\footnotesize We often use one cycle (left) to visualize the curve, but remember that that one cycle is happening 60 times every second (right)\par}
 \end{frame}
 
-\begin{frame}
-    \frametitle{AC Voltage - Phases}
-    \begin{columns}
-        \begin{column}{0.5\linewidth}
-            \begin{figure}
-                \centering
-                \resizebox{\columnwidth}{!}{
-                    \input{../../assets/plots/120VACSineWave_Blank.tex}
-                }
-            \end{figure}
-        \end{column}
-        \begin{column}{0.5\linewidth}
-            \begin{figure}
-                \centering
-                \resizebox{\columnwidth}{!}{
-                    \input{../../assets/plots/480VACSineWave_Blank.tex}
-                }
-            \end{figure}
-        \end{column}
-    \end{columns}
-\end{frame}
+% \begin{frame}
+%     \frametitle{AC Voltage - Phases}
+%     \begin{columns}
+%         \begin{column}{0.5\linewidth}
+%             \begin{figure}
+%                 \centering
+%                 \resizebox{\columnwidth}{!}{
+%                     \input{../../assets/plots/120VACSineWave_Blank.tex}
+%                 }
+%             \end{figure}
+%         \end{column}
+%         \begin{column}{0.5\linewidth}
+%             \begin{figure}
+%                 \centering
+%                 \resizebox{\columnwidth}{!}{
+%                     \input{../../assets/plots/480VACSineWave_Blank.tex}
+%                 }
+%             \end{figure}
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+
+\subsection{Converting AC to DC}
 
 \begin{frame}
     \frametitle{Bridge Rectifier}
@@ -269,7 +503,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Bridge Rectifier}
+    \frametitle{Bridge Rectifier - Active}
 
     \begin{columns}
         \begin{column}{0.5\linewidth}
@@ -316,7 +550,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Rectified Alternating Current}
+    \frametitle{Bridge Rectifier - Smoothed}
 
     \begin{figure}
         \centering
@@ -331,7 +565,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Rectified Alternating Current}
+    \frametitle{Rectified and Smoothed Alternating Current}
 
     \begin{figure}
         \centering
@@ -344,167 +578,244 @@
 
 \end{frame}
 
+\subsection{Resistance}
+
+\begin{frame}
+    \frametitle{Resistance Defined}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/Resistance_PipeRestriction.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize \emph{Resistance} is the opposition to electron flow--like a restriction in a water pipe\par}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Resistance Causes Heat}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item{\emph{ALL} components in a circuit have resistance--including wires}
+                \item{Current through a resistance \emph{always} comes with heat}
+                \item{Unless we're actually building a heater, this is \emph{dissipated} (lost) energy}
+            \end{itemize}            
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+
+                %\hexpic[]{\columnwidth}{A cartridge heater being heated to a red hot state.}{../../assets/images/Cartridge-heater-hot.jpg}
+                \includegraphics[width=0.9\columnwidth, alt={A cartridge heater being heated to a red hot state.}]{../../assets/images/Cartridge-heater-hot.jpg}
+
+                {\tiny \textbf{Attribution:} Maxellator, \href{https://creativecommons.org/licenses/by-sa/3.0}{CC BY-SA 3.0}, via \href{https://commons.wikimedia.org/wiki/File:Cartridge-heater-hot.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}    
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ohm's Law}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.375\linewidth}{!}{
+            \input{../../assets/diagrams/OhmsLaw.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize Ohm's Law relates current, voltage, and resistance. Combined with Watt's Law to relate power (heat) we can solve all aspects of a circuit.\par}
+    \end{figure}
+\end{frame}
+
+\subsection{Voltage Phases}
+
+\begin{frame}
+    \frametitle{AC Voltage - Phases}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_Blank.tex}
+                }
+
+                \vspace{0.5em}
+                {\footnotesize 1$\phi$ is created with a single alternator coil\par}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/480VACSineWave_Blank.tex}
+                }
+
+                \vspace{0.5em}
+                {\footnotesize 3$\phi$ is created with 3 coils physically placed 120$^\circ$ apart\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Single Phase - Zero Voltage (1 of 5)}
+
+        \begin{figure}
+            \centering
+            \resizebox{0.75\linewidth}{!}{
+                \input{../../assets/plots/120VACSineWave_Blank.tex}
+            }
+        \end{figure}
+
+        \centering
+        \vspace{0.5em}
+        {\footnotesize The instantaneous voltage value of 1$\phi$ crosses 0 twice every cycle\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Single Phase - Zero Voltage (2 of 5)}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item{What happens when voltage drops to 0?}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_Blank.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Single Phase - Zero Voltage (3 of 5)}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \[            
+                \begin{aligned}
+                    p(t) &= v(t) \cdot i(t) \\
+                    v(t) = 0 &\rightarrow p(t) = 0
+                \end{aligned}
+            \]
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_Blank.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Single Phase - Zero Voltage (4 of 5)}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item Instantaneous power drops to \emph{zero} twice every cycle
+                \item Requires higher peak current $I_{\text{peak}}$ to deliver equal average power $P_{\text{avg}}$
+                \item Causes mechanical vibration and pulsating torque in heavy equipment
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/plots/120VACSineWave_Blank.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Single Phase - Zero Voltage (5 of 5)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/plots/120VACSineWave_1second.tex}
+        }
+    \end{figure}
+
+    \centering
+    \vspace{0.5em}
+    {\footnotesize This isn't a rare occurrence--at 60 Hz the power is dropping to zero 120 times every second\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Three Phase Power}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/plots/480VACSineWave_Blank.tex}
+        }
+    \end{figure}
+
+    \centering
+    \vspace{0.5em}
+    {\footnotesize With a 3$\phi$ power supply the effective voltage is \emph{never} zero--less average current required to maintain power and no pulsing\par}
+\end{frame}
+
+\section{Circuit Review}
+
+\begin{frame}
+    \frametitle{Electric Circuit Defined}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item{A closed, complete loop of conductive components that allow current to flow from a source, through a device, and back to the source}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.9\columnwidth, alt={PID circuit with operational amplifiers.}]{Circuito_PID.png}
+
+                {\tiny \textbf{Attribution:} Galessandroni, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Circuito_PID.svg}{Wikimedia Commons}\par}
+
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsection{Series Circuits}
+
+\begin{frame}
+    \frametitle{Series Circuit Defined}
+
+    \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/SeriesCircuit_3Resistor_Generic.tex}
+        }
+\end{frame}
+
 % \begin{frame}
 %     \frametitle{Test Todo}
 
 %     % Usage: \tikztodo[width]{height}{description/notes}
 %     \tikztodo[0.7\textwidth]{4cm}{Convert block diagram of feedback loop}
 % \end{frame}
-
-% \begin{frame}
-%     \frametitle{Primary Properties of Electricity}
-% 	\begin{columns}
-% 	\begin{column}{0.5\linewidth}
-%         \begin{enumerate}[<+- | alert@+>]
-%             \item{Current}
-%             \item{Voltage}
-%             \item{Resistance}
-%         \end{enumerate}
-% 	\end{column}
-% 	\begin{column}{0.5\linewidth}
-% 		\begin{figure}
-%             \centering
-%             \includegraphics[width=0.75\columnwidth, alt={A double electric arc from a Tesla coil, electrical experience at the science festival in October 2016 in Le Teil d'Ardèche}]{Arc_electrique_double}
-
-%             {\tiny Attribution: Celeda, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Arc_\%C3\%A9lectrique_double.jpg}{Wikimedia Commons}\par}
-%         \end{figure}
-% 	\end{column}
-% 	\end{columns}
-% \end{frame}
-
-% \subsection{Current}
-
-% % \begin{frame}
-% %     \frametitle{Current Defined}
-% %     \begin{figure}
-% %         \centering
-% %         \animategraphics[autoplay, loop, width=\columnwidth]{10}{images/current/current-}{0}{20}
-% %         \caption*{The \textbf{flow rate} (speed) of electric charges through a conductor}
-% %     \end{figure}
-% % \end{frame}
-
-% % \begin{frame}
-% %     \frametitle{Ampere Defined}
-% %     \begin{figure}
-% %         \centering
-% %         \animategraphics[autoplay, loop, width=\columnwidth]{10}{images/current/current-}{0}{20}
-% %         \caption*{One \textbf{ampere} is 6.24 $\times$ 10\textsuperscript{18} electrons (one coloumb of charge) flowing past a given point in one second}
-% %     \end{figure}
-% % \end{frame}
-
-% \begin{frame}
-%     \frametitle{Alternating Current Defined}
-%     \begin{figure}
-%         \centering
-%         %\includegraphics[width=0.75\columnwidth, page=25, alt={}]{Circuits1-1-1ElectricityTikz.pdf}
-%         \input{../../assets/diagrams/ACExamplePlot.tex}\\
-%         {\footnotesize \textbf{Alternating current} is an electric current that reverses polarity at regular intervals\par}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Alternating Current}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=0.5\columnwidth, page=2, alt={}]{Circuits3-2-1AlternatingCurrentTikz.pdf}
-%         \caption*{As the \textbf{alternator's} coil spins inside the magnetic field the coil cuts the field in different directions, leading to a reverse in polarity}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Frequency}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=0.5\columnwidth, page=1, alt={}]{Circuits3-2-1AlternatingCurrentTikz.pdf}
-%         \caption*{\textbf{Frequency} is defined as the number of cycles in one second (Hertz, Hz)}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Frequency}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=0.5\columnwidth, page=1, alt={}]{Circuits3-2-1AlternatingCurrentTikz.pdf}
-%         \caption*{The standard frequency for AC in the US is 60 Hz}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Direct Current Defined}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=0.5\columnwidth, page=23, alt={}]{Circuits1-1-1ElectricityTikz.pdf}
-%         \caption*{\textbf{Direct current} is an electric current that flows in one direction only (maintains polarity)}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Rectifier}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=0.5\columnwidth, alt={}]{rectifier}
-%         \caption*{A \textbf{bridge rectifier} is commonly used in controls applications to convert AC to DC}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Rectifier}
-% 	\begin{columns}
-%     	\begin{column}{0.5\linewidth}
-%     		\begin{figure}
-%     			\centering
-%     			\includegraphics[width=\columnwidth]{rectifier1}
-%     		\end{figure}
-%     	\end{column}
-%     	\begin{column}{0.5\linewidth}
-%     		\begin{figure}
-%     			\centering
-%     			\includegraphics[width=\columnwidth]{rectifier2}
-%     		\end{figure}
-%     	\end{column}
-% 	\end{columns}
-%     \begin{center}
-%         As the polarity of the AC changes the rectifier forces the output to the same polarity
-%     \end{center}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Rectifier}
-%     \begin{figure}
-%         \centering
-%         \input{../../assets/plots/FullWaveRectifier_Plot.tex}\\
-%         {\footnotesize The rectifier redirects the current so the output is always the same polarity but it \emph{does not} affect the voltage value\par}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Rectifier}
-%     \begin{figure}
-%         \centering
-%         \input{../../assets/plots/FullWaveRectifier_Plot.tex}\\
-%         {\footnotesize The resulting wave form is DC, but not very useful DC\par}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Rectifier Smoothing}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=\columnwidth, page=26, alt={}]{MATT1150Ch30PowerSuppliesTikz.pdf}
-%         \caption*{Smoothing capacitors maintain the voltage level between cycles which helps keep the DC at a more consistent value}
-%     \end{figure}
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Rectifier Smoothing}
-%     \begin{figure}
-%         \centering
-%         \includegraphics[width=\columnwidth, page=27, alt={}]{MATT1150Ch30PowerSuppliesTikz.pdf}
-%         \caption*{Smoothing capacitors maintain the voltage level between cycles which helps keep the DC at a more consistent value}
-%     \end{figure}
-% \end{frame}
-
-% \subsection{Voltage}
 
 % \begin{frame}
 %     \frametitle{Voltage}
