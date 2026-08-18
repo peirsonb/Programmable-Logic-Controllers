@@ -457,3 +457,15 @@
     }%
   \end{center}%
 }
+
+% Macro: \drawrails{<number_of_1cm_segments>}
+\newcommand{\drawrails}[1]{
+  % Calculate total depth: 1 cm per segment
+  \pgfmathsetmacro{\railheight}{-1 * #1}
+  
+  % L1 Rail (x = 0)
+  \draw[thick] (0, 0) -- (0, \railheight cm);
+    
+  % L2 Rail (x = 15)
+  \draw[thick] (15, 0) -- (15, \railheight cm);
+}

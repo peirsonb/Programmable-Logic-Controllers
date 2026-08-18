@@ -1,0 +1,68 @@
+\begin{circuitikz}[
+        american, 
+        >={Latex[length=5mm, width=2mm]},
+        %>=latex,
+        alt={}
+    ]
+
+    %========================================================
+    % Component Grid
+    % Spacing = 3x, 2y
+    %========================================================
+    \foreach \i in {0,...,5} {
+        \foreach \j in {0,...,20} { % Change to 0,...,19 if you need 20 individual Y points down to -40
+        
+        % Calculate spatial positions
+        \pgfmathsetmacro{\px}{\i * 3}
+        \pgfmathsetmacro{\py}{-1 - (\j * 2)}
+        
+        % Name coordinate using loop indices: (C-column-row) e.g., (C-0-0), (C-5-10)
+        \coordinate (C-\i-\j) at (\px, \py);
+        
+        % OPTIONAL: Uncomment the 2 lines below to display grid labels while building
+        % \fill[red] (C-\i-\j) circle (1.5pt);
+        %\node[anchor=south west, scale=0.5, gray] at (C-\i-\j) {(\i,\j)};
+        }
+    }
+
+    \begin{pgfonlayer}{ft}
+        
+        \draw[
+            BakerBlack,
+            very thick,
+            name path=L1
+        ]
+        (0,0)
+        -- (0,-3);
+
+        \draw[
+            BakerBlack,
+            very thick,
+            name path=L2
+        ]
+        (15,0)
+        -- (15,-3);
+
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{bg}
+        
+        \draw[
+            UpNorthGreen,
+            opacity=0.4,
+            line width=10pt,
+        ]
+        (0,0)
+        -- (0,-3);
+
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{main}
+
+        \draw[BakerBlack] (C-0-0) to[C={Start PB}] (C-1-0) -- (C-4-0) to[esource,l={CR1}] (C-5-0);
+
+        \draw (C-0-1) -- (C-5-1);
+
+    \end{pgfonlayer}
+
+\end{circuitikz}
