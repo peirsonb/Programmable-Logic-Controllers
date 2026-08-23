@@ -1,0 +1,76 @@
+\begin{circuitikz}[
+        american,
+        voltage dir=RP,
+        >={Latex[length=5mm, width=2mm]},
+        %>=latex,
+        alt={Schematic diagram of a DC electrical circuit connected to a multi-channel PLC input module enclosed in a dashed red box labeled Input Section. On the left side of the circuit, a single DC battery labeled V provides power to four parallel input channels, each controlled by an individual push button switch labeled PB1 through PB4 from bottom to top. Each channel wire connects to its corresponding terminal on the PLC input section, where the internal circuitry of each channel is represented by a schematic symbol. The common return path connects the bottom side of all four internal circuits together and routes back directly to the negative terminal of the DC battery.}
+    ]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[battery, color=BakerBlack, font=\small, -*, v={$V$}] ++(0,3)
+    coordinate(in1)
+    to[push button, color=BakerBlack, font=\small, l={PB1}] ++(2,0)
+    to[short, color=BakerBlack, -o] ++(1,0)
+    -- ++(1,0)
+    to[isource, color=BakerBlack, -*] ++(0,-3)
+    coordinate(con1)
+    to[short, color=BakerBlack, -o] ++(-1,0)
+    coordinate(ibot)
+    -- (0,0);
+
+    \draw[
+        BakerBlack
+    ]
+    (in1)
+    to[short, color=BakerBlack, -*] ++(0,1.5)
+    coordinate(in2)
+    to[push button, color=BakerBlack, font=\small, l={PB2}] ++(2,0)
+    to[short, color=BakerBlack, -o] ++(1,0)
+    -- ++(2,0)
+    to[isource, color=BakerBlack, -*] ++(0,-4.5)
+    coordinate(con2)
+    -- (con1);
+
+    \draw[
+        BakerBlack
+    ]
+    (in2)
+    to[short, color=BakerBlack, -*] ++(0,1.5)
+    coordinate(in3)
+    to[push button, color=BakerBlack, font=\small, l={PB3}] ++(2,0)
+    to[short, color=BakerBlack, -o] ++(1,0)
+    -- ++(3,0)
+    to[isource, color=BakerBlack, -*] ++(0,-6)
+    coordinate(con3)
+    -- (con2);
+
+    \draw[
+        BakerBlack
+    ]
+    (in3)
+    -- ++(0,1.5)
+    coordinate(in3)
+    to[push button, color=BakerBlack, font=\small, l={PB4}] ++(2,0)
+    to[short, color=BakerBlack, -o] ++(1,0)
+    coordinate(itop)
+    -- ++(4,0)
+    to[isource, color=BakerBlack] ++(0,-7.5)
+    coordinate(con4)
+    -- (con3);
+
+    \node[
+        draw=BakerADARed,
+        text=BakerBlack,
+        dashed,
+        anchor=north west,
+        minimum width=5cm,
+        minimum height=9.5cm,
+        label={above:{\small Input Section}}
+    ]
+    at ($(itop) + (0,1)$)
+    {};
+
+\end{circuitikz}

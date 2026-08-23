@@ -1,0 +1,945 @@
+% ============================================================================
+% Accessibility
+% ============================================================================
+\DocumentMetadata{
+  lang = en-US, 
+  pdfstandard = ua-2, 
+  tagging = on, 
+  tagging-setup = {math/setup=mathml-SE}
+}
+
+% ============================================================================
+% Document Properties - used on title slide and PDF metadata fields
+% ============================================================================
+\def\PresTitle{PLC Hardware}  % Required - top line of title slide
+\def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
+\def\PresAuthor{Brad Peirson}               % Required - below dividing line
+\def\PresInstitute{College of Information Technology and Engineering}       % Optional
+\def\PresDate{}                             % Optional
+\def\PresKeywords{}                         % Optional - used for hyperref
+
+% ============================================================================
+% Presentation Formatting
+% ============================================================================
+\input{../../ltxtalk_preamble}
+
+% ============================================================================
+% Document Content
+% ============================================================================
+\begin{document}
+
+\maketitle              % Redefined in the preamble to generate a full frame
+
+\begin{frame}
+    \frametitle{Agenda}
+    \begingroup
+        % Tighten the spacing between paragraphs/TOC lines
+        \setlength{\parskip}{0.3em} 
+        
+        % Optionally tighten the line spacing within an entry
+        %\baselineskip=1.2em 
+        
+        \setcounter{tocdepth}{1} % Show only sections
+    \tableofcontents
+    \setcounter{tocdepth}{2} % Reset back to default so subsections are tracked
+    \endgroup
+\end{frame}
+
+\begin{frame}
+    \frametitle{Student Learning Outcomes}
+    \begin{itemize}[<+- | alert@+>]
+        \item[4.]{Explain the types and functions of generic PLC hardware}
+        \begin{itemize}
+            \item[a.]{Explain the functions and different variations of the five sections of a PLC: input section, output section, power supply, CPU, and programming device}
+            \item[b.] List the typical number of I/Os for the various size classifications of PLCs
+            \item[c.] Explain the different types of PLC memory
+            \item[d.] Describe the operating cycle of a PLC and how it relates to a PLC’s memory
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{PLC History}
+
+\begin{frame}
+    \frametitle{The PLC and the Industrial Revolutions}
+
+    \centering
+    The development of the PLC is tied to the natural development of the industrial revolutions
+\end{frame}
+
+\section{PLC Classifications}
+
+\begin{frame}
+    \frametitle{PLC Classifications}
+
+    \begin{columns}[t]
+        \begin{column}{0.48\linewidth}
+            PLC Types:
+            \begin{enumerate}
+                \item Fixed
+                \item Modular
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            PLC Sizes:
+            \begin{enumerate}
+                \item Pico/Nano
+                \item Micro
+                \item Small
+                \item Large
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.25in}
+    \centering
+    {These are \emph{broad} classifications--and most manufacturers don't even use them}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Pico/Nano PLC}
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Smallest form factor
+                \item Usually 32 I/O or less
+                \item Good for small, single station machines
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            %\hexpic[]{0.875\columnwidth}{Industrial version of the Arduino "Controllino Mini" for DIN rail mounting and 12/24V.}{Controllino_mini.jpg}
+
+            \begin{figure}
+                \centering
+                \includegraphics[width=\columnwidth, alt={Industrial version of the Arduino "Controllino Mini" for DIN rail mounting and 12/24V}]{Controllino_mini.jpg}
+
+                {\tiny \textbf{Attribution:} Laserlicht, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Controllino_mini.jpg}{Wikimedia Commons}\par}
+
+                \vspace{0.5em}
+                {\footnotesize Arduino Controllino Mini\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Mini PLC}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item 32-128 I/O
+                \item Often expandable with additional modules
+                \item Good for small, single station machines
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                %trim={left bottom right top}, clip
+                \includegraphics[width=\columnwidth, trim={3.5in 0 1in 0.5in}, clip, alt={Top view of a Panasonic FP-XH C30T PLC installed in an electrical control panel.}]{PLC_Panasonic_FP-XH_C30T.jpg}
+
+                {\tiny \textbf{Attribution:} Angga Panca Alam Anugrah, cropped from original, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:PLC_Panasonic_FP-XH_C30T.jpg}{Wikimedia Commons}\par}
+
+                \vspace{0.5em}
+                {\footnotesize Panasonic FP-XH C30T\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Small PLC}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item 128-960 I/O
+                \item Large machines to entire assembly lines
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\columnwidth, trim={1.75in 4.5in 1.75in 2.25in}, clip, alt={Allen Bradley CompactLogix PLC collecting information from a tank battery.}]{PLC_Control_Panel.jpg}
+
+                {\tiny \textbf{Attribution:} sirdle, cropped from original, \href{https://creativecommons.org/licenses/by-sa/2.0}{CC BY-SA 2.0}, via \href{https://commons.wikimedia.org/wiki/File:PLC_Control_Panel.jpg}{Wikimedia Commons}\par}
+
+                \vspace{0.5em}
+                {\footnotesize Allen-Bradley CompactLogix\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Large PLC}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item 960+ I/O
+                \item Large assembly lines to \emph{entire plants}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\columnwidth, trim={1in 3in 0.5in 3in}, clip, alt={Allen Bradley PLC for a sugar centrifugal installed in a control panel (BMA Automation GmbH)}]{BMA_Automation_Allen_Bradley_PLC_3.JPG}
+
+                {\tiny \textbf{Attribution:} Elmschrat Coaching-Blog, cropped from original, \href{https://creativecommons.org/licenses/by-sa/3.0}{CC BY-SA 3.0}, via \href{https://commons.wikimedia.org/wiki/File:BMA_Automation_Allen_Bradley_PLC_3.JPG}{Wikimedia Commons}\par}
+
+                \vspace{0.5em}
+                {\footnotesize Allen-Bradley ControlLogix\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Safety PLC}
+
+    \begin{itemize}
+        \item Standard PLCs are \emph{not} rated for safety applications
+        \item There are a number of industrial standards governing electronic safety devices--standard PLCs meet none of them
+        \item There \emph{are} safety-rated PLCs available from almost every manufacturer
+        \item Pricey: 
+        \begin{itemize}
+            \item 5069-L306ER=\$1,500
+            \item 5069-L306ERS2 =\$2,000
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Safety Relay}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item If you have safety functions but don't have a safety PLC you \emph{need} a safety relay
+                \item Have the necessary self-monitoring, dual-channel setup
+                \item \emph{WAY} cheaper than safety PLCs (\$100-ish)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                %trim={left bottom right top}, clip
+                \includegraphics[width=\columnwidth, trim={0.5in 2in 0.5in 1.5in}, clip, alt={Safety relays from Schleicher Electronic}]{Schleicher_Electronic_Sicherheitsrelais.jpg}
+
+                {\tiny \textbf{Attribution:} Schleicher Electronic, cropped from original, \href{https://creativecommons.org/licenses/by-sa/3.0/de/deed.en}{CC BY-SA 3.0 DE}, via \href{https://commons.wikimedia.org/wiki/File:Schleicher_Electronic_Sicherheitsrelais.jpg}{Wikimedia Commons}\par}
+
+                \vspace{0.5em}
+                {\footnotesize Schneider Safety Relays\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{PLC Sections}
+
+\begin{frame}
+    \frametitle{PLC Sections}
+
+    \begin{enumerate}
+        \item Power supply
+        \item Central processing unit
+        \item Programming device
+        \item Input section
+        \item Output section
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Power Supply}
+
+    \begin{itemize}
+        \item All PLCs have a power supply
+        \item Takes input power and converts to \emph{transistor-to-transistor (TTL)} voltage levels
+        \begin{itemize}
+            \item \emph{ALL} computers operate at TTL at the component level
+            \item Can be 3.3 V or 5 V--typically 5 V for PLCs
+        \end{itemize}
+        \item Fixed PLC power supplies: integrated
+        \item Modular PLC power supplies: separate module
+        \item Multiple input voltages available: 24 VDC, 120 VAC, 240 VAC, etc.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Central Processing Unit}
+
+    \begin{itemize}
+        \item Polls input section, executes the program logic, sends signals to output section
+        \item Unlike PCs, PLC CPUs are typically specified based on memory size
+        \begin{itemize}
+            \item Allen-Bradley 1769-L16ER (our trainers): 384 KB
+            \item Allen-Bradley 5069-L3100ERM (biggest): 10 MB
+        \end{itemize}
+        \item PLCs typically do not have a lot of memory by modern computing standards, they don't need it
+        \item They deal with highly efficient, compiled machine code and mostly boolean logic
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Programming Devices}
+    
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item All PLCs require a programming device
+                \item Some have a keypad for (limited) programming
+                \item Older models have a dedicated programming pendant
+                \item Modern PLCs use PC software
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                %\includegraphics[witdth=0.9\columnwidth, alt={Siemens modular programmabler controller SIMATIC S7-1500}]{S71500.JPG}
+                \hexpic[]{0.875\columnwidth}{Siemens modular programmabler controller SIMATIC S7-1500}{S71500.JPG}
+
+                {\tiny \textbf{Attribution:} Palatinatian, \href{https://creativecommons.org/licenses/by/3.0}{CC BY 3.0}, via \href{https://commons.wikimedia.org/wiki/File:S71500.JPG}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Input and Output Sections}
+
+    \begin{itemize}
+        \item PLCs need to be able to interface with the real world--kind of the whole point
+        \item They do that by taking in information (inputs) to alter the state of equipment (outputs)
+        \item The \emph{vast} majority of PLC I/O are boolean--on or off
+        \item That's far from the only available I/O: analog, high speed counters, communication devices, etc.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sinking and Sourcing}
+
+    \begin{itemize}
+        \item Boolean PLC I/O commonly use solid-state devices (transistors) under the hood
+        \item It doesn't matter much for simple pushbuttons, but for modern sensors and acuators knowing the difference between sinking and sourcing is \emph{critical}
+        \item Sinking and sourcing refers to whether the PLC I/O point provides the external device a path to supply source (+) or a path to supply common (-)
+        \item Solid-state devices \emph{must match} in order to function
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sinking}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Sinking PLC I/O points provide a path from the I/O device, through the PLC, to the supply common (-)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SinkingInput.tex}
+                }
+            \end{figure}
+            
+            \vspace{0.5em}
+
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SinkingOutput.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sourcing}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Sourcing PLC I/O points provide a path from the I/O device, through the PLC, to the supply source (+)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SourcingInput.tex}
+                }
+            \end{figure}
+            
+            \vspace{0.5em}
+
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SourcingOutput.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Which to Pick?}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SinkingInput.tex}
+                }
+            \end{figure}
+            
+            \vspace{0.5em}
+
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SourcingInput.tex}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SinkingOutput.tex}
+                }
+            \end{figure}
+
+            \vspace{0.5em}
+
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SourcingOutput.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.5em}
+
+    \centering
+    {\footnotesize Which combination is more common in the U.S.? In Europe (IEC)? Japan?\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Differing Preferences}
+
+    \begin{itemize}
+        \item You \emph{will} find a mix in most facilities--another reason it's important to understand the difference
+        \item The U.S. prefers \emph{sinking inputs} and \emph{sourcing outputs}
+        \item Older IEC standards were the opposite--they now dictate the same
+        \item Japan still prefers sourcing inputs and sinking outputs
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sinking Inputs}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item The machine frame is grounded--if an input wire shorts it's pulled to 0 V
+                \item The input is forced to stay off--\emph{fail-safe}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SinkingInput.tex}
+                }
+            \end{figure}
+
+            \vspace{0.5em}
+
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SourcingOutput.tex}
+                }
+            \end{figure}            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sourcing Outputs}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item The machine frame is grounded--if the wire to the load shorts it will pop a breaker
+                \item The output device doesn't unintentionally actuate--\emph{fail-safe}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SinkingInput.tex}
+                }
+            \end{figure}
+
+            \vspace{0.5em}
+
+            \begin{figure}
+                \centering
+                \resizebox{0.75\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_SourcingOutput.tex}
+                }
+            \end{figure}            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Japanese Tradition}
+
+    \begin{itemize}
+        \item Why use sourcing inputs/sinking outputs when the other way is fail-safe?
+        \item Early NPN / N-channel transistors were cheaper, smaller, faster, and handled heat better than PNP / P-channel equivalents
+        \item NPN devices sink current to 0 V--created a ``normal'' way of thinking
+        \item In older standards 0 V was left floating, \emph{not} bonded to ground--no risk of accidental trigger
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sinking and Sourcing Summary}
+
+    \begin{table}[htbp]
+        \centering
+        % \caption{PLC Sinking vs. Sourcing Conventions by Region}
+        % \label{tab:plc_sinking_sourcing}
+        \small
+        \tagpdfsetup{table/header-rows={1}}
+        \resizebox{\linewidth}{!}{
+            \begin{tabular}{|c|l|C{1.5in}|C{1.5in}|C{1.5in}|}
+                \cline{3-5}
+                \multicolumn{2}{c|}{} & US Standard Practice & IEC / European (Modern) & Japanese / Asian Standard \\ \hline
+                \multirow{3}{*}{Inputs} & Module Type & Sinking \newline Receives $+24\,\text{V}$ & Sinking \newline Receives $+24\,\text{V}$ & Sourcing \newline Supplies $+24\,\text{V}$ \\ \cline{2-5}
+                & Required Field Device & Sourcing \newline PNP / $+24\,\text{V}$ Switch & Sourcing \newline PNP / $+24\,\text{V}$ Switch & Sinking \newline NPN / $0\,\text{V}$ Switch \\ \cline{2-5}
+                & Signal Short-to-Ground & Input forced \textbf{OFF} \newline (Fail-Safe) & Input forced \textbf{OFF} \newline (Fail-Safe) & Input forced \textbf{ON} \newline (False trigger risk) \\ \hline
+                \multirow{3}{*}{Outputs} & Module Type & Sourcing \newline Outputs $+24\,\text{V}$ & Sourcing \newline Outputs $+24\,\text{V}$ & Sinking \newline Pulls load to $0\,\text{V}$ \\ \cline{2-5}
+                & Field Signal Line Polarity & $+24\,\text{V}$ Active & $+24\,\text{V}$ Active & $0\,\text{V}$ Common Active \\ \cline{2-5}
+                & Signal Short-to-Ground & Trips Fuse / Breaker & Trips Fuse / Breaker & Load energizes unexpectedly \\ \hline
+                \multicolumn{2}{|c|}{Primary System Rationale} & Ground fault protection \& positive switching & Mandated fail-safe standards \newline (EN 60204-1) & Historical cost, speed, \& heat benefits of NPN \\ \hline
+            \end{tabular}
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Common Terminals (1 of 6)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item I/O is a circuit--they need the return path
+                \item Each point \emph{could} have it's own--a lot of space/cost
+                \item Most I/O sections use a common terminal internally wired to multiple I/O points
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.875\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_InputCommon.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Common Terminals (2 of 6)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Older PLCs have diagrams onboard showing what common terminal services what I/O point(s)
+                \item There is one other concern with common terminals we need to be aware of
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.875\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_InputCommon.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Common Terminals (3 of 6)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item What is the current through the common terminal wire?
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.875\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_InputCommon.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Common Terminals (4 of 6)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item It takes \emph{all} of the current of connected I/O devices
+                \item It needs to be sized for the entire load
+                \item It needs to be properly protected
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.875\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_InputCommon.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Common Terminals (5 of 6)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item We also need to protect against shorts
+                \item Inputs are pulled to 0 V--not much danger
+                \item But if we're \emph{sourcing} outputs all of that output current is shunted to ground
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.875\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_OutputCommon.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Common Terminals (6 of 6)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item We \emph{need} to protect either the (+) wire to the output common or protect each output
+                \item Probably both--5 mm glass fuses and their holders are small and cheap
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\columnwidth}{fuse 5mm 250V 500mA}{SparkFun_fuse-5mm-250v-500ma_16096159897_o.jpg}
+
+                {\tiny \textbf{Attribution:} SparkFun Electronics, \href{https://creativecommons.org/licenses/by/2.0}{CC BY 2.0}, via \href{https://commons.wikimedia.org/wiki/File:SparkFun_fuse-5mm-250v-500ma_16096159897_o.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{PLC Output Protection}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.375\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_OutputCommon_Fused.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize Protecting the main source to the output common terminal \emph{and} each individual output point is best practice\par}
+    \end{figure}
+\end{frame}
+
+\section{PLC Scan Cycle}
+
+\begin{frame}
+    \frametitle{The Synchronous Scan Cycle}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.375\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The \emph{synchronous scan cycle} is a series of processing operations that the PLC performs in a continuous loop\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle - Overhead}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item System diagnostics
+                \item Communications
+                \item Math functions
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.9\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_ScanCycle.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle - Input Scan}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Scans all input points
+                \item Stores their value in an \emph{input data table}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.9\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_ScanCycle.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle - Logic Scan}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Scans the control logic left to right, top to bottom
+                \item Reads the input data table to evaulate ladder logic
+                \item Stores output values in \emph{output data table}
+                \item \emph{NO OUTPUTS ARE TURNED ON UNTIL ALL LOGIC IS SCANNED!}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.9\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_ScanCycle.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle - Output Scan}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Reads output values from the output data table
+                \item Sets output values (on/off/analog) based on table value
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.9\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_ScanCycle.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Time}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.375\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize Even for complex programs the \emph{scan time}, the time the PLC takes to complete one cycle, is usually under 10 ms\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Program Logic Indicator}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example1.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize Most PLC programming softwares provide a visual indicator (green in this case) for what logic elements are currently true\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Don't Trust the Green}
+
+    \begin{itemize}
+        \item There are a lot of reasons the green ``true'' indicator will be wrong
+        \item Industrial input/output devices are \emph{fast}
+        \item The green indicator has to go through PLC scan time, communication time, PC processing time, and programming software time--that's a lot of delay
+        \item Devices can blink so fast the green never turns off
+        \item Good for general indication, but as soon as troubleshooting starts \emph{always} question the green
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle Example (1 of 6)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example1.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize In its completely idle state \emph{nothing} is true--the PLC \emph{still} scans\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle Example (2 of 6)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example1.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The PLC will read the input data table, see Start PB is false, and set LT1 false in the output data table. Likewise for the second rung.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle Example (3 of 6)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example2.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize When the Start PB is pressed the PLC will read the true value from the input data table and set LT1 true in the output data table\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle Example (4 of 6)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize Now, let's look scan by scan--here the Start PB has been released, LT1 will be set to false. Manual PB has been pressed, LT2 will be set to true.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle Example (5 of 6)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example4.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize When the scan comes back around, the Manual PB is still pressed. But now LT2 is \emph{true} in the data table, so it will scan as true as well.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scan Cycle Example (6 of 6)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ScanCycle_Example5.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize When Manual PB is released, it's data table will be false. \emph{BUT} LT2 is still true in the data table--it will be read as true and will \emph{stay on}.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Human Inputs and Scan Time}
+
+    \begin{itemize}
+        \item The entire scan cycle happens around 10 ms
+        \item It takes a human 100-150 ms minimum to take in a stimulus (like a stack light), decide to act, and move their muscles (release the button)
+        \item \emph{ANY} human operated input \textbf{WILL} be on for more than one scan
+        \item That can be a problem, we need to be aware of it, and we'll learn how to handle it when we get into programming
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Copyright Notice}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.625\linewidth, alt={Creative Commons Attribution NonCommercial ShareAlike logo displaying four circular icons arranged horizontally over a black banner. From left to right, the icons feature the CC logo, a person pictogram for Attribution labeled BY below, a slashed dollar sign for NonCommercial labeled NC below, and a counterclockwise circular arrow for ShareAlike labeled SA below.}]{by-nc-sa.png}
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    PLC Hardware \textcopyright 2026 by Brad Peirson is licensed under \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0}. To view a copy of this license, visit \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+\end{frame}
+
+\end{document}
+
+\end{document}

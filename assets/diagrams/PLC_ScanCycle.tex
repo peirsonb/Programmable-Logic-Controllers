@@ -1,0 +1,92 @@
+\begin{circuitikz}[
+        american, 
+        >={Latex[length=5mm, width=2mm]},
+        %>=latex,
+        alt={A diagram depicting the synchronous programmable logic controller, or PLC, scan cycle arranged in a clockwise loop of four rounded rectangular nodes connected by arrows. Starting at the top left, the sequence begins with Overhead, then points right and down to Input scan at the top right. From Input scan, an arrow points down and left to Logic scan at the bottom right. From Logic scan, an arrow points left and up to Output scan at the bottom left. Finally, an arrow connects Output scan back up and right to Overhead, completing the continuous cycle.}
+    ]
+
+    \node[
+        draw=BakerBlack,
+        text=BakerBlack,
+        align=center,
+        rounded corners=0.5cm,
+        minimum height=3cm,
+        minimum width=3cm
+    ](overhead)
+    at (0,0)
+    {Overhead};
+
+    \draw[
+        ultra thick,
+        LakeBlue,
+        ->,
+        rounded corners=1.5cm
+    ]
+    (overhead.east)
+    -- ++(2,0)
+    -- ++(0,-2)
+    node[
+        draw=BakerBlack,
+        thin,
+        text=BakerBlack,
+        align=center,
+        anchor=north,
+        rounded corners=0.5cm,
+        minimum height=3cm,
+        minimum width=3cm
+    ](input)
+    {Input\\scan};
+
+    \draw[
+        ultra thick,
+        LakeBlue,
+        ->,
+        rounded corners=1.5cm
+    ]
+    (input.south)
+    -- ++(0,-2)
+    -- ++(-2,0)
+    node[
+        draw=BakerBlack,
+        thin,
+        text=BakerBlack,
+        align=center,
+        anchor=east,
+        rounded corners=0.5cm,
+        minimum height=3cm,
+        minimum width=3cm
+    ](logic)
+    {Logic\\scan};
+
+    \draw[
+        ultra thick,
+        LakeBlue,
+        ->,
+        rounded corners=1.5cm
+    ]
+    (logic.west)
+    -- ++(-2,0)
+    -- ++(0,2)
+    node[
+        draw=BakerBlack,
+        thin,
+        text=BakerBlack,
+        align=center,
+        anchor=south,
+        rounded corners=0.5cm,
+        minimum height=3cm,
+        minimum width=3cm
+    ](output)
+    {Output\\scan};
+
+    \draw[
+        ultra thick,
+        LakeBlue,
+        ->,
+        rounded corners=1.5cm
+    ]
+    (output.north)
+    -- ++(0,2)
+    -- (overhead.west);
+
+\end{circuitikz}

@@ -1,0 +1,68 @@
+\begin{circuitikz}[
+        american,
+        voltage dir=RP,
+        >={Latex[length=5mm, width=2mm]},
+        %>=latex,
+        alt={Schematic diagram of a DC electrical circuit connected to a multi-channel PLC output module enclosed in a dashed red box labeled Output Section. On the left side, a DC battery labeled V provides power through an 8 amp main fuse along the top power rail connected to the PLC output section. Inside the PLC module, four output channels are represented by schematic symbols wired in parallel. The output terminals from top to bottom connect to four individual external loads labeled CR4 through CR1, each protected by a series 1 amp fuse. The return paths from all four loads connect back together to the negative terminal of the DC battery.}
+    ]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[battery, color=BakerBlack, font=\small, v={$V$}] ++(0,3)
+    to[fuse, color=BakerBlack, -o, l={\small 8A}] ++(4,0)
+    coordinate(otop)
+    -- ++(4,0)
+    coordinate[pos=0.25](o4t)
+    coordinate[pos=0.5](o3t)
+    coordinate[pos=0.75](o2t)
+    to[isource, color=BakerBlack] ++(0,-7.5)
+    to[short, color=BakerBlack, -o] ++(-4,0)
+    coordinate(obot)
+    to[fuse, color=BakerBlack, l={\small 1A}] ++(-2,0)
+    to[esource, color=BakerBlack, text=BakerBlack, font=\small, l={CR1}] ++(-2,0)
+    coordinate(o2)
+    -- (0,0);
+
+    \draw[
+        BakerBlack
+    ]
+    (o2t)
+    to[isource, color=BakerBlack, *-] ++(0,-6)
+    to[short, color=BakerBlack, -o] ++(-3,0)    
+    to[fuse, color=BakerBlack, l={\small 1A}] ++(-2,0)
+    to[esource, color=BakerBlack, text=BakerBlack, font=\small, -*, l={CR2}] ++(-2,0);
+
+    \draw[
+        BakerBlack
+    ]
+    (o3t)
+    to[isource, color=BakerBlack, *-] ++(0,-4.5)
+    to[short, color=BakerBlack, -o] ++(-2,0)
+    to[fuse, color=BakerBlack, l={\small 1A}] ++(-2,0)
+    to[esource, color=BakerBlack, text=BakerBlack, font=\small, -*, l={CR3}] ++(-2,0);
+
+    \draw[
+        BakerBlack
+    ]
+    (o4t)
+    to[isource, color=BakerBlack, *-] ++(0,-3)
+    to[short, color=BakerBlack, -o] ++(-1,0)
+    to[fuse, color=BakerBlack, l={\small 1A}] ++(-2,0)
+    to[esource, color=BakerBlack, text=BakerBlack, font=\small, -*, l={CR4}] ++(-2,0);
+
+    \node[
+        draw=BakerADARed,
+        text=BakerBlack,
+        dashed,
+        anchor=north west,
+        minimum width=5cm,
+        minimum height=9.5cm,
+        label={above:{\small Output Section}}
+    ]
+    at ($(otop) + (0,1)$)
+    {};
+
+
+\end{circuitikz}

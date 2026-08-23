@@ -1,0 +1,49 @@
+\begin{circuitikz}[
+        american,
+        voltage dir=RP,
+        >={Latex[length=5mm, width=2mm]},
+        %>=latex,
+        alt={Schematic diagram of a simple DC electrical circuit connected to a PLC output point labeled Output Point. On the right, a DC battery labeled V provides voltage to the circuit. The top wire connects directly from the positive terminal of the battery to the PLC interface and is labeled Common. The PLC output module is enclosed in a dashed red box on the left, labeled PNP at the bottom, and contains an internal current source component. The return path from the bottom terminal of the PLC output module passes through an electrical load labeled Load before completing the circuit back to the negative terminal of the battery.}
+    ]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[battery, color=BakerBlack, v_={$V$}] ++(0,2)
+    to[short, color=BakerBlack, -o] coordinate[pos=0.5](com) ++(-3,0)
+    coordinate(PLC_top)
+    -- ++(-1,0)
+    to[isource, color=BakerBlack] ++(0,-2)
+    to[short, color=BakerBlack, -o] ++(1,0)
+    coordinate(PLC_bottom)
+    to[R, color=BakerBlack, l_={Load}, font=\small] (0,0);
+
+    \node[
+        text=BakerBlack,
+        font=\small,
+        anchor=south west
+    ]
+    at (com)
+    {Common};
+
+    \node[
+        draw=BakerADARed,
+        dashed,
+        anchor=north east,
+        minimum width=2cm,
+        minimum height=3cm,
+        label={above:{\small \textcolor{BakerBlack}{Output Point}}},
+    ]
+    (PLC)
+    at ($(PLC_top)+(0,0.5)$)
+    {};
+
+    \node[
+        text=BakerBlack,
+        anchor=south
+    ]
+    at (PLC.south)
+    {{\tiny PNP}};
+
+\end{circuitikz}

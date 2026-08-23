@@ -1,0 +1,102 @@
+\begin{circuitikz}[
+        american, 
+        >={Latex[length=5mm, width=2mm]},
+        %>=latex,
+        alt={A ladder logic diagram bounded by two vertical power rails, illustrating active power flow on the top rung after Start PB is pressed. The left vertical power rail and the entire top rung are highlighted in green, indicating a true condition, while the bottom rung remains unhighlighted and inactive. On the top rung, power flows through the closed contact Start PB to energize the output coil LT1 on the right rail. On the second rung, the parallel contacts labeled Manual PB and LT2, along with their connected output coil LT2, remain inactive.}
+    ]
+
+    \def\rungs{3}   % Power rails are automatically drawn the proper height for # rungs
+    \pgfmathsetmacro{\railheight}{-\rungs * 2}
+
+    %========================================================
+    % Component Grid
+    % Spacing = 3x, 2y
+    %========================================================
+    \foreach \i in {0,...,5} {
+        \foreach \j in {0,...,20} {
+        
+        % Calculate spatial positions
+        \pgfmathsetmacro{\px}{\i * 3}
+        \pgfmathsetmacro{\py}{-1 - (\j * 2)}
+        
+        % Name coordinate using loop indices: (C-column-row) e.g., (C-0-0), (C-5-10)
+        \coordinate (C-\i-\j) at (\px, \py);
+        
+        % OPTIONAL: Uncomment the 2 lines below to display grid labels while building
+        % \fill[red] (C-\i-\j) circle (1.5pt);
+        %\node[anchor=south west, scale=0.5, gray] at (C-\i-\j) {(\i,\j)};
+        }
+    }
+
+    % Put the primary logic elements on this layer
+    \begin{pgfonlayer}{main}
+
+        \draw[
+            BakerBlack
+        ] 
+        (C-0-0) 
+        to[C, color=BakerBlack, font=\small, l={Start PB}] (C-1-0) 
+        -- (C-4-0) 
+        to[esource, color=BakerBlack, font=\small, l={LT1}] (C-5-0);
+
+        \draw[
+            BakerBlack
+        ] 
+        (C-0-1)
+        to[C, color=BakerBlack, font=\small, l={Manual PB}] (C-1-1)
+        -- (C-4-1)
+        to[esource, color=BakerBlack, font=\small, l={LT2}] (C-5-1);
+
+        \draw[
+            BakerBlack
+        ]
+        (C-0-2)
+        to[C, color=BakerBlack, font=\small, l={LT2}] (C-1-2)
+        -- (C-1-1);
+
+    \end{pgfonlayer}
+
+    % Use only for green highlighting of true logic elements
+    \begin{pgfonlayer}{bg}
+        
+        % Always highlight the left rail green
+        \draw[
+            UpNorthGreen,
+            opacity=0.6,
+            line width=10pt
+        ]
+        (0,0)
+        -- (0,\railheight);
+
+        \draw[
+            UpNorthGreen,
+            opacity=0.6,
+            line width=10pt
+        ]
+        (C-0-0)
+        -- (C-5-0);
+
+    \end{pgfonlayer}
+
+    % Power rails should be the only thing in the foreground
+    % Automatically drawn based on the number of rungs - should need to change this
+    % Rails start at y=0 and go down - note the (-) sign is in the macro above
+    \begin{pgfonlayer}{ft}
+        
+        \draw[
+            BakerBlack,
+            very thick,
+        ]
+        (0,0)
+        -- (0,\railheight);
+
+        \draw[
+            BakerBlack,
+            very thick,
+        ]
+        (15,0)
+        -- (15,\railheight);
+
+    \end{pgfonlayer}
+
+\end{circuitikz}
