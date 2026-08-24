@@ -1,0 +1,89 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={A circuit with a DC voltage source, V, and 3 resistors R1, R2, and R2 all in series.}
+]
+
+\draw[
+    BakerBlack
+]
+(0,0)
+to[battery=$24\,\text{V}$, color=BakerBlack] ++(0,3)
+coordinate(btop)
+-- ++(12,0)
+coordinate[pos=1/3](r1t)
+coordinate[pos=2/3](r2t)
+coordinate(r3t)
+to[R=$20\,\Omega$, color=BakerBlack] ++(0,-3)
+coordinate(r3b)
+--(0,0)
+coordinate[pos=1/3](r2b)
+coordinate[pos=2/3](r1b);
+
+\draw[
+    BakerBlack
+]
+(r1t)
+to[R=$10\,\Omega$, color=BakerBlack, *-*] (r1b);
+
+\draw[
+    BakerBlack
+]
+(r2t)
+to[R=$5\,\Omega$, color=BakerBlack, *-*] (r2b);
+
+\draw[
+    UpNorthGreen,
+    ultra thick,
+    ->
+]
+($(btop)-(-0.5,0.5)$)
+-- ($(r1t)-(0.5,0.5)$)
+node[
+    midway,
+    below,
+    text=BakerBlack
+]{$I_T$};
+
+\draw[
+    UpNorthGreen,
+    ultra thick,
+    ->
+]
+($(r1t)-(0.5,1)$)
+-- ($(r1b)-(0.5,-1)$)
+node[
+    midway,
+    left,
+    text=BakerBlack
+]{$I_1$};
+
+\draw[
+    UpNorthGreen,
+    ultra thick,
+    ->
+]
+($(r2t)-(0.5,1)$)
+-- ($(r2b)-(0.5,-1)$)
+node[
+    midway,
+    left,
+    text=BakerBlack
+]{$I_2$};
+
+\draw[
+    UpNorthGreen,
+    ultra thick,
+    ->
+]
+($(r3t)-(0.5,1)$)
+-- ($(r3b)-(0.5,-1)$)
+node[
+    midway,
+    left,
+    text=BakerBlack
+]{$I_3$};
+
+\end{circuitikz}

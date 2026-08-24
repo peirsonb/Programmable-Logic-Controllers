@@ -1,0 +1,32 @@
+\begin{circuitikz}[
+    american,
+        voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={A circuit with a DC voltage source, V, and 3 resistors R1, R2, and R2 all in series.}
+]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[battery, v=$24\,\text{V}$, color=BakerBlack] ++(0,4)
+    to[R=$10\,\Omega$, v=$V_1$, color=BakerBlack] ++(4,0)
+    to[R=$5\,\Omega$, v=$V_2$, color=BakerBlack] ++(0,-4)
+    to[R=$20\,\Omega$, v=$V_3$, color=BakerBlack] (0,0);
+
+    \draw[
+        UpNorthGreen,
+        ultra thick,
+        ->,
+        rounded corners=0.25cm
+    ]
+    (0.5,2.5)
+    -- (0.5,3)
+    -- (1.5,3)
+    node[
+        anchor=north,
+        text=BakerBlack
+    ]{$0.686\,\text{A}$};
+
+\end{circuitikz}

@@ -1,0 +1,17 @@
+\begin{circuitikz}[
+    american,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={A circuit with a DC voltage source, V, and 3 resistors 10 ohm, 5 ohm, and 20 ohm all in series.}
+]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[battery, v<=$V$, invert, color=BakerBlack] ++(0,3)
+    to[R=$20\,\Omega$, color=BakerBlack] ++(3,0)
+    to[R=$5\,\Omega$, color=BakerBlack] ++(0,-3)
+    to[R=$10\,\Omega$, color=BakerBlack] (0,0);
+
+\end{circuitikz}
