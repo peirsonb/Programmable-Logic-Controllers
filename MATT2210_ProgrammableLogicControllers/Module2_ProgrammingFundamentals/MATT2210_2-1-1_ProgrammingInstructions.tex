@@ -53,6 +53,102 @@
     \end{itemize}
 \end{frame}
 
+\section{PLC Data Types \& Memory Architecture}
+
+\subsection{Memory Hierarchy: Bits to Words}
+
+\begin{frame}
+    \frametitle{BIT}
+
+    \begin{itemize}
+        \item 1 bit
+        \item The smallest unit of memory
+        \item Represents discrete binary states
+        \begin{itemize}
+            \item 0 (OFF/FALSE)
+            \item 1 (ON/TRUE)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{NIBBLE}
+
+    \begin{itemize}
+        \item 4 bits
+        \item 1 binary coded decimal (BCD) digit
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{BYTE}
+
+    \begin{itemize}
+        \item 8 Bits
+        \item 256 unique combinations
+        \item Typically used for ASCII characters--1 BYTE = 1 character
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{WORD}
+
+    \begin{itemize}
+        \item 16 Bits
+        \item Historical standard register size in PLCs (AB SLC 500/Siemens S7-300)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{DWORD/LWORD}
+
+    \begin{itemize}
+        \item DWORD--32 bits
+        \item LWORD--64 bits
+        \item Modern architecture
+        \item Used for high precision motion/math in older systems
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sub-Bit Access}
+
+    \begin{itemize}
+        \item These data types are most often used as a number
+        \item But they are \emph{also} just a collection of bits
+        \item We can access the individual bit inside a word using \emph{dot notation}
+        \begin{itemize}
+            \item \texttt{Word\_Var.0}, \texttt{Word\_Var.7}, etc.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{IEC 61131-3 Elementary Types}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+        {\small
+        \begin{tabular}{|L{1.25in}|C{0.75in}|C{0.375in}|C{1.5in}|L{2in}|}
+            \hline
+            Type & Keyword & Bits & Signed Range & Common Industrial Usage\\
+            \hline
+            Boolean & \texttt{BOOL} & 1 & 0 or 1 \newline (FALSE / TRUE) & Proximity sensors, pushbuttons, coils\\
+            \hline
+            Short Integer & \texttt{SINT} & 8 & -128 to +127 & Small part counts, status flags\\
+            \hline
+            Integer & \texttt{INT} & 16 & -32,768 to +32,767 & Analog inputs (0-10V, 4-20mA raw counts)\\
+            \hline
+            Double Integer & \texttt{DINT} & 32 & -2,147,483,648 to +2,147,483,647 & High-speed encoders, totalizer counts\\
+            \hline
+            Real (Float) & \texttt{REAL} & 32 & IEEE 754 Floating Point & Scaled engineering units (PSI, GPM, $^\circ$C)\\
+            \hline
+        \end{tabular}
+        }}
+    \end{table}
+\end{frame}
+
 \section{Basic PLC Programming Instructions}
 
 \begin{frame}
@@ -166,7 +262,55 @@
     \input{../../assets/diagrams/PLC_ONS.tex}
 \end{frame}
 
-\section{PLC Timers}
+\section{PLC Timers and Counters}
+
+\begin{frame}
+    \frametitle{Timers and Counters}
+
+    \begin{itemize}
+        \item Timers time, counters count--but their under-the-hood structure is \emph{very} similar
+        \item ``Timer'' and ``counter'' refer to the \emph{variable type}
+        \item The timer or counter variable is then used in conjunction with a timer or counter instruction
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Timer and Counter Variable Types}
+
+    \begin{itemize}
+        \item Timers and counters are made up of 3 words:
+        \begin{enumerate}
+            \item Word 0: Control word--used as bits, what the bits \emph{do} vary between timers and counters
+            \item Word 1: Preset (PRE)--the time/count target
+            \item Word 2: Accumulated (ACC)--the current time/count
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Timer Variables}
+
+    \begin{description}
+        \item[EN] Rung logic before the instruction is true
+        \item[TT] The timer is actively timing
+        \item[DN] The preset value has been reached
+        \item[PRE] The target time, in \emph{milliseconds}
+        \item[ACC] The current timer value, in \emph{milliseconds} 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Timer Instructions}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \input{../../assets/diagrams/PLC_TON_Instruction.tex}
+        \end{column}
+    \end{columns}
+\end{frame}
 
 \begin{frame}
     \frametitle{TON Timing Diagram}
@@ -186,7 +330,19 @@
     }
 \end{frame}
 
-\section{PLC Counters}
+\begin{frame}
+    \frametitle{Counter Variables}
+
+    \begin{description}
+        \item[CU] The logic before the \texttt{CTU} instruction is true
+        \item[CD] The logic before the \texttt{CTD} instruction is true
+        \item[DN] The preset value has been reached
+        \item[OV] The \texttt{ACC} has exceeded the DINT limit of 2,147,483,647
+        \item[UN] The \texttt{ACC} has exceed the DINT limit of -2,147,483,648 
+        \item[PRE] The target count
+        \item[ACC] The current count
+    \end{description}
+\end{frame}
 
 \begin{frame}
     \frametitle{CTU Timing Diagram}
