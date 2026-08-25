@@ -1,0 +1,192 @@
+% ============================================================================
+% Accessibility
+% ============================================================================
+\DocumentMetadata{
+  lang = en-US, 
+  pdfstandard = ua-2, 
+  tagging = on, 
+  tagging-setup = {math/setup=mathml-SE}
+}
+
+% ============================================================================
+% Document Properties - used on title slide and PDF metadata fields
+% ============================================================================
+\def\PresTitle{PLC Programming Instructions}  % Required - top line of title slide
+\def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
+\def\PresAuthor{Brad Peirson}               % Required - below dividing line
+\def\PresInstitute{College of Information Technology and Engineering}       % Optional
+\def\PresDate{}                             % Optional
+\def\PresKeywords{}                         % Optional - used for hyperref
+
+% ============================================================================
+% Presentation Formatting
+% ============================================================================
+\input{../../ltxtalk_preamble}
+
+% ============================================================================
+% Document Content
+% ============================================================================
+\begin{document}
+
+\maketitle              % Redefined in the preamble to generate a full frame
+
+\begin{frame}
+    \frametitle{Agenda}
+    \begingroup
+        % Tighten the spacing between paragraphs/TOC lines
+        \setlength{\parskip}{0.3em} 
+        
+        % Optionally tighten the line spacing within an entry
+        %\baselineskip=1.2em 
+        
+        \setcounter{tocdepth}{1} % Show only sections
+    \tableofcontents
+    \setcounter{tocdepth}{2} % Reset back to default so subsections are tracked
+    \endgroup
+\end{frame}
+
+\begin{frame}
+    \frametitle{Student Learning Outcomes}
+    \begin{itemize}[<+- | alert@+>]
+        \item[1.]{Create programs in Ladder Logic using the following instructions in an application}
+        \item[2.]{Program PLC timers and counters}
+    \end{itemize}
+\end{frame}
+
+\section{Basic PLC Programming Instructions}
+
+\begin{frame}
+    \frametitle{The 3 Basic Instructions}
+
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            \begin{itemize}
+                \item Ladder logic doesn't care what the input \emph{is}
+                \item All that matters is on/off
+                \item Remember, these were intentionally designed to look like relay contacts and coils
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \centering
+            \input{../../assets/diagrams/PLC_XIC_XIO_OTE.tex}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Examine if Closed (XIC)}
+
+    \centering
+    True when the input is true (on)
+
+    \vspace{0.5in}
+
+    \input{../../assets/diagrams/PLC_XIC_Comparison.tex}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Examine if Open (XIO)}
+
+    \centering
+    True when the input is false (off)
+
+    \vspace{0.5in}
+
+    \input{../../assets/diagrams/PLC_XIO_Comparison.tex}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Output Energize (OTE)}
+
+    \centering
+    True when the logic before it is true
+
+    \vspace{0.5in}
+
+    \input{../../assets/diagrams/PLC_OTE_Comparison.tex}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Output Latch and Unlatch}
+
+    \centering
+    Once turned on the outputs \emph{stays on} until explcitly unlatched
+
+    \vspace{0.375in}
+
+    \input{../../assets/diagrams/PLC_OTL_OTU.tex}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Take Caution with Latches}
+
+    \begin{itemize}
+        \item Be \emph{very} careful with latches--my recommendation is to not use them as much as possible
+        \item OTE is \emph{volatile}--when power cycles the output is set to 0 (off)
+        \item OTL is \emph{NOT} volatile--if it's on when power goes out it will be on when power is restored
+        \item This can and has caused unwanted/unsafe machine motion
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Latch/Unlatch on Key Platforms}
+
+    \begin{table}
+        \centering
+        {\footnotesize How Key Platforms Handle Latch/Unlatch on Power Cycle\par}
+        \tagpdfsetup{table/header-rows={1}}
+        \resizebox{0.875\linewidth}{!}{
+            \begin{tabular}{|L{2in}|C{1.25in}|L{2in}|L{2in}|}
+                \hline
+                Manufacturer & Equivalent Instructions & Power Cycle Behavior & Memory Control Mehcanism\\
+                \hline
+                Allen-Bradley \newline (Logix5000) & OTL/OTU & Retains state across power cycles (non-volatile) & Tied directly to the instruction choice (OTL/OTU memory retention vs. OTE non-retention)\\
+                \hline
+                Siemens \newline (TIA Portal) & S (Set)/\newline R (Reset) & Resets to \texttt{0} unless declared as Retentive & Bit/DB retain settings in tag table\\
+                \hline
+                Beckhoff (TwinCAT)/\newline CODESYS & S (Set)/\newline R (Reset) & Resets to \texttt{0} unless located in Retain memory & \texttt{RETAIN} or \texttt{PERSISTENT} keywords\\
+                \hline
+                Mitsubishi \newline (GX Works) & SET/RST & Retains state if mapped to Latch Range & Latch (L) device memory range\\
+                \hline
+                Omron \newline (Sysmac Studio) & Set/Rst & Resets to \texttt{0} unless declared as Retentive & Retain attribute checkbox on VAR\\
+                \hline
+            \end{tabular}
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Oneshot}
+
+    \input{../../assets/diagrams/PLC_ONS.tex}
+\end{frame}
+
+\section{PLC Timers}
+
+\section{PLC Counters}
+
+\section{Advanced PLC Programming Instructions}
+
+\section{Data Manupulation Instructions}
+
+\begin{frame}
+    \frametitle{Copyright Notice}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.625\linewidth, alt={Creative Commons Attribution NonCommercial ShareAlike logo displaying four circular icons arranged horizontally over a black banner. From left to right, the icons feature the CC logo, a person pictogram for Attribution labeled BY below, a slashed dollar sign for NonCommercial labeled NC below, and a counterclockwise circular arrow for ShareAlike labeled SA below.}]{by-nc-sa.png}
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    \PresTitle \textcopyright 2026 by Brad Peirson is licensed under \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0}. To view a copy of this license, visit \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+\end{frame}
+
+\end{document}
+
+% \begin{frame}
+%     \frametitle{Test Todo}
+
+%     % Usage: \tikztodo[width]{height}{description/notes}
+%     \tikztodo[0.7\textwidth]{4cm}{Convert block diagram of feedback loop}
+% \end{frame}

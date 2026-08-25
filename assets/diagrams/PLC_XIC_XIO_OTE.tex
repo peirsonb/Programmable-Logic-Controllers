@@ -1,0 +1,29 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[C, color=BakerBlack, l={XIC}] (2,0);
+
+    \begin{scope}[yshift=-2cm]
+        \draw[
+        BakerBlack
+        ]
+        (0,0)
+        to[vC, color=BakerBlack, l={XIO}] (2,0);
+    \end{scope}
+
+    \begin{scope}[yshift=-4cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        to[esource, color=BakerBlack, l={OTE}] (2,0);
+    \end{scope}                
+\end{circuitikz}

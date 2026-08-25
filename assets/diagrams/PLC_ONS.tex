@@ -1,0 +1,28 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    -- ++(0.5,0)
+    node[
+        draw=BakerBlack,
+        anchor=west,
+        minimum width=1cm,
+        minimum height=0.5,
+        rounded corners=0.25cm
+    ](ons)
+    {ONS};
+
+    \draw[
+        BakerBlack
+    ]
+    (ons.east)
+    -- ++(0.5,0);
+\end{circuitikz}

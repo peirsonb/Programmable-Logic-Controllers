@@ -1,0 +1,83 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    %==========================================================================
+    % Column 1 Row 1 - False XIC, false OTE
+    %==========================================================================
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    coordinate(start)
+    to[C, color=BakerBlack] ++(2,0)
+    to[esource, color=BakerBlack] ++(2,0)
+    coordinate(end);
+
+    %==========================================================================
+    % Column 1 Row 2 - True XIC, true OTE
+    %==========================================================================
+    \begin{scope}[yshift=-2cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        coordinate(start)
+        to[C, color=BakerBlack] ++(2,0)
+        to[esource, color=BakerBlack] ++(2,0)
+        coordinate(end);
+
+        \begin{pgfonlayer}{bg}
+            \draw[
+                UpNorthGreen,
+                line width=10pt,
+                opacity=0.5
+            ]
+            (start)
+            -- (end);
+        \end{pgfonlayer}
+    \end{scope}
+
+    %==========================================================================
+    % Column 2 Row 1 - False XIO, false OTE
+    %==========================================================================
+    \begin{scope}[xshift=7cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        coordinate(start)
+        to[vC, color=BakerBlack] ++(2,0)
+        to[esource, color=BakerBlack] ++(2,0)
+        coordinate(end);
+
+        %==========================================================================
+        % Column 2 Row 2 - True XIO, true OTE
+        %==========================================================================
+        \begin{scope}[yshift=-2cm]
+            \draw[
+                BakerBlack
+            ]
+            (0,0)
+            coordinate(start)
+            to[vC, color=BakerBlack] ++(2,0)
+            to[esource, color=BakerBlack] ++(2,0)
+            coordinate(end);
+
+            \begin{pgfonlayer}{bg}
+                \draw[
+                    UpNorthGreen,
+                    line width=10pt,
+                    opacity=0.5
+                ]
+                (start)
+                -- (end);
+            \end{pgfonlayer}
+        \end{scope}
+    \end{scope}
+
+\end{circuitikz}

@@ -1,0 +1,102 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    %==========================================================================
+    % Column 1 Row 1 - NO PB open and XIO with highlight
+    %==========================================================================
+    \draw[
+        BakerBlack
+    ]
+    (0,0)
+    to[nopb, color=BakerBlack] (2,0);
+
+    \begin{scope}[xshift=3cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        to[C, color=BakerBlack] (2,0);
+
+        \begin{pgfonlayer}{bg}
+            \draw[
+                UpNorthGreen,
+                line width=10pt,
+                opacity=0.5
+            ]
+            (0,0)
+            -- (2,0);
+        \end{pgfonlayer}
+    \end{scope}
+
+    %==========================================================================
+    % Column 1 Row 2 - NO PB closed and XIO without highlight
+    %==========================================================================
+    \begin{scope}[yshift=-2cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        to[nopbc, color=BakerBlack] (2,0);
+
+        \begin{scope}[xshift=3cm]
+            \draw[
+                BakerBlack
+            ]
+            (0,0)
+            to[vC, color=BakerBlack] (2,0);
+        \end{scope}
+    \end{scope}
+
+    %==========================================================================
+    % Column 2 Row 1 - NC PB and XIO wihtout highlight
+    %==========================================================================
+    \begin{scope}[xshift=7cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        to[ncpb, color=BakerBlack] (2,0);
+
+        \begin{scope}[xshift=3cm]
+            \draw[
+                BakerBlack
+            ]
+            (0,0)
+            to[vC, color=BakerBlack] (2,0);
+        \end{scope}
+
+        %==========================================================================
+        % Column 2 Row 2 - NC PB opened and XIO with highlight
+        %==========================================================================
+        \begin{scope}[yshift=-2cm]
+            \draw[
+                BakerBlack
+            ]
+            (0,0)
+            to[ncpbo, color=BakerBlack] (2,0);
+
+            \begin{scope}[xshift=3cm]
+                \draw[
+                    BakerBlack
+                ]
+                (0,0)
+                to[vC, color=BakerBlack] (2,0);
+
+                \begin{pgfonlayer}{bg}
+                    \draw[
+                        UpNorthGreen,
+                        line width=10pt,
+                        opacity=0.5
+                    ]
+                    (0,0)
+                    -- (2,0);
+                \end{pgfonlayer}
+            \end{scope}
+        \end{scope}
+    \end{scope}
+\end{circuitikz}
