@@ -10,6 +10,7 @@
         BakerBlack
     ]
     (0,0)
+    to[C, color=BakerBlack, l={Prox1}] ++(2,0)
     -- ++(0.5,0)
     node[
         draw=BakerBlack,
@@ -20,9 +21,80 @@
     ](ons)
     {ONS};
 
+    \node[
+        text=BakerBlack,
+        anchor=south
+    ]
+    at(ons.north)
+    {OneShot};
+
     \draw[
         BakerBlack
     ]
     (ons.east)
-    -- ++(0.5,0);
+    -- ++(0.5,0)
+    to[esource, color=BakerBlack, l={Valve}] ++(2,0);
+
+    \node[
+        text=BakerBlack
+    ]
+    at (3,1.5)
+    {First Scan};
+
+    \begin{pgfonlayer}{bg}
+        \draw[
+            UpNorthGreen,
+            line width=10pt,
+            opacity=0.5
+        ]
+        (0,0)
+        --(6,0);
+    \end{pgfonlayer}
+
+    \begin{scope}[yshift=-3cm]
+        \draw[
+            BakerBlack
+        ]
+        (0,0)
+        to[C, color=BakerBlack, l={Prox1}] ++(2,0)
+        -- ++(0.5,0)
+        node[
+            draw=BakerBlack,
+            anchor=west,
+            minimum width=1cm,
+            minimum height=0.5,
+            rounded corners=0.25cm
+        ](ons)
+        {ONS};
+
+        \node[
+            text=BakerBlack,
+            anchor=south
+        ]
+        at(ons.north)
+        {OneShot};
+
+        \draw[
+            BakerBlack
+        ]
+        (ons.east)
+        -- ++(0.5,0)
+        to[esource, color=BakerBlack, l={Valve}] ++(2,0);
+
+        \node[
+            text=BakerBlack
+        ]
+        at (3,1.5)
+        {Second Scan};
+
+        \begin{pgfonlayer}{bg}
+            \draw[
+                UpNorthGreen,
+                line width=10pt,
+                opacity=0.5
+            ]
+            (0,0)
+            --(6,0);
+        \end{pgfonlayer}
+    \end{scope}
 \end{circuitikz}

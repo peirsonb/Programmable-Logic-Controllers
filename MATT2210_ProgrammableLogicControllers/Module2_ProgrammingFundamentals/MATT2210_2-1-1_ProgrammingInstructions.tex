@@ -107,7 +107,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Output Latch and Unlatch}
+    \frametitle{Output Latch (OTL) and Unlatch (OTU)}
 
     \centering
     Once turned on the outputs \emph{stays on} until explcitly unlatched
@@ -158,12 +158,44 @@
 \begin{frame}
     \frametitle{Oneshot}
 
+    \centering
+    A oneshot is true for \emph{one scan} while the logic before it is true--the logic has to turn false to reset it
+
+    \vspace{0.25in}
+
     \input{../../assets/diagrams/PLC_ONS.tex}
 \end{frame}
 
 \section{PLC Timers}
 
+\begin{frame}
+    \frametitle{TON Timing Diagram}
+
+    \centering
+    \resizebox{0.75\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Diagram}
+
+    \centering
+    \resizebox{0.75\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+    }
+\end{frame}
+
 \section{PLC Counters}
+
+\begin{frame}
+    \frametitle{CTU Timing Diagram}
+
+    \centering
+    \resizebox{0.75\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_CTU_TimingDiagram.tex}
+    }
+\end{frame}
 
 \section{Advanced PLC Programming Instructions}
 
