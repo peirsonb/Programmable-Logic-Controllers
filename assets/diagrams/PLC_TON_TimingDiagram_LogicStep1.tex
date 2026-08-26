@@ -52,18 +52,6 @@
 
     \end{pgfonlayer}
 
-    % \begin{pgfonlayer}{bg}
-        
-    %     \draw[
-    %         UpNorthGreen,
-    %         opacity=0.4,
-    %         line width=10pt,
-    %     ]
-    %     (0,0)
-    %     -- (0,-3);
-
-    % \end{pgfonlayer}
-
     \begin{pgfonlayer}{main}
         \draw[
             BakerBlack
@@ -82,8 +70,30 @@
         \node[text=BakerBlack, anchor=south] at (T1-TOP) {{\small TON}};
         \node[text=BakerBlack, anchor=north] at (T1-TOP) {{\small My\_Timer}};
         \node[text=BakerBlack, anchor=west] at (T1-PRE) {{\small 2000}};
-        \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 0}};
+        \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 547}};
 
-    \end{pgfonlayer}    
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{bg}
+        
+        \draw[
+            UpNorthGreen,
+            opacity=0.4,
+            line width=10pt,
+        ]
+        (C-0-0)
+        -- (C-1-0);
+
+        \draw[
+            UpNorthGreen,
+            opacity=0.4,
+            line width=10pt,
+        ]
+        (T1-EN1)
+        -- (T1-EN2);
+
+        
+
+    \end{pgfonlayer}
     
 \end{circuitikz}

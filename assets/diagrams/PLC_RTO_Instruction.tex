@@ -1,0 +1,16 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    \pic (T1) at (0,0) {TON};
+
+    \node[text=BakerBlack, anchor=south] at (T1-TOP) {{\small RTO}};
+    \node[text=BakerBlack, anchor=north] at (T1-TOP) {{\small My\_Timer}};
+    \node[text=BakerBlack, anchor=west] at (T1-PRE) {{\small 2000}};
+    \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 0}};
+    
+\end{circuitikz}

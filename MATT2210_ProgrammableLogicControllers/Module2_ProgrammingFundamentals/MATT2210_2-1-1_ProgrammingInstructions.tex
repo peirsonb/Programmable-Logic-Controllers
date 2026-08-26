@@ -18,10 +18,9 @@
 \def\PresDate{}                             % Optional
 \def\PresKeywords{}                         % Optional - used for hyperref
 
-% ============================================================================
 % Presentation Formatting
 % ============================================================================
-\input{
+\input{../../ltxtalk_preamble.tex}
 
 % ============================================================================
 % Document Content
@@ -351,6 +350,23 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Time Base}
+
+    \begin{itemize}
+        \item Some platforms use a timer time base
+        \item Time base $\times$ preset = total time
+        \item AB RSlogix 500: time base can be 0.01s or 1s
+        \begin{itemize}
+            \item Base = 0.01, Preset = 500, Time = 5s
+        \end{itemize}
+        \item AB RSLogix 5000: time base is \emph{always} 0.001s
+        \begin{itemize}
+            \item Base = 0.001, Preset = 500, Time = 0.5s
+        \end{itemize} 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
     \frametitle{Timer Variable Warning}
 
     \begin{itemize}
@@ -359,6 +375,8 @@
         \item One timer variable per timer instruction
     \end{itemize}
 \end{frame}
+
+\subsection{Timer On}
 
 \begin{frame}
     \frametitle{Timer On Instruction}
@@ -381,7 +399,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{TON Example}
+    \frametitle{TON Example 1}
 
     \begin{figure}
         \centering
@@ -392,10 +410,295 @@
 \begin{frame}
     \frametitle{TON Timing Diagram}
 
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+        }
+    \end{figure}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (1 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 1 second the input goes true
+                \item The logic is true--\texttt{EN} turns on
+                \item The timer starts timing--\texttt{TT} turns on
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (2 of 7)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_TON_TimingDiagram_LogicStep1.tex}
+        
+        \vspace{1em}
+        {\small While the logic is true \texttt{EN} turns on, \texttt{TT} turns on, and \texttt{ACC} starts counting\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (3 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 2 seconds the input goes false
+                \item The logic is false--\texttt{EN} turns off
+                \item The timer stops timing--\texttt{TT} turns off
+                \item The \texttt{ACC} is automatically cleared
+                \item It wasn't on long enough to reach 2s, \texttt{DN} never turns on
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (4 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 3 seconds the input goes true
+                \item The logic is true--\texttt{EN} turns on
+                \item The timer starts timing--\texttt{TT} turns on
+                \item \texttt{ACC} starts counting
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (5 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 5 seconds the input is still on
+                \item The logic is true--\texttt{EN} stays on
+                \item $\texttt{ACC} \geq \texttt{PRE}$--\texttt{DN} turns on
+                \item \texttt{ACC} stops counting, holds its value
+                \item It's not actively timing--\texttt{TT} turns off
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (6 of 7)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_TON_TimingDiagram_LogicStep2.tex}
+        
+        \vspace{1em}
+        {\small At 5 seconds $\texttt{ACC} \geq \texttt{PRE}$ so \texttt{DN} turns on and \texttt{TT} turns off\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Timing Step-by-Step (7 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 6 seconds the input goes false
+                \item The logic is false--\texttt{EN} turns off
+                \item The \texttt{ACC} is automatically cleared
+                \item \texttt{DN} turns off
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ACC and DN (1 of 3)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Note the \texttt{ACC} value when \texttt{DN} turns on--this is normal
+                \item The TON \emph{logic} is triggered by the PLC scan
+                \item The TON \emph{timing} happens in a separate processor thread
+                \item The scan checks in every pass to compare the new \texttt{ACC} to \texttt{PRE}
+            \end{itemize}    
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram_LogicStep2.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ACC and DN (2 of 3)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item The \texttt{ACC} will \emph{always} be slightly bigger than \texttt{PRE} when the timer finishes
+                \item You \emph{cannot} do an equal comparison (\texttt{ACC}=\texttt{PRE}) because it's \emph{never} true
+                \item That's what \texttt{DN} is for
+            \end{itemize}    
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_TimingDiagram_LogicStep2.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ACC and DN (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_TON_UsingDNBit.tex}
+        
+        \vspace{0.5em}
+        {\small Use \texttt{DN} to trigger logic that has to happen when the timer finishes, \emph{not} an equal comparison\par}
+    \end{figure}
+\end{frame}
+
+\subsection{Retentive Timer On}
+
+\begin{frame}
+    \frametitle{Retentive Timer On (RTO)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item RTO works exactly like TON with \emph{one} difference
+                \item \texttt{ACC} \emph{does not} clear when the input goes false
+                \item \texttt{ACC} must be explicitly cleared with a RES instruction
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \input{../../assets/diagrams/PLC_RTO_Instruction.tex}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RTO Example (1 of 3)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_RTO_Example1.tex}
+    \end{figure}
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_RTO_Example2.tex}
+    \end{figure}
+
+    \vspace{0.5em}
     \centering
-    \resizebox{0.875\linewidth}{!}{
-        \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
-    }
+    {\footnotesize Top: the RTO times as normal when the logic is true. Bottom: When the logic false, the RTO stops timing but retains the \texttt{ACC}.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RTO Example (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_RTO_Example3.tex}
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize When \texttt{PRE} is reached \texttt{DN} turns on\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{RTO Example (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_RTO_Example4.tex}
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The \texttt{ACC} and \texttt{DN} will \emph{stay on} until a RES instruction is used on the timer\par}
+\end{frame}
+
+\subsection{Timer Off}
+
+\begin{frame}
+    \frametitle{Timer Off Instruction}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Used to keep things running \emph{after} the timer finishes (cooling fans)
+                \item \texttt{DN} is on most of the time, it turns \emph{off} when the timer finishes
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \input{../../assets/diagrams/PLC_TOF_Instruction.tex}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}
@@ -406,6 +709,206 @@
         \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
     }
 \end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (1 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 0s the input it off
+                \item \texttt{DN} is \emph{already} on
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (2 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 1s the input turns on
+                \item \texttt{EN} turns on
+                \item \texttt{DN} is \emph{still} on
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (3 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 2s the input turns off
+                \item \texttt{EN} turns off
+                \item \texttt{TT} turns on
+                \item The timer starts timing as soon as the input turns off
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (4 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 3s the input turns on
+                \item \texttt{EN} turns on
+                \item \texttt{TT} turns off
+                \item The timer preset hasn't been met, nothing happens with \texttt{DN}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (5 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 4s the input turns off
+                \item \texttt{EN} turns off
+                \item \texttt{TT} turns on
+                \item The timer starts timing as soon as the input turns off
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (6 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 6s we hit the preset
+                \item \texttt{TT} turns off--it's not actively timing anymore
+                \item \texttt{DN} turns \emph{off}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Timing Step-by-Step (7 of 7)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item At 7s the input turns on
+                \item \texttt{EN} turns on
+                \item \texttt{DN} turns \emph{on}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
+                }
+            \end{figure}  
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Example (1 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_TOF_FanExample1.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize While the input is on, \texttt{DN} remains on and timer \emph{is not} timing\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Example (2 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_TOF_FanExample2.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize As soon as the input drops out the timer starts timing--\texttt{EN} drops, but \texttt{DN} stays on\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TOF Example (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_TOF_FanExample3.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When we hit \texttt{PRE}, \texttt{DN} drops out\par}
+    \end{figure}
+\end{frame}
+
+\subsection{Counters}
 
 \begin{frame}
     \frametitle{Counter Variables}

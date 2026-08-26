@@ -7,7 +7,7 @@
     ]
 
     % Define the number of rungs in the diagram
-    \def\numRungs{1}
+    \def\numRungs{3}
 
     % Calculate the length of the vertical power rails dynamically based on number of rungs
     \pgfmathsetmacro{\railLength}{-2 * \numRungs}
@@ -52,24 +52,16 @@
 
     \end{pgfonlayer}
 
-    % \begin{pgfonlayer}{bg}
-        
-    %     \draw[
-    %         UpNorthGreen,
-    %         opacity=0.4,
-    %         line width=10pt,
-    %     ]
-    %     (0,0)
-    %     -- (0,-3);
-
-    % \end{pgfonlayer}
-
     \begin{pgfonlayer}{main}
+
+        %=================================================================
+        % Rung 1
+        %=================================================================
         \draw[
             BakerBlack
         ]
         (C-0-0)
-        to[C, color=BakerBlack, l={{\small Prox1}}] (C-1-0)
+        to[C, color=BakerBlack, l={{\small MotorOn}}] (C-1-0)
         -- (C-3-0)
         pic (T1) {TON};
 
@@ -79,11 +71,52 @@
         (T1-OUT)
         -- (C-5-0);
 
-        \node[text=BakerBlack, anchor=south] at (T1-TOP) {{\small TON}};
-        \node[text=BakerBlack, anchor=north] at (T1-TOP) {{\small My\_Timer}};
+        \node[text=BakerBlack, anchor=south] at (T1-TOP) {{\small TOF}};
+        \node[text=BakerBlack, anchor=north] at (T1-TOP) {{\small FanTimer}};
         \node[text=BakerBlack, anchor=west] at (T1-PRE) {{\small 2000}};
-        \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 0}};
+        \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 759}};
 
-    \end{pgfonlayer}    
+        %=================================================================
+        % Rung 3 (ton occupies 2 rungs)
+        %=================================================================
+        \draw[
+            BakerBlack
+        ]
+        (C-0-2)
+        to[C, color=BakerBlack, l={{\small My\_Timer.DN}}] (C-1-2)
+        -- (C-4-2)
+        to[esource, color=BakerBlack, l={{\small CoolingFan}}] (C-5-2);
+
+    \end{pgfonlayer}
+
+    %=================================================================
+    % Background layer - highlight any logic that should be true
+    % UpnorthGreen, opacity=0.4, line width=10pt
+    %=================================================================
+    \begin{pgfonlayer}{bg}
+        
+        %=================================================================
+        % Rung 1
+        %=================================================================
+        \draw[
+            UpNorthGreen,
+            opacity=0.4,
+            line width=10pt,
+        ]
+        (T1-DN1)
+        -- (T1-DN2);
+
+        %=================================================================
+        % Rung 3 (ton occupies 2 rungs)
+        %=================================================================
+        \draw[
+            UpNorthGreen,
+            opacity=0.4,
+            line width=10pt
+        ]
+        (C-0-2)
+        -- (C-5-2);
+
+    \end{pgfonlayer}
     
 \end{circuitikz}
