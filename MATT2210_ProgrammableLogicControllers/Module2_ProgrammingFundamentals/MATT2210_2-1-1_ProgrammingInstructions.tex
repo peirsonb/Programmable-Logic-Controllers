@@ -53,9 +53,7 @@
     \end{itemize}
 \end{frame}
 
-\section{PLC Data Types \& Memory Architecture}
-
-\subsection{Memory Hierarchy: Bits to Words}
+\section{PLC Data Types}
 
 \begin{frame}
     \frametitle{BIT}
@@ -146,6 +144,59 @@
             \hline
         \end{tabular}
         }}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Signed Integers}
+    
+    \begin{itemize}
+        \item Integers can be signed (+/-) or unsigned
+        \item The defautl in most PLCs is signed--unsigned is optional
+        \item In a signed integer the first bit is the sign: 0 = +, 1 = -
+        \item Because we lose a bit, the capacity of the number is effectively cut in half
+        \item \texttt{INT}: -32,768 to 32,767
+        \item \texttt{UINT}: 0 to 65,535
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Floating Point Numbers}
+    
+    \begin{itemize}
+        \item IEEE 754 Format
+        \item 32-bits: 1 sign, 8 exponent bits, 23 mantissa bits
+        \item An integer is \emph{only} whole numbers, \texttt{REAL} must be used if a decimal point is necessary
+        \item \emph{NEVER} use an equality check (\texttt{REAL\_1 = 10.0}) on a \texttt{REAL}--floating point numbers have in-built rounding errors
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Addressing Memory in PLCs}
+
+    \begin{itemize}
+        \item \textbf{Direct Memory Addressing:} Logic references explicit \emph{physical} register locations in the CPU
+        \item \textbf{Tag-Based Addressing:} Programmer creates descriptive, symbolic names stored in a database
+        \item IEC 61131-3 standardizes both approaches
+        \item Older PLCs pretty exclusively direct addressed, modern PLCs mostly use tag-based databases
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Direct vs. Tag-Based Syntax}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \resizebox{\linewidth}{!}{
+            \begin{tabular}{L{3in}L{3in}L{3in}}
+                \textbf{AB Direct (SLC/Micrologix)} & \textbf{IEC 61131-3 Direct Syntax} & \textbf{Tag-Based (Logix/TIA)}\\
+                Uses fixed file letters \& numbers & Uses standard prefix notation & Uses symbolic variable names\\
+                \texttt{I:1/0}--Input slot 1, bit 0 & \texttt{\%IX0.0}--Input byte 0, bit 0 & \texttt{Conveyor\_Start\_PB}\\
+                \texttt{B3:0/0}--Binary bit word 0, bit 3 & \texttt{\%QX0.0}--Output byte 0, bit 0 & \texttt{Tank\_Level\_Scaled}\\
+                \texttt{N7:0}--Integer file 7, register 0 & \texttt{\%MW100}--Memory word 100 & Hardware mapped vis I/O aliasing
+            \end{tabular}
+        }    
     \end{table}
 \end{frame}
 
@@ -300,23 +351,49 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Timer Instructions}
+    \frametitle{Timer Variable Warning}
+
+    \begin{itemize}
+        \item Timer variables can only be used \emph{once}
+        \item Software will \emph{allow} you to use them more than once, but you will definitely see fun and interesting behavior
+        \item One timer variable per timer instruction
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Timer On Instruction}
 
     \begin{columns}
         \begin{column}{0.48\linewidth}
-            
+            \begin{itemize}
+                \item Starts timing when the preceding logic is true
+                \item Stops timing when the logic goes false
+                \item \texttt{ACC} is cleared when the logic goes false
+            \end{itemize}
         \end{column}
         \begin{column}{0.48\linewidth}
-            \input{../../assets/diagrams/PLC_TON_Instruction.tex}
+            \begin{figure}
+                \centering
+                \input{../../assets/diagrams/PLC_TON_Instruction.tex}
+            \end{figure}
         \end{column}
     \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TON Example}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_TON_ExampleLogic.tex}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{TON Timing Diagram}
 
     \centering
-    \resizebox{0.75\linewidth}{!}{
+    \resizebox{0.875\linewidth}{!}{
         \input{../../assets/diagrams/PLC_TON_TimingDiagram.tex}
     }
 \end{frame}
@@ -325,7 +402,7 @@
     \frametitle{TOF Timing Diagram}
 
     \centering
-    \resizebox{0.75\linewidth}{!}{
+    \resizebox{0.875\linewidth}{!}{
         \input{../../assets/diagrams/PLC_TOF_TimingDiagram.tex}
     }
 \end{frame}
@@ -348,7 +425,7 @@
     \frametitle{CTU Timing Diagram}
 
     \centering
-    \resizebox{0.75\linewidth}{!}{
+    \resizebox{0.875\linewidth}{!}{
         \input{../../assets/diagrams/PLC_CTU_TimingDiagram.tex}
     }
 \end{frame}

@@ -278,64 +278,6 @@
     color = BakerBlack,
 }
 
-\usepackage[americanvoltages]{circuitikz}
-\usepackage{pgfplots}
-\usepackage{pgf-pie}
-
-\usetikzlibrary{
-    intersections, 
-    fillbetween,
-    patterns,
-    decorations.pathreplacing,
-    decorations.pathmorphing,
-    decorations.text,
-    decorations.markings,
-    arrows.meta,
-    arrows,
-    shapes,
-    shapes.geometric,
-    shadows,
-    calligraphy,
-    backgrounds,
-    intersections,
-    calc,
-    math,
-    positioning
-    }
-
-\tikzset{middlearrow/.style={
-        decoration={markings, 
-        mark= at position 0.5 with {\arrow{#1}},
-        },
-        postaction={decorate}
-    }
-}
-
-\pgfplotsset{compat=1.18}
-
-\pgfdeclarelayer{ft}
-\pgfdeclarelayer{bg}
-\pgfsetlayers{bg, main, ft}
-
-\newcommand{\hexpic}[4][]{%
-  \begin{tikzpicture}[baseline=(hex.base)]
-    \node (hex) [
-      draw=white, 
-      minimum size=#2, 
-      regular polygon, 
-      regular polygon sides=6, 
-      rotate=90,
-    ] {};
-    \begin{scope}
-      \clip (hex.corner 1) -- (hex.corner 2) -- (hex.corner 3) -- 
-            (hex.corner 4) -- (hex.corner 5) -- (hex.corner 6) -- cycle;
-      \node at (hex.center) [#1] {
-        \includegraphics[height=#2, alt={#3}]{#4}
-      };
-    \end{scope}
-  \end{tikzpicture}
-}
-
 \pretocmd{\tableofcontents}{\begin{minipage}{\textwidth} \linespread{1.4}}{}{}
 \apptocmd{\tableofcontents}{\end{minipage}}{}{}
 
@@ -434,40 +376,10 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 
-\newcommand{\ccwplus}{%
-  \begin{tikzpicture}[baseline=(char.base)]
-    \node(char) at (0,0) {\(\scriptscriptstyle +\)};
-    \draw[->, >=stealth, semithick] (0.2,0) arc (0:230:0.18cm);
-  \end{tikzpicture}%
-}
-
 \usepackage{animate}
 
 \usepackage{calc} % Optional, but helpful for layout
 
-% Usage: \tikztodo[width]{height}{description/notes}
-\newcommand{\tikztodo}[3][0.8\textwidth]{%
-  \begin{center}
-    \fbox{%
-      \parbox[c][#2][c]{#1}{%
-        \centering
-        \textbf{\textcolor{red}{TODO: TikZ Diagram}}\\[0.5em]
-        \small #3%
-      }%
-    }%
-  \end{center}%
-}
-
-% Macro: \drawrails{<number_of_1cm_segments>}
-\newcommand{\drawrails}[1]{
-  % Calculate total depth: 1 cm per segment
-  \pgfmathsetmacro{\railheight}{-1 * #1}
-  
-  % L1 Rail (x = 0)
-  \draw[thick] (0, 0) -- (0, \railheight cm);
-    
-  % L2 Rail (x = 15)
-  \draw[thick] (15, 0) -- (15, \railheight cm);
-}
-
 \usepackage{multirow}
+
+\input{../../tikz_setup.tex}

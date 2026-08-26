@@ -6,34 +6,64 @@
     alt={}
     ]
 
-    \draw[
-        BakerBlack
-    ]
-    (0,0)
-    -- ++(0.5,0)
-    node[
-        draw=BakerBlack,
-        text=BakerBlack,
-        anchor=west,
-        align=left,
-        minimum width=2cm,
-        minimum height=2cm
-    ](ton)
-    {{\small \textbf{Timer:} My\_Timer}\\
-    {\small \textbf{PRE:} 500}\\
-    {\small \textbf{ACC:} 0}};
+    \pic (T1) at (0,0) {TON};
 
-    \draw[
-        BakerBlack
-    ]
-    (ton.east)
-    -- ++(0.5,0);
+    \node[text=BakerBlack, anchor=south] at (T1-TOP) {{\small TON}};
+    \node[text=BakerBlack, anchor=north] at (T1-TOP) {{\small My\_Timer}};
+    \node[text=BakerBlack, anchor=west] at (T1-PRE) {{\small 2000}};
+    \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 0}};
 
-    \node[
-        text=BakerBlack,
-        anchor=south
-    ]
-    at (ton.north)
-    {{\small TON}};
+    % \draw[
+    %     BakerBlack
+    % ]
+    % (0,0)
+    % -- ++(0.5,0)
+    % node[
+    %     draw=BakerBlack,
+    %     text=BakerBlack,
+    %     anchor=157.5,
+    %     align=left,
+    %     minimum width=2cm,
+    %     minimum height=2cm
+    % ](ton)
+    % {{\small \textbf{Timer:} My\_Timer}\\
+    % {\small \textbf{PRE:} 500}\\
+    % {\small \textbf{ACC:} 0}};
+
+    % \draw[
+    %     BakerBlack
+    % ]
+    % (ton.22.5)
+    % -- ++(0.5,0)
+    % coordinate(ton_out);
+
+    % \draw[
+    %     BakerBlack
+    % ]
+    % (ton.east)
+    % -- ++(1,0)
+    % node[
+    %     text=BakerBlack,
+    %     anchor=north east
+    % ]
+    % {{\small EN}};
+
+    % \draw[
+    %     BakerBlack
+    % ]
+    % (ton.337.5)
+    % -- ++(1,0)
+    % node[
+    %     text=BakerBlack,
+    %     anchor=north east
+    % ]
+    % {{\small DN}};
+
+    % \node[
+    %     text=BakerBlack,
+    %     anchor=south
+    % ]
+    % at (ton.north)
+    % {{\small TON}};
     
 \end{circuitikz}

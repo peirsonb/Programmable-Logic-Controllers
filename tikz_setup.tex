@@ -1,0 +1,160 @@
+\usepackage[americanvoltages]{circuitikz}
+\usepackage{pgfplots}
+\usepackage{pgf-pie}
+
+\usetikzlibrary{
+    intersections, 
+    fillbetween,
+    patterns,
+    decorations.pathreplacing,
+    decorations.pathmorphing,
+    decorations.text,
+    decorations.markings,
+    arrows.meta,
+    arrows,
+    shapes,
+    shapes.geometric,
+    shadows,
+    calligraphy,
+    backgrounds,
+    intersections,
+    calc,
+    math,
+    positioning
+    }
+
+\pgfplotsset{compat=1.18}
+
+\pgfdeclarelayer{ft}
+\pgfdeclarelayer{bg}
+\pgfsetlayers{bg, main, ft}
+
+\newcommand{\hexpic}[4][]{%
+  \begin{tikzpicture}[baseline=(hex.base)]
+    \node (hex) [
+      draw=white, 
+      minimum size=#2, 
+      regular polygon, 
+      regular polygon sides=6, 
+      rotate=90,
+    ] {};
+    \begin{scope}
+      \clip (hex.corner 1) -- (hex.corner 2) -- (hex.corner 3) -- 
+            (hex.corner 4) -- (hex.corner 5) -- (hex.corner 6) -- cycle;
+      \node at (hex.center) [#1] {
+        \includegraphics[height=#2, alt={#3}]{#4}
+      };
+    \end{scope}
+  \end{tikzpicture}
+}
+
+\tikzset{middlearrow/.style={
+        decoration={markings, 
+        mark= at position 0.5 with {\arrow{#1}},
+        },
+        postaction={decorate}
+    }
+}
+
+% Usage: \tikztodo[width]{height}{description/notes}
+\newcommand{\tikztodo}[3][0.8\textwidth]{%
+  \begin{center}
+    \fbox{%
+      \parbox[c][#2][c]{#1}{%
+        \centering
+        \textbf{\textcolor{red}{TODO: TikZ Diagram}}\\[0.5em]
+        \small #3%
+      }%
+    }%
+  \end{center}%
+}
+
+% Macro: \drawrails{<number_of_1cm_segments>}
+\newcommand{\drawrails}[1]{
+  % Calculate total depth: 1 cm per segment
+  \pgfmathsetmacro{\railheight}{-1 * #1}
+  
+  % L1 Rail (x = 0)
+  \draw[thick] (0, 0) -- (0, \railheight cm);
+    
+  % L2 Rail (x = 15)
+  \draw[thick] (15, 0) -- (15, \railheight cm);
+}
+
+\newcommand{\ccwplus}{%
+  \begin{tikzpicture}[baseline=(char.base)]
+    \node(char) at (0,0) {\(\scriptscriptstyle +\)};
+    \draw[->, >=stealth, semithick] (0.2,0) arc (0:230:0.18cm);
+  \end{tikzpicture}%
+}
+
+\tikzset{
+    TON/.pic={
+        % \node[
+        %     draw=BakerBlack,
+        %     text=BakerBlack,
+        %     anchor=157.5,
+        %     align=left,
+        %     text width=2.75cm,
+        %     minimum width=3cm,
+        %     minimum height=2cm
+        % ](box)
+        % {};
+
+        \draw[
+          BakerBlack
+        ]
+        (0,0)
+        -- ++(0,0.25)
+        -- ++(3,0)
+        coordinate[pos=0.5](-TOP)
+        -- ++(0,-2)
+        coordinate[pos=0.125](-OUT)
+        coordinate[pos=0.5](en)
+        coordinate[pos=0.875](dn)
+        -- ++(-3,0)
+        -- (0,0)
+        coordinate[pos=0.75](-IN);
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=east
+        ](pre)
+        at (1.5,-1)
+        {{\small PRE:}};
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=east
+        ](acc)
+        at ($(1.5,-1)-(0,1em)$)
+        {{\small ACC:}};
+
+        \coordinate (-PRE) at (pre.east); % For the preset value
+        \coordinate (-ACC) at (acc.east);
+
+        \draw[
+            BakerBlack
+        ]
+        (en)
+        -- ++(1,0)
+        node[
+            text=BakerBlack,
+            anchor=north
+        ]
+        {{\scriptsize EN}};
+
+        \draw[
+            BakerBlack
+        ]
+        (dn)
+        -- ++(1,0)
+        node[
+            text=BakerBlack,
+            anchor=north
+        ]
+        {{\scriptsize DN}};
+    }
+}
