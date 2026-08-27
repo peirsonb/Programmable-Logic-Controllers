@@ -52,7 +52,7 @@
     \end{itemize}
 \end{frame}
 
-\section{PLC Data Types}
+\section{Data Types}
 
 \begin{frame}
     \frametitle{BIT}
@@ -199,7 +199,7 @@
     \end{table}
 \end{frame}
 
-\section{Basic PLC Programming Instructions}
+\section{Basic Programming Instructions}
 
 \begin{frame}
     \frametitle{The 3 Basic Instructions}
@@ -312,7 +312,7 @@
     \input{../../assets/diagrams/PLC_ONS.tex}
 \end{frame}
 
-\section{PLC Timers and Counters}
+\section{Timers and Counters}
 
 \begin{frame}
     \frametitle{Timers and Counters}
@@ -925,6 +925,38 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Counter Usage}
+
+    \begin{itemize}
+        \item Unlike timer variables, counter variables can be used \emph{twice}
+        \item Once for a count up (CTU) and once for a count down (CTD)
+        \item Recommendation: put the CTU and CTD \emph{very} close to one another--makes it easier to troubleshoot
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Count Up (CTU)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Adds one to the count when the preceding logic is true
+                \item \emph{ONLY} adds one--the logic must go false in order to count again
+                \item If the counter variable needs to be cleared, must use a RES instruction
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \input{../../assets/diagrams/PLC_CTU_Instruction.tex}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
     \frametitle{CTU Timing Diagram}
 
     \centering
@@ -933,9 +965,196 @@
     }
 \end{frame}
 
-\section{Advanced PLC Programming Instructions}
+\begin{frame}
+    \frametitle{CTU Step-by-Step (1 of 4)}
 
-\section{Data Manupulation Instructions}
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item The input becomes true
+                \item \texttt{EN} turns on
+                \item \texttt{CU} turns on--it only stays on long enough for the count to happen
+                \item The \texttt{ACC} is incremented by 1
+                \item As long as the input stays on \texttt{CU} never pulses, \texttt{ACC} stays where it is
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTU_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Step-by-Step (2 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item After several input pulses \texttt{ACC} = \texttt{PRE}
+                \item \texttt{DN} energizes
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTU_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Step-by-Step (3 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item If left alone, the counter will keep counting every input pulse
+                \item \texttt{DN} stays on as long as $\texttt{ACC} \geq \texttt{PRE}$
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTU_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Step-by-Step (4 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Eventually the \texttt{ACC} will exceed 2,147,483,647 (\texttt{DINT} limit)
+                \item At that point \texttt{ACC} will roll over to read -2,147,483,648 and count up from there
+                \item \texttt{DN} will stay on
+                \item \texttt{OV} will turn on
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTU_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (1 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset1.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize The input turns on, \texttt{EN} turns on, and the count increments by one\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (2 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset1.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize As long as the input \emph{stays} on, \texttt{EN} stays on but \texttt{ACC} stays where it is\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (3 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset2.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When the input turns off, \texttt{EN} turns off\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (4 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset3.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When the input turns on again, \texttt{EN} turns on and \texttt{ACC} increments. Because \texttt{ACC} = \texttt{PRE}, \texttt{DN} also turns on.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (5 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset4.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When the input drops out, so does \texttt{EN}. But \texttt{DN} stays on.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (6 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset5.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize \texttt{ACC} will keep incrementing with each new input pulse, and \texttt{DN} will stay on\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTU Example 1 (7 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTU_Reset6.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize A RES instruction can be used on the counter variable to reset the \texttt{ACC} back to 0\par}
+    \end{figure}
+\end{frame}
+
+\section{Advanced Programming Instructions}
+
+\section{Data Manipulation Instructions}
 
 \begin{frame}
     \frametitle{Copyright Notice}

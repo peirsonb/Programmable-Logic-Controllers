@@ -1,0 +1,140 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    % Define the number of rungs in the diagram
+    \def\numRungs{3}
+
+    % Calculate the length of the vertical power rails dynamically based on number of rungs
+    \pgfmathsetmacro{\railLength}{-2 * \numRungs}
+
+    %======================================================================================================
+    % Component Grid
+    % Spacing = 3x, 2y
+    %======================================================================================================
+    \foreach \i in {0,...,5} {
+        \foreach \j in {0,...,20} { % Change to 0,...,19 if you need 20 individual Y points down to -40
+        
+        % Calculate spatial positions
+        \pgfmathsetmacro{\px}{\i * 3}
+        \pgfmathsetmacro{\py}{-1 - (\j * 2)}
+        
+        % Name coordinate using loop indices: (C-column-row) e.g., (C-0-0), (C-5-10)
+        \coordinate (C-\i-\j) at (\px, \py);
+        
+        % OPTIONAL: Uncomment the 2 lines below to display grid labels while building
+        % \fill[red] (C-\i-\j) circle (1.5pt);
+        %\node[anchor=south west, scale=0.5, gray] at (C-\i-\j) {(\i,\j)};
+        }
+    }
+
+    \begin{pgfonlayer}{ft}
+        
+        \draw[
+            BakerBlack,
+            very thick,
+            name path=L1
+        ]
+        (0,0)
+        -- (0,\railLength);
+
+        \draw[
+            BakerBlack,
+            very thick,
+            name path=L2
+        ]
+        (15,0)
+        -- (15,\railLength);
+
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{main}
+
+        %=================================================================
+        % Rung 1
+        %=================================================================
+        \draw[
+            BakerBlack
+        ]
+        (C-0-0)
+        to[C, color=BakerBlack, l={{\small Photo1}}] (C-1-0)
+        -- (C-3-0)
+        pic (CTU) {TON};
+
+        \draw[
+            BakerBlack
+        ]
+        (CTU-OUT)
+        -- (C-5-0);
+
+        \node[text=BakerBlack, anchor=south] at (CTU-TOP) {{\small CTU}};
+        \node[text=BakerBlack, anchor=north] at (CTU-TOP) {{\small PartCount}};
+        \node[text=BakerBlack, anchor=west] at (CTU-PRE) {{\small 10}};
+        \node[text=BakerBlack, anchor=west] at (CTU-ACC) {{\small 10}};
+
+        %=================================================================
+        % Rung 3 (timer takes 2 rungs)
+        %=================================================================
+        \draw[
+            BakerBlack
+        ]
+        (C-0-2)
+        to[C, color=BakerBlack, l={{\small BatchDone}}] (C-1-2)
+        -- (C-4-2)
+        node[draw=BakerBlack, text=BakerBlack, font=\small, minimum width=1cm, minimum height=0.5cm, anchor=west, rounded corners=0.25cm](res){RES};
+
+        \node[
+            above,
+            text=BakerBlack
+        ]
+        at (res.north)
+        {{\small PartCount}};
+
+        \draw[
+            BakerBlack
+        ]
+        (res.east)
+        -- (C-5-2);
+
+    \end{pgfonlayer}
+
+    %=================================================================
+    % Background layer - highlight any logic that should be true
+    % UpnorthGreen, opacity=0.4, line width=10pt
+    %=================================================================
+    \begin{pgfonlayer}{bg}
+        
+        %=================================================================
+        % Rung 1
+        %=================================================================
+        % \draw[
+        %     UpNorthGreen,
+        %     opacity=0.4,
+        %     line width=10pt,
+        % ]
+        % (C-0-0)
+        % -- (C-1-0);
+
+        % \draw[
+        %     UpNorthGreen,
+        %     opacity=0.4,
+        %     line width=10pt,
+        % ]
+        % (CTU-EN1)
+        % -- (CTU-EN2);
+
+        \draw[
+            UpNorthGreen,
+            opacity=0.4,
+            line width=10pt,
+        ]
+        (CTU-DN1)
+        -- (CTU-DN2);
+
+    \end{pgfonlayer}
+    
+\end{circuitikz}

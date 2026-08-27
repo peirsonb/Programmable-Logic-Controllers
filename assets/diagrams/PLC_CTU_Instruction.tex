@@ -1,0 +1,17 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    \pic (C1) at (0,0) {TON};
+
+    \node[text=BakerBlack, anchor=south] at (C1-TOP) {{\small CTU}};
+    \node[text=BakerBlack, anchor=north] at (C1-TOP) {{\small My\_Counter}};
+    \node[text=BakerBlack, anchor=west] at (C1-PRE) {{\small 5}};
+    \node[text=BakerBlack, anchor=west] at (C1-ACC) {{\small 0}};
+
+    
+\end{circuitikz}
