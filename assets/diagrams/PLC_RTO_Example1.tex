@@ -32,87 +32,95 @@
         }
     }
 
+    %======================================================================================================
+    % Foreground Layer
+    % Only contains the vertical power rails
+    % Length of the rails is automatic, calculated based on the number of rungs defined above
+    %======================================================================================================
     \begin{pgfonlayer}{ft}
-        
-        \draw[
-            BakerBlack,
-            very thick,
-            name path=L1
-        ]
-        (0,0)
-        -- (0,\railLength);
 
-        \draw[
-            BakerBlack,
-            very thick,
-            name path=L2
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack, very thick
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small,
+            ultra thick
         ]
-        (15,0)
-        -- (15,\railLength);
 
+            % Left rail
+            \draw (0,0) -- (0,\railLength);
+
+            % Right rail
+            \draw (15,0) -- (15,\railLength);
+
+        \end{scope}
     \end{pgfonlayer}
 
+    %======================================================================================================
+    % Main Layer
+    % All actual logic goes here
+    %======================================================================================================
     \begin{pgfonlayer}{main}
+        
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack for draw and text
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
+        ]
 
-        %=================================================================
+        %======================================================================================================
         % Rung 1
-        %=================================================================
-        \draw[
-            BakerBlack
-        ]
-        (C-0-0)
-        to[C, color=BakerBlack, l={{\small Auto\_Mode}}] (C-1-0)
-        -- (C-3-0)
-        pic (T1) {TON};
+        %======================================================================================================
+        \draw (C-0-0) to[C, l={Auto\_Mode}] (C-1-0) -- (C-3-0) pic (T1){TON};
+        \draw (T1-OUT) -- (C-5-0);
 
-        \draw[
-            BakerBlack
-        ]
-        (T1-OUT)
-        -- (C-5-0);
+        \node[anchor=south] at (T1-TOP) {RTO};          % Label above box
+        \node[anchor=north] at (T1-TOP) {AutoTimer};    % Label inside box
+        \node[anchor=west] at (T1-PRE) {28800};         % PRE value
+        \node[anchor=west] at (T1-ACC) {6547};          % ACC value
 
-        \node[text=BakerBlack, anchor=south] at (T1-TOP) {{\small RTO}};
-        \node[text=BakerBlack, anchor=north] at (T1-TOP) {{\small AutoTimer}};
-        \node[text=BakerBlack, anchor=west] at (T1-PRE) {{\small 28800}};
-        \node[text=BakerBlack, anchor=west] at (T1-ACC) {{\small 6547}};
-
-
+        \end{scope}
 
     \end{pgfonlayer}
 
     %=================================================================
-    % Background layer - highlight any logic that should be true
-    % UpnorthGreen, opacity=0.4, line width=10pt
+    % Background layer
     %=================================================================
     \begin{pgfonlayer}{bg}
         
+        %==================================================================
+        % Highlight Scope
+        % This layer exists for highlighting true logic, the scope sets the
+        % highlight options without having to repeat them every \draw
+        % draw=UpNorthGreen, line width=10pt, opacity=0.4
+        %==================================================================
+        \begin{scope}[
+            draw=UpNorthGreen,
+            line width=10pt,
+            opacity=0.4
+        ]
+
+        %==================================================================
+        % Left vertical rung - leave this alone, it should ALWAYS be green
+        % It automatically draws itself to the length defined at the top
+        %==================================================================
+        \draw (0,0) -- (0,\railLength);
+        
         %=================================================================
         % Rung 1
         %=================================================================
-        \draw[
-            UpNorthGreen,
-            opacity=0.4,
-            line width=10pt,
-        ]
-        (C-0-0)
-        -- (C-1-0);
+        \draw (C-0-0) -- (C-1-0);
 
-        \draw[
-            UpNorthGreen,
-            opacity=0.4,
-            line width=10pt,
-        ]
-        (T1-EN1)
-        -- (T1-EN2);
+        \draw (T1-EN1) -- (T1-EN2);
 
-        % \draw[
-        %     UpNorthGreen,
-        %     opacity=0.4,
-        %     line width=10pt,
-        % ]
-        % (T1-DN1)
-        % -- (T1-DN2);
-
+        \end{scope}
     \end{pgfonlayer}
     
 \end{circuitikz}

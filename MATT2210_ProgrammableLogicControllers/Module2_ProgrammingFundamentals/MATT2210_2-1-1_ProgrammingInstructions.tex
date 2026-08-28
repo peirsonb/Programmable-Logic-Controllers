@@ -934,7 +934,7 @@
     \end{itemize}
 \end{frame}
 
-
+\subsection{Count Up}
 
 \begin{frame}
     \frametitle{Count Up (CTU)}
@@ -1149,6 +1149,224 @@
 
         \vspace{0.5em}
         {\footnotesize A RES instruction can be used on the counter variable to reset the \texttt{ACC} back to 0\par}
+    \end{figure}
+\end{frame}
+
+\subsection{Count Down}
+
+\begin{frame}
+    \frametitle{Count Down (CTD)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Subtracts one from the count when the preceding logic is true
+                \item \emph{ONLY} subtracts one--the logic must go false in order to count again
+                \item \emph{DON'T} use a RES instruction to reset the counter\dots
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \input{../../assets/diagrams/PLC_CTD_Instruction.tex}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Timing Diagram}
+
+    \centering
+    \resizebox{0.875\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_CTD_TimingDiagram.tex}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Step-by-Step (1 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item The input becomes true
+                \item \texttt{EN} turns on
+                \item \texttt{CD} turns on--it only stays on long enough for the count to happen
+                \item The \texttt{ACC} is decremented by 1
+                \item As long as the input stays on \texttt{CD} never pulses, \texttt{ACC} stays where it is
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTD_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Step-by-Step (2 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item After several input pulses \texttt{ACC} = \texttt{PRE}
+                \item \texttt{DN} energizes
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTD_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Step-by-Step (3 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item If left alone, the counter will keep counting every input pulse
+                \item \texttt{DN} stays on as long as $\texttt{ACC} \leq \texttt{PRE}$
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTD_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Step-by-Step (4 of 4)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Eventually the \texttt{ACC} will exceed -2,147,483,648 (\texttt{DINT} limit)
+                \item At that point \texttt{ACC} will roll over to read 2,147,483,647 and count up from there
+                \item \texttt{DN} will stay on
+                \item \texttt{UN} will turn on
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\columnwidth}{!}{
+                    \input{../../assets/diagrams/PLC_CTD_TimingDiagram.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (1 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset1.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize The input turns on, \texttt{EN} turns on, and the count decrements by one\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (2 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset1.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize As long as the input \emph{stays} on, \texttt{EN} stays on but \texttt{ACC} stays where it is\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (3 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset2.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When the input turns off, \texttt{EN} turns off\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (4 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset3.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When the input turns on again, \texttt{EN} turns on and \texttt{ACC} decrements. Because \texttt{ACC} = \texttt{PRE}, \texttt{DN} also turns on.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (5 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset4.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize When the input drops out, so does \texttt{EN}. But \texttt{DN} stays on.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (6 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset5.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize \texttt{ACC} will keep decrementing with each new input pulse, and \texttt{DN} will stay on\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CTD Example 1 (7 of 7)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CTD_Reset6.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize A RES instruction sets \texttt{ACC} to 0--probably not a good thing for a count down\par}
     \end{figure}
 \end{frame}
 

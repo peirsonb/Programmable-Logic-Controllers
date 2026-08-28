@@ -94,6 +94,18 @@
     % UpnorthGreen, opacity=0.4, line width=10pt
     %=================================================================
     \begin{pgfonlayer}{bg}
+
+        %==================================================================
+        % Left vertical rung - leave this alone, it should ALWAYS be green
+        % It automatically draws itself to the length defined at the top
+        %==================================================================
+        \draw[
+            UpNorthGreen,
+            line width=10pt,
+            opacity=0.4
+        ]
+        (0,0)
+        -- (0,\railLength);
         
         %=================================================================
         % Rung 1

@@ -76,31 +76,22 @@
             %=================================================================
             % Rung 1
             %=================================================================
-            \draw(C-0-0) to[C, l={Auto\_Mode}] (C-1-0) -- (C-3-0) pic (T1) {TON};
+            \draw (C-0-0) to[C, l={Photo1}] (C-1-0) -- (C-3-0) pic (CTD) {TON};
+            \draw (CTU-OUT) -- (C-5-0);
 
-            \draw (T1-OUT) -- (C-5-0);
-
-            \node[anchor=south] at (T1-TOP) {RTO};
-            \node[anchor=north] at (T1-TOP) {AutoTimer};
-            \node[anchor=west] at (T1-PRE) {28800};
-            \node[anchor=west] at (T1-ACC) {0};
+            % CTD box labels
+            \node[anchor=south] at (CTD-TOP) {CTD};
+            \node[anchor=north] at (CTD-TOP) {PartCount};
+            \node[anchor=west] at (CTD-PRE) {10};
+            \node[anchor=west] at (CTD-ACC) {11};
 
             %=================================================================
             % Rung 3 (timer takes 2 rungs)
             %=================================================================
-            \draw (C-0-2) to[C, l={ShiftChange}] (C-1-2) -- (C-4-2)
-                node[
-                    draw=BakerBlack,
-                    minimum width=1cm, 
-                    minimum height=0.5cm, 
-                    anchor=west, 
-                    rounded corners=0.25cm
-                ](res)
-                {RES};
-
-            \node[above] at (res.north){AutoTimer};
-
-            \draw (res.east) -- (C-5-2);
+            \draw (C-0-2) to[C, l={BatchDone}] (C-1-2) -- (C-4-2) pic (RES) {ONS} ;
+            
+            \node at (RES-INS) {RES};
+            \node[anchor=south] at (RES-VAR) {PartCount};
 
         \end{scope}
     \end{pgfonlayer}
@@ -127,11 +118,13 @@
             % It automatically draws itself to the length defined at the top
             %==================================================================
             \draw (0,0) -- (0,\railLength);
-            
+        
             %=================================================================
-            % Rung 3
+            % Rung 1
             %=================================================================
-            \draw (C-0-2) -- (C-5-2);
+            \draw (C-0-0) -- (C-1-0);
+
+            \draw (CTD-EN1) -- (CTD-EN2);
 
         \end{scope}
     \end{pgfonlayer}

@@ -32,109 +32,103 @@
         }
     }
 
+    %======================================================================================================
+    % Foreground Layer
+    % Only contains the vertical power rails
+    % Length of the rails is automatic, calculated based on the number of rungs defined above
+    %======================================================================================================
     \begin{pgfonlayer}{ft}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack, very thick
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small,
+            ultra thick
+        ]
         
-        \draw[
-            BakerBlack,
-            very thick,
-            name path=L1
-        ]
-        (0,0)
-        -- (0,\railLength);
+            \draw (0,0) -- (0,\railLength);
 
-        \draw[
-            BakerBlack,
-            very thick,
-            name path=L2
-        ]
-        (15,0)
-        -- (15,\railLength);
+            \draw (15,0) -- (15,\railLength);
 
+        \end{scope}
     \end{pgfonlayer}
 
+    %======================================================================================================
+    % Main Layer
+    % All actual logic goes here
+    %======================================================================================================
     \begin{pgfonlayer}{main}
-
-        %=================================================================
-        % Rung 1
-        %=================================================================
-        \draw[
-            BakerBlack
+        
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack for draw and text
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
         ]
-        (C-0-0)
-        to[C, color=BakerBlack, l={{\small Photo1}}] (C-1-0)
-        -- (C-3-0)
-        pic (CTU) {TON};
 
-        \draw[
-            BakerBlack
-        ]
-        (CTU-OUT)
-        -- (C-5-0);
+            %=================================================================
+            % Rung 1
+            %=================================================================
+            \draw (C-0-0) to[C, l={Photo1}] (C-1-0) -- (C-3-0) pic (CTU) {TON};
+            \draw (CTU-OUT) -- (C-5-0);
 
-        \node[text=BakerBlack, anchor=south] at (CTU-TOP) {{\small CTU}};
-        \node[text=BakerBlack, anchor=north] at (CTU-TOP) {{\small PartCount}};
-        \node[text=BakerBlack, anchor=west] at (CTU-PRE) {{\small 10}};
-        \node[text=BakerBlack, anchor=west] at (CTU-ACC) {{\small 11}};
+            % CTU box labels
+            \node[anchor=south] at (CTU-TOP) {CTU};
+            \node[anchor=north] at (CTU-TOP) {PartCount};
+            \node[anchor=west] at (CTU-PRE) {10};
+            \node[anchor=west] at (CTU-ACC) {11};
 
-        %=================================================================
-        % Rung 3 (timer takes 2 rungs)
-        %=================================================================
-        \draw[
-            BakerBlack
-        ]
-        (C-0-2)
-        to[C, color=BakerBlack, l={{\small BatchDone}}] (C-1-2)
-        -- (C-4-2)
-        node[draw=BakerBlack, text=BakerBlack, font=\small, minimum width=1cm, minimum height=0.5cm, anchor=west, rounded corners=0.25cm](res){RES};
+            %=================================================================
+            % Rung 3 (timer takes 2 rungs)
+            %=================================================================
+            \draw (C-0-2) to[C, l={BatchDone}] (C-1-2) -- (C-4-2) pic (RES) {ONS} ;
+            
+            \node at (RES-INS) {RES};
+            \node[anchor=south] at (RES-VAR) {PartCount};
 
-        \node[
-            above,
-            text=BakerBlack
-        ]
-        at (res.north)
-        {{\small PartCount}};
-
-        \draw[
-            BakerBlack
-        ]
-        (res.east)
-        -- (C-5-2);
-
+        \end{scope}
     \end{pgfonlayer}
 
     %=================================================================
-    % Background layer - highlight any logic that should be true
-    % UpnorthGreen, opacity=0.4, line width=10pt
+    % Background layer
     %=================================================================
     \begin{pgfonlayer}{bg}
         
-        %=================================================================
-        % Rung 1
-        %=================================================================
-        \draw[
-            UpNorthGreen,
-            opacity=0.4,
+        %==================================================================
+        % Highlight Scope
+        % This layer exists for highlighting true logic, the scope sets the
+        % highlight options without having to repeat them every \draw
+        % draw=UpNorthGreen, line width=10pt, opacity=0.4
+        %==================================================================
+        \begin{scope}[
+            draw=UpNorthGreen,
             line width=10pt,
+            opacity=0.4
         ]
-        (C-0-0)
-        -- (C-1-0);
 
-        \draw[
-            UpNorthGreen,
-            opacity=0.4,
-            line width=10pt,
-        ]
-        (CTU-EN1)
-        -- (CTU-EN2);
+            %==================================================================
+            % Left vertical rung - leave this alone, it should ALWAYS be green
+            % It automatically draws itself to the length defined at the top
+            %==================================================================
+            \draw (0,0) -- (0,\railLength);
+        
+            %=================================================================
+            % Rung 1
+            %=================================================================
+            \draw (C-0-0) -- (C-1-0);
 
-        \draw[
-            UpNorthGreen,
-            opacity=0.4,
-            line width=10pt,
-        ]
-        (CTU-DN1)
-        -- (CTU-DN2);
+            \draw (CTU-EN1) -- (CTU-EN2);
 
+            \draw (CTU-DN1) -- (CTU-DN2);
+
+        \end{scope}
     \end{pgfonlayer}
     
 \end{circuitikz}

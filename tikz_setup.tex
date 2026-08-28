@@ -20,7 +20,7 @@
     intersections,
     calc,
     math,
-    positioning
+    positioning,
     }
 
 \pgfplotsset{compat=1.18}
@@ -151,5 +151,34 @@
             anchor=west
         ]
         {{\small DN}};
+    }
+}
+
+%====================================================================================
+% Oval ladder symbol, good for ONS, RES, etc.
+%====================================================================================
+\tikzset{
+    ONS/.pic={
+
+        \draw[
+          BakerBlack
+        ]
+        (0,0)
+        coordinate(-IN)
+        -- ++(0.75,0)
+        node[
+          draw=BakerBlack, 
+          text=BakerBlack, 
+          font=\small, 
+          minimum width=1.5cm, 
+          minimum height=0.75cm, 
+          anchor=west, 
+          rounded corners=0.25cm
+          ](ons){};
+        
+        \draw[BakerBlack] (ons.east) -- ++(0.75,0) coordinate(-OUT);
+
+        \coordinate(-INS) at (ons.center);
+        \coordinate(-VAR) at (ons.north); 
     }
 }
