@@ -1,0 +1,74 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    %=================================================================
+    % ADD1
+    %=================================================================
+    \begin{scope}[
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (ADD1) at (0,0) {SrcDest};
+        \node[anchor=south](label1) at (ADD1-TOP) {ADD};
+        \node[anchor=west] at (ADD1-SRCA) {Count};
+        \node[anchor=west] at (ADD1-AVAL) {10};
+        \node[anchor=west] at (ADD1-SRCB) {1};
+        \node[anchor=west] at (ADD1-BVAL) {1};
+        \node[anchor=west] at (ADD1-DEST) {Count};
+        \node[anchor=west] at (ADD1-DVAL) {11};
+
+        \node[anchor=south] at (label1.north) {Scan 1};
+    
+    \end{scope}
+
+    %=================================================================
+    % ADD2
+    %=================================================================
+    \begin{scope}[
+        xshift=4.5cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (ADD2) at (0,0) {SrcDest};
+        \node[anchor=south](label2) at (ADD2-TOP) {ADD};
+        \node[anchor=west] at (ADD2-SRCA) {Count};
+        \node[anchor=west] at (ADD2-AVAL) {11};
+        \node[anchor=west] at (ADD2-SRCB) {1};
+        \node[anchor=west] at (ADD2-BVAL) {1};
+        \node[anchor=west] at (ADD2-DEST) {Count};
+        \node[anchor=west] at (ADD2-DVAL) {12};
+
+        \node[anchor=south] at (label2.north) {Scan 2};
+    
+    \end{scope}
+
+    %=================================================================
+    % ADD3
+    %=================================================================
+    \begin{scope}[
+        xshift=9cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (ADD3) at (0,0) {SrcDest};
+        \node[anchor=south](label3) at (ADD3-TOP) {ADD};
+        \node[anchor=west] at (ADD3-SRCA) {Count};
+        \node[anchor=west] at (ADD3-AVAL) {12};
+        \node[anchor=west] at (ADD3-SRCB) {1};
+        \node[anchor=west] at (ADD3-BVAL) {1};
+        \node[anchor=west] at (ADD3-DEST) {Count};
+        \node[anchor=west] at (ADD3-DVAL) {13};
+
+        \node[anchor=south] at (label3.north) {Scan 3};
+    
+    \end{scope}
+    
+\end{circuitikz}

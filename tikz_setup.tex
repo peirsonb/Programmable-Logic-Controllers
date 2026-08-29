@@ -182,3 +182,55 @@
         \coordinate(-VAR) at (ons.north); 
     }
 }
+
+%====================================================================================
+% Source A, Source B, Dest box
+%====================================================================================
+\tikzset{
+    SrcDest/.pic={
+      
+        \draw[
+          BakerBlack
+        ]
+        (0,0)
+        -- ++(0,0.375)
+        -- ++(4,0)
+        coordinate[pos=0.5](-TOP)
+        -- ++(0,-6.25em)
+        coordinate[pos=3/28](-OUT)
+        -- ++(-4,0)
+        -- (0,0)
+        coordinate(l1);
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=west
+        ](srcA)
+        at (l1)
+        {{\small Src A:}};
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=west
+        ](srcB)
+        at ($(l1)-(0,2em)$)
+        {{\small Src B:}};
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=west
+        ](dest)
+        at ($(srcB.west)-(0,2em)$)
+        {{\small Dest:}};
+
+        \coordinate(-SRCA) at (srcA.east);
+        \coordinate(-AVAL) at ($(srcA.east)-(0,1em)$);
+        \coordinate(-SRCB) at (srcB.east);
+        \coordinate(-BVAL) at ($(srcB.east)-(0,1em)$);
+        \coordinate(-DEST) at ($(-BVAL)-(0,1em)$);
+        \coordinate(-DVAL) at ($(-DEST)-(0,1em)$);
+    }
+}

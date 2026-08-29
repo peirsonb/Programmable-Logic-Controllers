@@ -1372,6 +1372,86 @@
 
 \section{Advanced Programming Instructions}
 
+\begin{frame}
+    \frametitle{Math Instructions}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_MathInstructions.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize There are more math instructions, but these are the most common\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Math Instruction Arguments}
+
+    \begin{itemize}
+        \item The instructions on the previous slide accept 3 arguments: Source A, Source B, and Destination
+        \item Source A and Source B can be either a variable (tag) or a fixed number
+        \item Destination \emph{must} be a variable--the instruction will store the result here
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Argument Example}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_MathInstructions_Arguments.tex}
+
+        \vspace{0.5em}
+        {\footnotesize The sources can be fixed numbers or variables.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Math Instruction Data Types}
+
+    \begin{itemize}
+        \item Math instructions work on all numeric data types
+        \item Data types \emph{do not} need to match
+        \item Be careful--if the math would produce a decimal, but the variable is an integer all decimal points will be chopped off
+        \item Can be useful if you don't want the decimals
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Floating Point Example}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_MathInstructions_FloatingPoint.tex}
+
+        \vspace{0.5em}
+        {\footnotesize Left: Result is defined as a \texttt{DINT}, all decimals are truncated. Right: Result is defined as a \texttt{REAL}, decimal points are preserved.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Math Instruction Behavior}
+
+    \begin{itemize}
+        \item Source A comes first in the operation--Source A minus Source B, Source A divided by Source B, etc
+        \item The destination variable \emph{can be} the same variable as Source A--useful for a running count
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Count Example}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_MathInstructions_RunningCount.tex}
+
+        \vspace{0.5em}
+        {\footnotesize Setting the destination to the same variable as source A stores the result back in source A\par}
+    \end{figure}
+\end{frame}
+
 \section{Data Manipulation Instructions}
 
 \begin{frame}

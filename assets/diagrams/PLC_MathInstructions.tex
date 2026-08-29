@@ -1,0 +1,110 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    %=================================================================
+    % ADD
+    %=================================================================
+    \begin{scope}[
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (ADD) at (0,0) {SrcDest};
+        \node[anchor=south] at (ADD-TOP) {ADD};
+        \node[anchor=west] at (ADD-SRCA) {Number1};
+        \node[anchor=west] at (ADD-AVAL) {10};
+        \node[anchor=west] at (ADD-SRCB) {Number2};
+        \node[anchor=west] at (ADD-BVAL) {5};
+        \node[anchor=west] at (ADD-DEST) {Result};
+        \node[anchor=west] at (ADD-DVAL) {15};
+    
+    \end{scope}
+
+    %=================================================================
+    % SUB
+    %=================================================================
+    \begin{scope}[
+        xshift=4.5cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (SUB) at (0,0) {SrcDest};
+        \node[anchor=south] at (SUB-TOP) {SUB};
+        \node[anchor=west] at (SUB-SRCA) {Number1};
+        \node[anchor=west] at (SUB-AVAL) {10};
+        \node[anchor=west] at (SUB-SRCB) {Number2};
+        \node[anchor=west] at (SUB-BVAL) {2};
+        \node[anchor=west] at (SUB-DEST) {Result};
+        \node[anchor=west] at (SUB-DVAL) {8};
+    
+    \end{scope}
+
+    %=================================================================
+    % MUL
+    %=================================================================
+    \begin{scope}[
+        xshift=9cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (MUL) at (0,0) {SrcDest};
+        \node[anchor=south] at (MUL-TOP) {MUL};
+        \node[anchor=west] at (MUL-SRCA) {Number1};
+        \node[anchor=west] at (MUL-AVAL) {10};
+        \node[anchor=west] at (MUL-SRCB) {Number2};
+        \node[anchor=west] at (MUL-BVAL) {2};
+        \node[anchor=west] at (MUL-DEST) {Result};
+        \node[anchor=west] at (MUL-DVAL) {20};
+    
+    \end{scope}
+
+    %=================================================================
+    % DIV
+    %=================================================================
+    \begin{scope}[
+        xshift=2.5cm,
+        yshift=-4cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (DIV) at (0,0) {SrcDest};
+        \node[anchor=south] at (DIV-TOP) {DIV};
+        \node[anchor=west] at (DIV-SRCA) {Number1};
+        \node[anchor=west] at (DIV-AVAL) {10};
+        \node[anchor=west] at (DIV-SRCB) {Number2};
+        \node[anchor=west] at (DIV-BVAL) {2};
+        \node[anchor=west] at (DIV-DEST) {Result};
+        \node[anchor=west] at (DIV-DVAL) {5};
+    
+    \end{scope}
+
+    %=================================================================
+    % MOD
+    %=================================================================
+    \begin{scope}[
+        xshift=7cm,
+        yshift=-4cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (MOD) at (0,0) {SrcDest};
+        \node[anchor=south] at (MOD-TOP) {MOD};
+        \node[anchor=west] at (MOD-SRCA) {Number1};
+        \node[anchor=west] at (MOD-AVAL) {10};
+        \node[anchor=west] at (MOD-SRCB) {Number2};
+        \node[anchor=west] at (MOD-BVAL) {3};
+        \node[anchor=west] at (MOD-DEST) {Result};
+        \node[anchor=west] at (MOD-DVAL) {1};
+    
+    \end{scope}
+    
+\end{circuitikz}

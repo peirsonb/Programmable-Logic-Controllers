@@ -1,0 +1,48 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    %=================================================================
+    % DIV - result is a DINT
+    %=================================================================
+    \begin{scope}[
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (DIV) at (0,0) {SrcDest};
+        \node[anchor=south] at (DIV-TOP) {DIV};
+        \node[anchor=west] at (DIV-SRCA) {Number1};
+        \node[anchor=west] at (DIV-AVAL) {10};
+        \node[anchor=west] at (DIV-SRCB) {Number2};
+        \node[anchor=west] at (DIV-BVAL) {3};
+        \node[anchor=west] at (DIV-DEST) {Result};
+        \node[anchor=west] at (DIV-DVAL) {3};
+    
+    \end{scope}
+
+    %=================================================================
+    % DIV - result is a REAL
+    %=================================================================
+    \begin{scope}[
+        xshift=4.5cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (DIV) at (0,0) {SrcDest};
+        \node[anchor=south] at (DIV-TOP) {DIV};
+        \node[anchor=west] at (DIV-SRCA) {Number1};
+        \node[anchor=west] at (DIV-AVAL) {10};
+        \node[anchor=west] at (DIV-SRCB) {Number2};
+        \node[anchor=west] at (DIV-BVAL) {3};
+        \node[anchor=west] at (DIV-DEST) {Result};
+        \node[anchor=west] at (DIV-DVAL) {3.333};
+    
+    \end{scope}
+    
+\end{circuitikz}
