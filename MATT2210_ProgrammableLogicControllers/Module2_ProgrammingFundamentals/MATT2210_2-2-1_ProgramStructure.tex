@@ -1,0 +1,108 @@
+% ============================================================================
+% Accessibility
+% ============================================================================
+\DocumentMetadata{
+  lang = en-US, 
+  pdfstandard = ua-2, 
+  tagging = on, 
+  tagging-setup = {math/setup=mathml-SE}
+}
+
+% ============================================================================
+% Document Properties - used on title slide and PDF metadata fields
+% ============================================================================
+\def\PresTitle{PLC Program Structure}  % Required - top line of title slide
+\def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
+\def\PresAuthor{Brad Peirson}               % Required - below dividing line
+\def\PresInstitute{College of Information Technology and Engineering}       % Optional
+\def\PresDate{}                             % Optional
+\def\PresKeywords{}                         % Optional - used for hyperref
+
+% Presentation Formatting
+% ============================================================================
+\input{../../ltxtalk_preamble.tex}
+
+% ============================================================================
+% Document Content
+% ============================================================================
+\begin{document}
+
+\maketitle              % Redefined in the preamble to generate a full frame
+
+\begin{frame}
+    \frametitle{Agenda}
+    \begingroup
+        % Tighten the spacing between paragraphs/TOC lines
+        \setlength{\parskip}{0.3em} 
+        
+        % Optionally tighten the line spacing within an entry
+        %\baselineskip=1.2em 
+        
+        \setcounter{tocdepth}{1} % Show only sections
+    \tableofcontents
+    \setcounter{tocdepth}{2} % Reset back to default so subsections are tracked
+    \endgroup
+\end{frame}
+
+\begin{frame}
+    \frametitle{Student Learning Outcomes}
+    \begin{itemize}[<+- | alert@+>]
+        \item[1.]{Create programs in Ladder Logic using the following instructions in an application}
+        \item[2.]{Program PLC timers and counters}
+    \end{itemize}
+\end{frame}
+
+\section{Tactical Programming}
+
+\subsection{I/O Mapping}
+% Physical I/O mapping routines vs. direct aliasing (buffer layer advantages)
+
+\subsection{Input Processing}
+
+% Debouncing noisy physical inputs (timer-on delays)
+
+% Analog scaling and basic signal filtering
+
+% Logical grouping: combining physical inputs into virtual status tags (e.g., "All Home")
+
+\subsection{Output Management}
+% Permissives vs. Hard Interlocks (safety/machine protection)
+
+\subsection{Countdown Timers}
+
+\section{Program Architecture}
+
+\subsection{Organization Foundation}
+
+\subsection{GM 5-Rung Architecture}
+
+\subsection{Full State Machine}
+
+\subsection{Integer Step Sequencer}
+
+\begin{frame}
+    \centering
+    \Huge{Questions?}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Copyright Notice}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.625\linewidth, alt={Creative Commons Attribution NonCommercial ShareAlike logo displaying four circular icons arranged horizontally over a black banner. From left to right, the icons feature the CC logo, a person pictogram for Attribution labeled BY below, a slashed dollar sign for NonCommercial labeled NC below, and a counterclockwise circular arrow for ShareAlike labeled SA below.}]{by-nc-sa.png}
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    \PresTitle \textcopyright 2026 by Brad Peirson is licensed under \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0}. To view a copy of this license, visit \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+\end{frame}
+
+\end{document}
+
+% \begin{frame}
+%     \frametitle{Test Todo}
+
+%     % Usage: \tikztodo[width]{height}{description/notes}
+%     \tikztodo[0.7\textwidth]{4cm}{Convert block diagram of feedback loop}
+% \end{frame}
