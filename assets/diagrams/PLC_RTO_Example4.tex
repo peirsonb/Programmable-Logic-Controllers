@@ -3,7 +3,7 @@
     voltage dir=RP,
     >=latex,
     %>={Latex[length=5mm, width=2mm]},
-    alt={}
+    alt={Diagram showing a ladder logic program containing a Retentive Timer On (RTO) instruction and a Reset (RES) instruction across three rungs. The top rung contains a normally open contact Auto_Mode connected to an RTO timer block named AutoTimer with a Preset (PRE) value of 28800 and an Accumulated (ACC) value of 0. The bottom rung contains a normally open contact ShiftChange connected to a Reset instruction block labeled RES targeting AutoTimer. Green power flow highlighting extends from the left vertical rail through the ShiftChange contact and across the entire bottom rung through the RES instruction, indicating that the ShiftChange condition is true, executing the reset and holding the AutoTimer accumulated value at 0.}
     ]
 
     % Define the number of rungs in the diagram
