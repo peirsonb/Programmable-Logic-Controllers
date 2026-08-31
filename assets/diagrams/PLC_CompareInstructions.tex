@@ -1,0 +1,120 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    %=================================================================
+    % EQ
+    %=================================================================
+    \begin{scope}[
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (EQ) at (0,0) {SrcAB};
+        \node[anchor=south] at (EQ-TOP) {EQ ($A=B$)};
+        \node[anchor=west] at (EQ-SRCA) {Number1};
+        \node[anchor=west] at (EQ-AVAL) {10};
+        \node[anchor=west] at (EQ-SRCB) {Number2};
+        \node[anchor=west] at (EQ-BVAL) {5};
+    
+    \end{scope}
+
+    %=================================================================
+    % GT
+    %=================================================================
+    \begin{scope}[
+        xshift=4.5cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (GT) at (0,0) {SrcAB};
+        \node[anchor=south] at (GT-TOP) {GT ($A>B$)};
+        \node[anchor=west] at (GT-SRCA) {Number1};
+        \node[anchor=west] at (GT-AVAL) {10};
+        \node[anchor=west] at (GT-SRCB) {Number2};
+        \node[anchor=west] at (GT-BVAL) {2};
+    
+    \end{scope}
+
+    %=================================================================
+    % LT
+    %=================================================================
+    \begin{scope}[
+        xshift=9cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (LT) at (0,0) {SrcAB};
+        \node[anchor=south] at (LT-TOP) {LT ($A<B$)};
+        \node[anchor=west] at (LT-SRCA) {Number1};
+        \node[anchor=west] at (LT-AVAL) {10};
+        \node[anchor=west] at (LT-SRCB) {Number2};
+        \node[anchor=west] at (LT-BVAL) {2};
+    
+    \end{scope}
+
+    %=================================================================
+    % GE
+    %=================================================================
+    \begin{scope}[
+        yshift=-4cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (GE) at (0,0) {SrcAB};
+        \node[anchor=south] at (GE-TOP) {GE ($A \geq B$)};
+        \node[anchor=west] at (GE-SRCA) {Number1};
+        \node[anchor=west] at (GE-AVAL) {10};
+        \node[anchor=west] at (GE-SRCB) {Number2};
+        \node[anchor=west] at (GE-BVAL) {2};
+    
+    \end{scope}
+
+    %=================================================================
+    % LE
+    %=================================================================
+    \begin{scope}[
+        xshift=4.5cm,
+        yshift=-4cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (LE) at (0,0) {SrcAB};
+        \node[anchor=south] at (LE-TOP) {LE ($A \leq B$)};
+        \node[anchor=west] at (LE-SRCA) {Number1};
+        \node[anchor=west] at (LE-AVAL) {10};
+        \node[anchor=west] at (LE-SRCB) {Number2};
+        \node[anchor=west] at (LE-BVAL) {3};
+    
+    \end{scope}
+
+    %=================================================================
+    % LIMIT
+    %=================================================================
+    \begin{scope}[
+        xshift=9cm,
+        yshift=-4cm,
+        draw=BakerBlack,
+        text=BakerBlack,
+        font=\small
+    ]
+        \pic (LIM) at (0,0) {Limit};
+        \node[anchor=south] at (LIM-TOP) {LIMIT};
+        \node[anchor=west] at (LIM-LO) {Number1};
+        \node[anchor=west] at (LIM-LOV) {10};
+        \node[anchor=west] at (LIM-TEST) {Number2};
+        \node[anchor=west] at (LIM-TESTV) {3};
+        \node[anchor=west] at (LIM-HI) {Number3};
+        \node[anchor=west] at (LIM-HIV) {20};
+    
+    \end{scope}
+    
+\end{circuitikz}

@@ -1,0 +1,125 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    % Define the number of rungs in the diagram
+    \def\numRungs{1}
+
+    % Calculate the length of the vertical power rails dynamically based on number of rungs
+    \pgfmathsetmacro{\railLength}{-2 * \numRungs}
+
+    %======================================================================================================
+    % Component Grid
+    % Spacing = 3x, 2y
+    %======================================================================================================
+    \foreach \i in {0,...,5} {
+        \foreach \j in {0,...,20} { % Change to 0,...,19 if you need 20 individual Y points down to -40
+        
+        % Calculate spatial positions
+        \pgfmathsetmacro{\px}{\i * 3}
+        \pgfmathsetmacro{\py}{-1 - (\j * 2)}
+        
+        % Name coordinate using loop indices: (C-column-row) e.g., (C-0-0), (C-5-10)
+        \coordinate (C-\i-\j) at (\px, \py);
+        
+        % OPTIONAL: Uncomment the 2 lines below to display grid labels while building
+        % \fill[red] (C-\i-\j) circle (1.5pt);
+        %\node[anchor=south west, scale=0.5, gray] at (C-\i-\j) {(\i,\j)};
+        }
+    }
+
+    %======================================================================================================
+    % Foreground Layer
+    % Only contains the vertical power rails
+    % Length of the rails is automatic, calculated based on the number of rungs defined above
+    %======================================================================================================
+    \begin{pgfonlayer}{ft}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack, very thick
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small,
+            ultra thick
+        ]
+        
+            \draw (0,0) -- (0,\railLength);
+
+            \draw (15,0) -- (15,\railLength);
+
+        \end{scope}
+    \end{pgfonlayer}
+
+    %======================================================================================================
+    % Main Layer
+    % All actual logic goes here
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+        
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack for draw and text
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
+        ]
+
+            %=================================================================
+            % Rung 1
+            %=================================================================
+            \draw (C-0-0) -- ++(0.5,0) pic (LT) {SrcAB};
+            \draw (LT-OUT) -- (C-4-0) to[esource, l={OpenDoor}] (C-5-0);
+
+            % GT box labels
+            \node[anchor=south] at (LT-TOP) {LT};
+            \node[anchor=west] at (LT-SRCA) {PartCount};
+            \node[anchor=west] at (LT-AVAL) {9};
+            \node[anchor=west] at (LT-SRCB) {BatchLimit};
+            \node[anchor=west] at (LT-BVAL) {10};
+
+        \end{scope}
+    \end{pgfonlayer}
+
+    %=================================================================
+    % Background layer
+    %=================================================================
+    \begin{pgfonlayer}{bg}
+        
+        %==================================================================
+        % Highlight Scope
+        % This layer exists for highlighting true logic, the scope sets the
+        % highlight options without having to repeat them every \draw
+        % draw=UpNorthGreen, line width=10pt, opacity=0.4
+        %==================================================================
+        \begin{scope}[
+            draw=UpNorthGreen,
+            line width=10pt,
+            opacity=0.4
+        ]
+
+            %==================================================================
+            % Left vertical rung - leave this alone, it should ALWAYS be green
+            % It automatically draws itself to the length defined at the top
+            %==================================================================
+            \draw (0,0) -- (0,\railLength);
+        
+            %=================================================================
+            % Rung 1
+            %=================================================================
+            \draw (C-0-0) -- (LT-IN);
+
+            \draw (LT-OUT) -- (C-5-0);
+
+        \end{scope}
+    \end{pgfonlayer}
+    
+\end{circuitikz}

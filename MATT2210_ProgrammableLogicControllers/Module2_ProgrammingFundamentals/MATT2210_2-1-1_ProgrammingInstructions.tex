@@ -312,6 +312,19 @@
     \input{../../assets/diagrams/PLC_ONS.tex}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Oneshot Variable}
+
+    \begin{itemize}
+        \item A oneshot variable can only be used \emph{once}--each oneshot instruction needs a unique variable
+        \item This is a good case for using sub-bits
+        \begin{itemize}
+            \item Variable: OneShot, Data Type: \texttt{DINT}
+            \item This provides 32 variables in one--\texttt{OneShot.0}, \texttt{OneShot.1}, etc.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \section{Timers and Counters}
 
 \begin{frame}
@@ -1373,6 +1386,213 @@
 \section{Advanced Programming Instructions}
 
 \begin{frame}
+    \frametitle{Advanced Programming Instructions}
+
+    \begin{itemize}
+        \item PLCs are computers--capable of most functions a computer can perform
+        \item In our industrial world, we're mostly going to focus on comparison and math
+        \item Comparison instructions are \emph{decision} instructions--if they evaluate as true ``power'' flows through
+        \item Math instructions are \emph{action} instruction--they go at the end of the rung (output) at only evaluate if the rest of the rung is true
+    \end{itemize}
+\end{frame}
+
+\subsection{Compare Instructions}
+
+\begin{frame}
+    \frametitle{Compare Instruction Naming Convention}
+
+    \begin{itemize}
+        \item In Logix Designer v36 Rockwell renamed most of these instructions
+        \item The renaming aligns AB with IEC 61131-3
+        \item Older programs should automatically convert instruction names when updated to v36
+        \item Older \emph{programmers} need to learn new muscle memory when typing instruction logic
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Compare Instructions}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CompareInstructions.tex}
+        }
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Compare Instruction Arguments}
+
+    \begin{itemize}
+        \item With the exception of LIMIT, the compare instructions accept two arguments--the two numbers that will be compared
+        \item Source A and Source B can be either fixed or variable
+        \item Standard programming convention--Source A should be the variable, Source B should be the fixed comparison
+        \begin{itemize}
+            \item This means you might need to use a LT instead of a GT, depending on the need
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Equal Instruction}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_EQ_Example1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_EQ_Example2.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_EQ_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The EQ instruction is true when Source A is \emph{exactly} equal to Source B. Take care with things like timers, analog inputs, etc.--they are \emph{rarely} exactly equal.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Greater Than Instruction}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_GT_Example1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_GT_Example2.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_GT_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The GT instruction is true when Source A is greater than Source B.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Less Than Instruction}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LT_Example1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LT_Example2.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_LT_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The LT instruction is true when Source A is less than Source B.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Greater Than or Equal Instruction}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_GE_Example1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_GE_Example2.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_GE_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The GE instruction is true when Source A is greater than \emph{or} equal to Source B.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Less Than or Equal Instruction}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LE_Example1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LE_Example2.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+        \input{../../assets/diagrams/PLC_LE_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The LE instruction is true when Source A is less than \emph{or} equal to Source B.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Limit Instruction}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LIMIT_Example1.tex}
+        }
+        
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LIMIT_Example2.tex}
+        }
+        
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LIMIT_Example3.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize The LIMIT instruction is true when the test value falls between the high and low limits, inclusive.\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reverse Limit}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LIMIT_Reverse_Example1.tex}
+        }
+        
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_LIMIT_Reverse_Example2.tex}
+        }
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    {\footnotesize By placing the higher value in the Low field and the lower value in the High field, LIMIT checks if the test is \emph{outside} the limits.\par}
+\end{frame}
+
+\subsection{Math Instructions}
+
+\begin{frame}
     \frametitle{Math Instructions}
 
     \begin{figure}
@@ -1413,7 +1633,10 @@
 
     \begin{itemize}
         \item Math instructions work on all numeric data types
-        \item Data types \emph{do not} need to match
+        \item In Allen-Bradley, data types \emph{do not} need to match
+        \begin{itemize}
+            \item Some brands \emph{do} force them to match
+        \end{itemize}
         \item Be careful--if the math would produce a decimal, but the variable is an integer all decimal points will be chopped off
         \item Can be useful if you don't want the decimals
     \end{itemize}
@@ -1452,7 +1675,100 @@
     \end{figure}
 \end{frame}
 
-\section{Data Manipulation Instructions}
+\begin{frame}
+    \frametitle{Protecting Math}
+
+    \begin{itemize}
+        \item Math instructions can lead to some tricky program behavior--even processor hard faults
+        \item Care must be taken to \emph{protect} the math and prevent undesired operation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Protecting Addition (1 of 3)}
+
+    \begin{itemize}
+        \item Math instructions execute \emph{every scan} while the preceding logic is true
+        \item This can be especially dangerous when using an ADD as a counter
+        \item Remember, if an input is human actuated it \emph{will} be on for more than one scan--leads to more than one count
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Protecting Addition (2 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ADD_Protection1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ADD_Protection2.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize An ADD set up as a counter is going to count each \emph{scan} the logic is true, not necessarily each toggle of the logic\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Protecting Addition (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ADD_Protection3.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_ADD_Protection4.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize \emph{ALWAYS} add a one-shot to guarantee the addition only executes once per logic toggleand prevent runaway\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Protecting Division (1 of 3)}
+
+    \centering
+    There is also a major potential problem with division--what is it?
+\end{frame}
+
+\begin{frame}
+    \frametitle{Protecting Division (2 of 3)}
+
+    \begin{itemize}
+        \item ``Divide by Zero'' is a problem in \emph{any} computer system
+        \item In PLCs, it will cause a major fault--which immediately kills all program execution
+        \item It's also fairly simple to protect against--how?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Protecting Division (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_DIV_Protection1.tex}
+        }
+
+        \resizebox{0.625\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_DIV_Protection2.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize Using the division's Source B in a not equal to zero instruction prevents the division from executing a divide by zero\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \Huge{Questions?}
+\end{frame}
 
 \begin{frame}
     \frametitle{Copyright Notice}
