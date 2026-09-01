@@ -11,7 +11,7 @@
 % ============================================================================
 % Document Properties - used on title slide and PDF metadata fields
 % ============================================================================
-\def\PresTitle{PLC Program Structure}  % Required - top line of title slide
+\def\PresTitle{Structured PLC Programming}  % Required - top line of title slide
 \def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
 \def\PresAuthor{Brad Peirson}               % Required - below dividing line
 \def\PresInstitute{College of Information Technology and Engineering}       % Optional
@@ -52,7 +52,88 @@
     \end{itemize}
 \end{frame}
 
-\section{Tactical Programming}
+\section{Architectural Overview}
+
+\begin{frame}
+    \frametitle{The Cost of Spaghetti Logic}
+
+    \begin{center}
+        {\Huge \textbf{\textcolor{BakerADARed}{\$260,000}}}
+
+        \vspace{0.25em}
+        Average Hourly Downtime Cost
+    \end{center}
+
+    \vspace{0.5in}
+    \begin{itemize}
+        \item High-throughput automotive: \$2.3M per hour
+        \item Unstructured logic \emph{directly} prolongs diagnosis time
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Bad Logic Compounds Downtime}
+
+    \begin{itemize}
+        \item Extended Mean Time to Repair (MTR): Up to 80\% of downtime is spent deciphering code rather than fixing hardware
+        \item Troubleshooting Friction: Intermingled safety permissives, sequence logic, and direct I/O forces trial-and-error debugging
+        \item Modification Risk: Fixing one rung accidentally breaks secondary machine routines
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Spaghetti Code vs. Architecture}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{block}{Unstructured Logic}
+                Direct physical I/O scattered across dozens of subroutines with unbuffered signals and nested latches
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{block}{Layered Architecture}
+                Clean separation between Input Mapping, State Machines, Output Buffers, and Alarm Routines.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Pillars of Industrial PLC Code}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/tagging=presentation}
+        \begin{tabular}{L{2in}L{2in}L{2in}}
+            \textcolor{BakerADARed}{\textbf{1. Readability}} & \textcolor{BakerADARed}{\textbf{2. Maintainability}} & \textcolor{BakerADARed}{\textbf{3. Standard Troubleshooting}}\\
+            Code must be self-documenting for field technicians at 2 AM. Clear tag naming conventions and modular layout eliminate guesswork during emergency outages. & Hardware shifts and I/O module reconfigurations shouldn't break core sequence logic. I/O abstraction buffers protect the software core from physical changes. & Standardized step sequencing and diagnostic alarms pinpoint stalled steps immediately, eliminating the need to search through hundreds of rungs.\\
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Micro-Level vs. Macro-Level}
+
+    \begin{itemize}
+        \item High-quality industrial code requires mastery at both the instruction level and architectural level
+        \item Micro (Rung Mechanics): How individual instructions, logic gates, and execution operate within a single scan cycle
+        \item Macro (Program Layout): How routines, modules, are organized across the entire controller
+        \item Flawless micro-logic fails inside a disorganized architecture; brilliant macro-architecture is useless if individual rungs are buggy
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Micro-Level (Rung Mechanics)}
+
+    \begin{description}
+        \item[Boolean Logic \& Flow] Optimizing examine if closed (\texttt{XIC}), examine if open (\texttt{XIO}), and utput coils (\texttt{OTE}, \texttt{OTL}, \texttt{OTU})
+        \item[Scan Cycle Dynamics what happens as this gets long] Understand top Understanding top-to-bottom, left-to-right rung evaluation and memory image updates
+    \end{description}
+\end{frame}
+
+
+
+\section{Micro-Level Programming}
 
 \subsection{I/O Mapping}
 % Physical I/O mapping routines vs. direct aliasing (buffer layer advantages)
@@ -70,7 +151,7 @@
 
 \subsection{Countdown Timers}
 
-\section{Program Architecture}
+\section{Macro-Level Programming}
 
 \subsection{Organization Foundation}
 
@@ -82,7 +163,7 @@
 
 \begin{frame}
     \centering
-    \Huge{Questions?}
+    {\Huge \textbf{\textcolor{BakerADARed}{Questions?}}}
 \end{frame}
 
 \begin{frame}
