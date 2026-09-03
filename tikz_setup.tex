@@ -99,13 +99,13 @@
         ]
         (0,0)
         -- ++(0,0.375)
-        -- ++(3,0)
+        -- ++(3.5,0)
         coordinate[pos=0.5](-TOP)
         -- ++(0,-1.75)
         coordinate[pos=3/14](-OUT)
         coordinate[pos=0.5](-EN1)
         coordinate[pos=0.875](-DN1)
-        -- ++(-3,0)
+        -- ++(-3.5,0)
         -- (0,0)
         coordinate[pos=0.75](-IN);
 
@@ -132,7 +132,7 @@
             BakerBlack
         ]
         (-EN1)
-        -- ++(1,0)
+        -- ++(0.5,0)
         coordinate(-EN2)
         node[
             text=BakerBlack,
@@ -144,7 +144,7 @@
             BakerBlack
         ]
         (-DN1)
-        -- ++(1,0)
+        -- ++(0.5,0)
         coordinate(-DN2)
         node[
             text=BakerBlack,
@@ -195,11 +195,11 @@
         ]
         (0,0)
         -- ++(0,0.375)
-        -- ++(4,0)
+        -- ++(5,0)
         coordinate[pos=0.5](-TOP)
         -- ++(0,-3.25)
         coordinate[pos=3/26](-OUT)
-        -- ++(-4,0)
+        -- ++(-5,0)
         -- (0,0)
         coordinate(l1);
 
@@ -329,5 +329,91 @@
         \coordinate(-TESTV) at ($(srcB.east)-(0,1em)$);
         \coordinate(-HI) at ($(-TESTV)-(0,1em)$);
         \coordinate(-HIV) at ($(-HI)-(0,1em)$);
+    }
+}
+
+%====================================================================================
+% Source Destination box
+%====================================================================================
+\tikzset{
+    SrcSingle/.pic={
+      
+        \draw[
+          BakerBlack
+        ]
+        (0,0)
+        coordinate(-IN)
+        -- ++(0,0.375)
+        -- ++(6,0)
+        coordinate[pos=0.5](-TOP)
+        -- ++(0,-2.25)
+        coordinate[pos=1/6](-OUT)
+        -- ++(-6,0)
+        -- (0,0)
+        coordinate(l1);
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=west
+        ](srcA)
+        at (l1)
+        {{\small Source:}};
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=east
+        ](srcB)
+        at ($(srcA.east)-(0,2em)$)
+        {{\small Dest:}};
+
+        \coordinate(-SRC) at (srcA.east);
+        \coordinate(-SRCV) at ($(srcA.east)-(0,1em)$);
+        \coordinate(-DEST) at (srcB.east);
+        \coordinate(-DESTV) at ($(srcB.east)-(0,1em)$);
+    }
+}
+
+%====================================================================================
+% Compute Box
+%====================================================================================
+\tikzset{
+    CPT/.pic={
+      
+        \draw[
+          BakerBlack
+        ]
+        (0,0)
+        coordinate(-IN)
+        -- ++(0,0.375)
+        -- ++(8.5,0)
+        coordinate[pos=0.5](-TOP)
+        -- ++(0,-1.75)
+        coordinate[pos=3/14](-OUT)
+        -- ++(-8.5,0)
+        -- (0,0)
+        coordinate(l1);
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=west
+        ](srcA)
+        at (l1)
+        {{\small Source:}};
+
+        \node[
+          text=BakerBlack,
+          font=\bfseries,
+          anchor=east
+        ](srcB)
+        at ($(srcA.east)-(0,2em)$)
+        {{\small Exp:}};
+
+        \coordinate(-DEST) at (srcA.east);
+        \coordinate(-DESTV) at ($(srcA.east)-(0,1em)$);
+        \coordinate(-EXP) at (srcB.east);
+        \coordinate(-EXPV) at ($(srcB.east)-(0,1em)$);
     }
 }

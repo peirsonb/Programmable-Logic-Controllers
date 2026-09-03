@@ -1,0 +1,228 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={Diagram illustrating three sequential operating states of a vertical pneumatic cylinder assembly equipped with two sensors mounted on its left side. In the first state on the left, the cylinder piston is fully retracted at the top, activating the upper green sensor indicator while the middle sensor indicator remains unlit. In the second state in the middle, the piston is extended halfway, pressing against a circular part attached to the ram, which activates the middle green sensor indicator while the upper indicator turns unlit. In the third state on the right, the cylinder is fully extended downward with no part present, leaving both the upper and middle sensor indicators unlit.}
+    ]
+
+    %======================================================================================================
+    % Main Layer
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+
+        \node[
+            draw=BakerBlack,
+            ultra thick,
+            rounded corners=0.5cm,
+            minimum height=4cm,
+            minimum width=2cm
+        ] (body)
+        at (0,0)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            fill=LakeBlue,
+            minimum height=0.5cm,
+            minimum width=1.875cm,
+            anchor=north
+        ](piston)
+        at ($(body.north)-(0,0.25cm)$)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            fill=LakeBlue,
+            minimum height=3.5cm,
+            minimum width=0.75cm,
+            anchor=north
+        ](ram)
+        at (piston.south)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            fill=Iron1,
+            anchor=north east,
+            minimum width=0.25cm,
+            minimum height=0.75cm
+        ](upsw)
+        at ($(body.north west)-(0,0.25cm)$)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            fill=UpNorthGreen,
+            minimum height = 0.125cm,
+            minimum width = 0.25cm
+        ](uplt)
+        at (upsw.center)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            fill=Iron1,
+            anchor=east,
+            minimum width=0.25cm,
+            minimum height=0.75cm
+        ](midsw)
+        at (body.west)
+        {};
+
+        \node[
+            draw=BakerBlack,
+            minimum height = 0.125cm,
+            minimum width = 0.25cm
+        ](midlt)
+        at (midsw.center)
+        {};
+
+        \begin{scope}[xshift=4cm]
+            \node[
+                draw=BakerBlack,
+                ultra thick,
+                rounded corners=0.5cm,
+                minimum height=4cm,
+                minimum width=2cm
+            ] (body)
+            at (0,0)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=LakeBlue,
+                minimum height=0.5cm,
+                minimum width=1.875cm,
+                anchor=north
+            ](piston)
+            at ($(body.north)-(0,2cm)$)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=LakeBlue,
+                minimum height=3.5cm,
+                minimum width=0.75cm,
+                anchor=north
+            ](ram)
+            at (piston.south)
+            {};
+            
+            \node[
+                draw=BakerBlack,
+                anchor=north,
+                circle,
+                ultra thick,
+                minimum size=2cm
+            ](part)
+            at (ram.south)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=Iron1,
+                anchor=north east,
+                minimum width=0.25cm,
+                minimum height=0.75cm
+            ](upsw)
+            at ($(body.north west)-(0,0.25cm)$)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                minimum height = 0.125cm,
+                minimum width = 0.25cm
+            ](uplt)
+            at (upsw.center)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=Iron1,
+                anchor=east,
+                minimum width=0.25cm,
+                minimum height=0.75cm
+            ](midsw)
+            at (body.west)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=UpNorthGreen,
+                minimum height = 0.125cm,
+                minimum width = 0.25cm
+            ](midlt)
+            at (midsw.center)
+            {};
+        \end{scope}
+
+        \begin{scope}[xshift=8cm]
+            \node[
+                draw=BakerBlack,
+                ultra thick,
+                rounded corners=0.5cm,
+                minimum height=4cm,
+                minimum width=2cm
+            ] (body)
+            at (0,0)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=LakeBlue,
+                minimum height=0.5cm,
+                minimum width=1.875cm,
+                anchor=north
+            ](piston)
+            at ($(body.north)-(0,3cm)$)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=LakeBlue,
+                minimum height=3.5cm,
+                minimum width=0.75cm,
+                anchor=north
+            ](ram)
+            at (piston.south)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=Iron1,
+                anchor=north east,
+                minimum width=0.25cm,
+                minimum height=0.75cm
+            ](upsw)
+            at ($(body.north west)-(0,0.25cm)$)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                minimum height = 0.125cm,
+                minimum width = 0.25cm
+            ](uplt)
+            at (upsw.center)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                fill=Iron1,
+                anchor=east,
+                minimum width=0.25cm,
+                minimum height=0.75cm
+            ](midsw)
+            at (body.west)
+            {};
+
+            \node[
+                draw=BakerBlack,
+                minimum height = 0.125cm,
+                minimum width = 0.25cm
+            ](midlt)
+            at (midsw.center)
+            {};
+        \end{scope}
+    \end{pgfonlayer}
+\end{circuitikz}

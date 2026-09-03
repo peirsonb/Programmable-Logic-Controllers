@@ -300,8 +300,9 @@
         \begin{column}{0.48\linewidth}
             \begin{figure}
                 \centering
-                % Usage: \tikztodo[width]{height}{description/notes}
-                \tikztodo[\linewidth]{3cm}{Same input multiple contacts}
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_MultipleContacts.tex}
+                }
             \end{figure}
         \end{column}
     \end{columns}
@@ -320,8 +321,15 @@
         \begin{column}{0.48\linewidth}
             \begin{figure}
                 \centering
-                % Usage: \tikztodo[width]{height}{description/notes}
-                \tikztodo[\linewidth]{3cm}{Single OTE, multiple XIO}
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_MultipleOTE.tex}
+                }
+
+                \vspace{0.5em}
+
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_MultipleContacts.tex}
+                }
             \end{figure}
         \end{column}
     \end{columns}
@@ -332,8 +340,9 @@
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Same variable OTE multiple rungs}
+        \resizebox{\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_MultipleOTE.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize What happens to the output variable in this program?\par}
@@ -345,8 +354,9 @@
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Same variable OTE multiple rungs}
+        \resizebox{\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_MultipleOTE.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize Remember the scan--the first rung is scanned, the output is true. The output will \emph{never turn on}. The logic scan \emph{stores} the value, and it's going to store whatever value it hit last.\par}
@@ -358,8 +368,9 @@
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Good use of multiple OTE}
+        \resizebox{\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_MultipleOTE_Good.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize There are a \emph{lot} of cases where you \emph{want} to use an \texttt{OTE} multiple times on the same variable--this is what branching is for\par}
@@ -434,12 +445,13 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Air Cylinder Mid Switch (1 of )}
+    \frametitle{Air Cylinder Mid Switch (1 of 3)}
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Air Cylinder Mid Switch - 3 parts}
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/AirCylinderMidSwitch.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize This is a case-study, it actually happened: the air cylinder is acting as a clamp. The ``extend'' switch is \emph{not} at the end of the air cylinder, it's in the middle set where the cylinder would stop if a part were present.\par}
@@ -447,12 +459,13 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Air Cylinder Mid Switch (2 of )}
+    \frametitle{Air Cylinder Mid Switch (2 of 3)}
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Air Cylinder Mid Switch - 3 parts}
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/AirCylinderMidSwitch.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize This setup is also intended to act as a par-present sensor--if we extend the cylinder and the switch doesn't turn on that means the cylinder extended too far, and there is no part.\par}
@@ -460,12 +473,13 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Air Cylinder Mid Switch (3 of )}
+    \frametitle{Air Cylinder Mid Switch (3 of 3)}
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Air Cylinder Mid Switch - 3 parts}
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/AirCylinderMidSwitch.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize When there is no part, the cylinder flies by that switch \emph{really fast}. Except, because we don't know where we are in the scan \emph{sometimes} it catches the ``blink'' of the switch and counts it as on--the logic thinks there's a part there and the machine carries on.\par}
@@ -522,7 +536,7 @@
 
     \begin{figure}
         \centering
-        \includegraphics[width=0.625\linewidth, alt={A scatter plot titled Analog Scaling displaying Analog Value on the vertical axis, ranging from 2700 to 3900, against Temperature (F) on the horizontal axis, ranging from 70 to 95. Five dark blue data points show an upward linear trend with a dotted trendline passing through them. The linear regression equation is displayed in the upper right corner as y = 42.277x - 112.3 with an R-squared value of 0.9864.}]{AnalogScaling_Regression.png}
+        \includegraphics[width=0.5\linewidth, alt={A scatter plot titled Analog Scaling displaying Analog Value on the vertical axis, ranging from 2700 to 3900, against Temperature (F) on the horizontal axis, ranging from 70 to 95. Five dark blue data points show an upward linear trend with a dotted trendline passing through them. The linear regression equation is displayed in the upper right corner as y = 42.277x - 112.3 with an R-squared value of 0.9864.}]{AnalogScaling_Regression.png}
 
         \vspace{0.5em}
         {\footnotesize Set the sensor to 5-6 known real-world values and read the analog input value. Plot them in a spreadsheet and run a \emph{linear regression}--which the software will do automatically with one click. The regression equation is the scaling factor.\par}
@@ -534,8 +548,7 @@
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Analog Scaling - Use a CPT}
+        \input{../../assets/diagrams/PLC_AnalogScale.tex}
 
         \vspace{0.5em}
         {\footnotesize The preferred method is to scale the analog value to actual units \emph{in the input map}. The rest of your program is instantly easier to troubleshoot--you're using degrees throughout the program instead of analog count.\par}
@@ -645,11 +658,12 @@
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Countdown Timer - remember seconds conversion}
+        \resizebox{0.875\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CountdownTimer1.tex}
+        }
 
         \vspace{0.5em}
-        {\footnotesize The timer operates as normal and is used elsewhere in the logic just like any timer. The \texttt{SecondsRemain} variable is what's displayed \emph{to the operator}.\par}
+        {\footnotesize The timer operates as normal and is used elsewhere in the logic just like any timer. The \texttt{TimeLeft\_ms} will be counting down to zero as the timer runs.\par}
     \end{figure}
 \end{frame}
 
@@ -658,8 +672,9 @@
 
     \begin{figure}
         \centering
-        % Usage: \tikztodo[width]{height}{description/notes}
-        \tikztodo[\linewidth]{5cm}{Countdown Timer - remember seconds conversion}
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_CountdownTimer2.tex}
+        }
 
         \vspace{0.5em}
         {\footnotesize Remember, the timer \texttt{PRE} and \texttt{ACC} are in \emph{milliseconds}--that doesn't mean much to an operator.\par}
