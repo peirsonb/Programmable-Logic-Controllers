@@ -1,0 +1,53 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={A circuit diagram featuring three components connected in series horizontally from left to right along a black wire. The first component is a capacitor labeled AutoLT, the second is an empty source labeled GreenStack, and the third is an empty source labeled Valve1. Two thick semi-transparent red lines form a large X across the entire circuit, intersecting at the center between the capacitor and the rightmost source.}
+    ]
+
+    %======================================================================================================
+    % Foreground Layer
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerADARed,
+            text=BakerADARed,
+            color=BakerADARed,
+            line width=10pt,
+            opacity=0.5,
+            font=\small
+        ]
+        
+        \draw (0,1) -- (9,-1);
+
+        \draw (0,-1) -- (9,1);
+            
+        \end{scope}
+    \end{pgfonlayer}
+
+    %======================================================================================================
+    % Main Layer
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
+        ]
+        
+            \draw (0,0) to[C,l={AutoLT}] ++(3,0) to[esource, l={GreenStack}] ++(3,0) to[esource, l={Valve1}] ++(3,0);
+
+        \end{scope}
+    \end{pgfonlayer}
+    
+\end{circuitikz}

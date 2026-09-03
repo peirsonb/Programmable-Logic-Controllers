@@ -1,0 +1,31 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={Circuit diagram featuring a main horizontal path starting with two capacitors in series labeled AutoLT and HomeSW, followed by an empty source labeled GreenStack on the far right. A lower parallel path branches downward from the start of the circuit before the AutoLT capacitor, passes through a capacitor labeled ManualLT, extends across a straight segment, and rejoins the main path between the HomeSW capacitor and the GreenStack source.}
+    ]
+
+    %======================================================================================================
+    % Main Layer
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
+        ]
+        
+            \draw (0,0) to[C,l={AutoLT}] ++(3,0) to[C,l={HomeSW}] ++(3,0) to[esource, l={GreenStack}] ++(3,0);
+            
+            \draw (0,0) -- ++(0,-2) to[C, l={ManualLT}] ++(3,0) -- ++(3,0) -- ++(0,2);
+            
+        \end{scope}
+    \end{pgfonlayer}
+    
+\end{circuitikz}

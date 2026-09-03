@@ -116,8 +116,8 @@
 
     \begin{itemize}
         \item High-quality industrial code requires mastery at both the instruction level and architectural level
-        \item Micro (Rung Mechanics): How individual instructions, logic gates, and execution operate within a single scan cycle
-        \item Macro (Program Layout): How routines, modules, are organized across the entire controller
+        \item[Micro (Rung Mechanics)] How individual instructions, logic gates, and execution operate within a single scan cycle
+        \item[Macro (Program Layout)] How routines, modules, are organized across the entire controller
         \item Flawless micro-logic fails inside a disorganized architecture; brilliant macro-architecture is useless if individual rungs are buggy
     \end{itemize}
 \end{frame}
@@ -127,29 +127,586 @@
 
     \begin{description}
         \item[Boolean Logic \& Flow] Optimizing examine if closed (\texttt{XIC}), examine if open (\texttt{XIO}), and utput coils (\texttt{OTE}, \texttt{OTL}, \texttt{OTU})
-        \item[Scan Cycle Dynamics what happens as this gets long] Understand top Understanding top-to-bottom, left-to-right rung evaluation and memory image updates
+        \item[Scan Cycle Dynamics] Understand top Understanding top-to-bottom, left-to-right rung evaluation and memory image updates
+        \item[Edge Detection \& Timing] Proper use of One-Shots (ONS/OSR) and timers (TON/TOF) to prevent race conditions
     \end{description}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Micro-Level Best Practices}
 
+    \begin{itemize}
+        \item Keep rungs readable; avoid excessively nested logic
+        \item Limit multiple outputs driven by identical conditions across different rungs (destructive double-coils)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Macro-Level (Program Layout)}
+
+    \begin{description}
+        \item[Modular Organization] Dividing code into Tasks (Periodic vs. Continuous), Programs, and Subroutines/Routines
+        \item[State Machine Frameworks] Structuring sequences (e.g., PackML, ISA-88, or custom Step/State logic)
+        \item[Data Structuring] Utilizing User-Defined Data Types (UDTs) and arrays over unorganized tags
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Macro-Level Best Practices}
+
+    \begin{itemize}
+        \item Enforce a standardized folder/routine hierarchy (e.g., \texttt{00\_Inputs}, \texttt{10\_Modes}, \texttt{20\_Sequence}, \texttt{90\_Outputs})
+        \item Decouple hardware I/O mapping from core process control logic
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Micro vs. Macro Side-by-Side}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|L{1.5in}|L{3in}|L{3in}|}
+                \hline
+                Aspect & Micro-Level (Rung Mechanics) & Macro-Level (Program Layout)\\
+                \hline
+                Primary Scope & Single line of logic / localized operation & System-wide architecture / overall code base\\
+                \hline
+                Main Objective & Deterministic evaluation \& correct bit manipulation & Scalability, maintainability \& clear fault isolation\\
+                \hline
+                Typical Tools & Timers, counters, logic gates, math operations & Subroutines, UDTs, State Machines, Task Scheduling\\
+                \hline
+                Failure Mode & Intermittent bugs, missed pulses, logic race conditions & Unmaintainable ``spaghetti code," difficult commissioning\\
+                \hline
+            \end{tabular}
+        }
+    \end{table}
+\end{frame}
 
 \section{Micro-Level Programming}
+
+\begin{frame}
+    \frametitle{Micro-Level Programming Rules}
+
+    \begin{itemize}
+        \item Micro-level (rung level) programming is governed by a series of fixed rules
+        \item Some of the rules are based on the idea that ladder logic is based on electrical schematics
+        \item Some software (Logix Designer) will allow breaking the rules--it's up to the \emph{programmer} to follow them
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rule 1 - Rung Construction}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Each program line is a \emph{rung}
+                \item \emph{Condition} instructions go to the left
+                \item \emph{Control} instructions go to the right
+                \item Each rung must contain \emph{at least} one control
+                \item Most rungs contain condition \emph{and} control
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_TON_UsingDNBit.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rule 2 - One Control per Branch}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Each branch (level) of a rung can only have \emph{one} control instruction
+                \item Control instructions can be placed in parallel but \emph{never} series
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_OTE_Series.tex}
+                }
+                \vspace{0.5em}
+                
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_OTE_Parallel.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rule 3 - Condition Combinations}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Condition instructions can be in series, parallel, or any combination
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_InputCombination.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rule 4 - Branching}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Conditions \emph{and} controls can be placed in branches
+                \item Branches can be \emph{nested}--have different start and end points
+                \item Branches \emph{cannot} overlap
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_NestedBranches.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rule 5 - Condition Variables}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Variables and I/O can be used in multiple condition instructions
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                % Usage: \tikztodo[width]{height}{description/notes}
+                \tikztodo[\linewidth]{3cm}{Same input multiple contacts}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rule 6 - Control Variables}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Variables and I/O can only be used in \emph{one} control instruction (\texttt{OTE})
+                \item Those variables \emph{CAN} be used in other condition instructions
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                % Usage: \tikztodo[width]{height}{description/notes}
+                \tikztodo[\linewidth]{3cm}{Single OTE, multiple XIO}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Single \texttt{OTE} Trap (1 of 3)}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Same variable OTE multiple rungs}
+
+        \vspace{0.5em}
+        {\footnotesize What happens to the output variable in this program?\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Single \texttt{OTE} Trap (2 of 3)}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Same variable OTE multiple rungs}
+
+        \vspace{0.5em}
+        {\footnotesize Remember the scan--the first rung is scanned, the output is true. The output will \emph{never turn on}. The logic scan \emph{stores} the value, and it's going to store whatever value it hit last.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Single \texttt{OTE} Trap (3 of 3)}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Good use of multiple OTE}
+
+        \vspace{0.5em}
+        {\footnotesize There are a \emph{lot} of cases where you \emph{want} to use an \texttt{OTE} multiple times on the same variable--this is what branching is for\par}
+    \end{figure}
+\end{frame}
 
 \subsection{I/O Mapping}
 % Physical I/O mapping routines vs. direct aliasing (buffer layer advantages)
 
+\begin{frame}
+    \frametitle{Direct I/O Aliasing}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Direct aliasing asigns a physical I/O point to an intnernal tag
+                \item This is \emph{not recommended}
+                \item I/O are \emph{physical devices}--physical devices occasionally break
+                \item The system must be taken offline to change the alias and move the tag to another I/O point
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/diagrams/PLC_Aliasing.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{I/O Mapping}
+
+    \begin{itemize}
+        \item \emph{Mapping} is the preferred method of assigning I/O points to tags
+        \item Two subroutines are created--one for input mapping, one for output mapping
+        \item One I/O point per rung
+        \item A simple \texttt{XIO} and \texttt{OTE} combination is used to assign the I/O to the tag
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{I/O Mapping Example}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram rung featuring a normally closed contact on the left with a green highlight box above reading PLC Local Inputs, labeled with the tag Local:1:I.Data.6. On the right, the contact connects to an output coil with a green highlight box above reading Safety gate closed, labeled with the tag Machine.Safety.Gate[1].Closed.}]{MG5_InputMap.png}
+
+        \vspace{0.5em}
+
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram rung featuring a normally open contact on the left with a green highlight box above reading Red light, labeled with the tag Machine.StackLight.Red.LT. On the right, the contact connects to an output coil with a green highlight box above reading PLC Local Outputs, labeled with the tag Local:1:O.Data.0.}]{MG5_OutputMap.png}
+
+        \vspace{0.5em}
+        {\footnotesize Top: when the physical input \texttt{Local:1:I.Data.6} turns on, it will turn on the tag \texttt{Machine.Safety.Gate[1].Closed}. Bottom: when the tag \texttt{Machine.StackLight.Red.LT} turns on, it will turn on the physical output \texttt{Local:1:O:Data.0}.\par}
+    \end{figure}
+\end{frame}
+
 \subsection{Input Processing}
 
-% Debouncing noisy physical inputs (timer-on delays)
+\begin{frame}
+    \frametitle{Input Debouncing}
 
-% Analog scaling and basic signal filtering
+    \begin{itemize}
+        \item Mapping also allows something aliasing does not--\emph{debouncing}
+        \item Debouncing allows us to intentionally delay the time between a physical input turning on and the tag it's tied to turning on
+        \item Not required for \emph{all} input points
+        \item Good for filtering out ``nuissance'' trips caused by noise
+        \item Good for any input that has a tendency to ``blink''--allows us to be \emph{sure} it's on before we use it
+    \end{itemize}
+\end{frame}
 
-% Logical grouping: combining physical inputs into virtual status tags (e.g., "All Home")
+\begin{frame}
+    \frametitle{Air Cylinder Mid Switch (1 of )}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Air Cylinder Mid Switch - 3 parts}
+
+        \vspace{0.5em}
+        {\footnotesize This is a case-study, it actually happened: the air cylinder is acting as a clamp. The ``extend'' switch is \emph{not} at the end of the air cylinder, it's in the middle set where the cylinder would stop if a part were present.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Air Cylinder Mid Switch (2 of )}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Air Cylinder Mid Switch - 3 parts}
+
+        \vspace{0.5em}
+        {\footnotesize This setup is also intended to act as a par-present sensor--if we extend the cylinder and the switch doesn't turn on that means the cylinder extended too far, and there is no part.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Air Cylinder Mid Switch (3 of )}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Air Cylinder Mid Switch - 3 parts}
+
+        \vspace{0.5em}
+        {\footnotesize When there is no part, the cylinder flies by that switch \emph{really fast}. Except, because we don't know where we are in the scan \emph{sometimes} it catches the ``blink'' of the switch and counts it as on--the logic thinks there's a part there and the machine carries on.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Debounce Logic}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram rung featuring two normally open contacts in series leading to an output coil, with a timer instruction in parallel. On the far left, a contact with a green highlight box reading Station Level Inputs is tagged Local:4:I.Data.0. In series, the second contact has a green highlight box reading Fixture 1 Side A Output Delay Timer and is tagged Fixture[1,0].Cylinder[5].Ret.TMR.DN. On the far right, the series line terminates at an output coil with a green highlight box reading Fixture 1 Side A Tool Balancer, tagged Fixture[1,0].Cylinder[5].Ret.LT. Branching below the second contact and coil is a timer on delay block named TON, highlighted as Fixture 1 Side A Output Delay Timer, with the timer tag Fixture[1,0].Cylinder[5].Ret.TMR, a preset value of 300, and an accumulated value of 0.}]{MG5_Debounce.png}
+
+        \vspace{0.5em}
+        {\footnotesize Debounce is done with a single timer. When the physical input turns on, the timer starts. The \emph{tag} doesn't turn on until (unless) the timer \texttt{DN} bit turns on. Debounce timers don't need to be very long--50-200 ms is usually plenty.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Scaling}
+
+    \begin{itemize}
+        \item Analog inputs come is as integers--whole numbers that represent a voltage or current value from the sensor
+        \item Most analog cards are 12-bit--the value received by the PLC will be 0-4096
+        \item You \emph{can} use this value, but it doesn't mean much to anyone else looking at the code
+        \item It is \emph{much} better to scale it to engineering units \emph{before} using it in logic
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Allen-Bradley Scaling}
+
+    \begin{itemize}
+        \item Allen-Bradley's preferred method in the Logix 5000 PLCs is to scale the value in the definition of the analog card itself
+        \item This works, but has serious drawbacks
+        \item Not all cards and input devices are equal--if you swap temperature sensors and it's off compared to the old one the scaling needs to be changed
+        \item If the scaling is in the card definition, the system needs to be taken offline to change it
+        \item Plus, not all manufacturers do it this way--we like ``hardware agnostic'' programming methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Setting the Scale (1 of 2)}
+    \begin{itemize}
+        \item Math would tell us the scaling factor would be: $\text{Engineering Units} = \texttt{UnitRange} \times \frac{\texttt{AnalogValue}}{\texttt{MaxValue}}$
+        \item But this is only ever going to get you close--not all sensors and cards are equal
+        \item Best practice is to actually \emph{measure} the conversion factor
+        \item In this case, a spreadsheet is your best friend\dots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Setting the Scale (2 of 2)}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.625\linewidth, alt={A scatter plot titled Analog Scaling displaying Analog Value on the vertical axis, ranging from 2700 to 3900, against Temperature (F) on the horizontal axis, ranging from 70 to 95. Five dark blue data points show an upward linear trend with a dotted trendline passing through them. The linear regression equation is displayed in the upper right corner as y = 42.277x - 112.3 with an R-squared value of 0.9864.}]{AnalogScaling_Regression.png}
+
+        \vspace{0.5em}
+        {\footnotesize Set the sensor to 5-6 known real-world values and read the analog input value. Plot them in a spreadsheet and run a \emph{linear regression}--which the software will do automatically with one click. The regression equation is the scaling factor.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Scaling in the Input Map}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Analog Scaling - Use a CPT}
+
+        \vspace{0.5em}
+        {\footnotesize The preferred method is to scale the analog value to actual units \emph{in the input map}. The rest of your program is instantly easier to troubleshoot--you're using degrees throughout the program instead of analog count.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Logical Input Grouping}
+
+    \begin{itemize}
+        \item Input conditions can get extremely complicated, even in small machines
+        \item An \texttt{Inputs} subroutine can be used to group inputs together, making the main machine sequence much simpler to follow
+        \item This is commonly use for home conditions, but can be used to simplify anything
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inputs Subroutine Example 1}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram rung with a yellow banner reading CATCH A CYCLE START FROM ANY SOURCE. On the left are three parallel normally open contacts: the top contact labeled Side A Cycle Start Opto Machine.CycleStart[1].PB with green highlighting, the middle contact labeled Side B Cycle Start Opto Machine.CycleStart[2].PB with green highlighting, and the bottom contact labeled Machine.CycleStart[3].PB. On the right, the parallel inputs connect to an output coil labeled Machine.CycleStart[0].PB.}]{MG5_InputCombination.png}
+
+        \vspace{0.5em}
+        {\footnotesize Grouping inputs together in a logical manner greatly simplifies the main sequence routine\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inputs Subroutine Example 2}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram showing conditions for starting an auto routine. The main horizontal branch consists of multiple series contacts highlighted in green, including Machine Safety Control, Command Enable, System Ready, normally closed Program Running, normally closed Paused, normally closed Fault, normally closed TP Enabled, and normally closed Busy. This connects to three parallel branches: two Auto Mode branches with ROBOT START LT and Aux Home inputs for Side A and Side B, and a third Manual Mode branch with Manual Tip Change Command and Side A Weld Curtain inputs. A normally closed Robot Start Complete contact follows the parallel branches. Below the main line, a parallel branch contains an EQU block for PN Strobe Command comparing Robot PNS PNCommand to zero. All conditions terminate at an output coil on the right labeled Auto routine start conditions OK with tag Robot PLC AutoControl StartConditions.}]{MG5_RobotStart.png}
+
+        \vspace{0.5em}
+        {\footnotesize This rung combines all of the inputs that must be true in order for a FANUC robot to accept a start command.\par}
+    \end{figure}
+\end{frame}
 
 \subsection{Output Management}
-% Permissives vs. Hard Interlocks (safety/machine protection)
+
+\begin{frame}
+    \frametitle{Outputs Subroutine}
+
+    \begin{itemize}
+        \item Where input grouping is used for readability of the logic, output grouping is \emph{necessary} for machine safety
+        \item An \texttt{Outputs} subroutine is used to create the \emph{permissives} for machine motion--those conditions that are required to make sure the machine doesn't crash into itself
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Output Permissive}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram rung with a yellow banner reading SIDE B WELD CURTAIN. On the left are two parallel paths for Auto Mode and Manual Mode. The upper path contains an Auto Mode contact followed by a Limit Test block for Current Auto Step with a Low Limit of 30, a High Limit of 109, and a test tag Fixture[FixtureID_SideB,1].Auto.Step. The lower path contains a Manual Mode contact in series with a Side B Weld Curtain contact tagged Machine.WeldDoor[2].Ext.PB. These parallel branches join in series with a Side B Light Curtain normally open contact tagged Machine.Safety.LightCurtain[2].LT and a normally closed contact for Side B Weld Curtain Both closed switches made tagged Machine.Safety.Gate[3].GateOK. The rung terminates at an output coil on the right labeled Side B Weld Curtain with tag Machine.WeldDoor[2].Ext.CMD.}]{MG5_OutputPermissive.png}
+
+        \vspace{0.5em}
+        {\footnotesize This logic will not allow the \texttt{Machine.WeldDoor[2].Ext.CMD} output to energize unless the other elements of the machine are clear\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Output Seal-In}
+
+    \begin{itemize}
+        \item Output latching instructions and retentive outputs can be dangerous--they're still energized when the PLC power cycles
+        \item A \emph{seal-in} is the preferred method
+        \item A seal-in uses only an \texttt{OTE} instruction, guaranteeing that the output will turn off on a power cycle
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Seal-In Logic}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.75\linewidth, alt={Ladder logic diagram rung with a yellow banner reading AUTO MODE SELECT. On the left are two parallel normally open contacts: an upper contact for Auto Mode tagged Machine.Mode.Auto.PB and a lower seal in contact for Auto Mode tagged Machine.Mode.Auto.LT. These parallel branches connect in series to three contacts: a normally closed contact for Manual Mode tagged Machine.Mode.Manual.PB, a normally closed contact for Deselect Any Operating Mode tagged Machine.Mode.ModeReset.PB, and a normally open contact for Machine Safety Control tagged Machine.Safety.ControlPower[0].LT. The main rung terminates at an output coil on the right labeled Auto Mode with tag Machine.Mode.Auto.LT.}]{MG5_SealIn.png}
+
+        \vspace{0.5em}
+        {\footnotesize \texttt{Machine.Mode.Auto.LT} will remain energized until someone presses the manual button, the mode deselect button, or the machine safety is tripped.\par}
+    \end{figure}
+\end{frame}
 
 \subsection{Countdown Timers}
+
+\begin{frame}
+    \frametitle{Countdown Timers}
+
+    \begin{itemize}
+        \item The techniques discussed up to this point are intended primarily to make it easier for technicians and engineers to troubleshoot the code
+        \item Knowing how to properly code a countdown timer is for the \emph{operators}
+        \item The countdown can be displayed on a human-machine interface to let the operator know \emph{exactly} how much time is left in a given operation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{How Would You Program a Countdown?}
+
+    \centering
+    \Large{How would \emph{you} program a timer so that the \emph{time remaining} can be displayed to an operator?}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Countdown Timer Logic (1 of 2)}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Countdown Timer - remember seconds conversion}
+
+        \vspace{0.5em}
+        {\footnotesize The timer operates as normal and is used elsewhere in the logic just like any timer. The \texttt{SecondsRemain} variable is what's displayed \emph{to the operator}.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Countdown Timer Logic (2 of 2)}
+
+    \begin{figure}
+        \centering
+        % Usage: \tikztodo[width]{height}{description/notes}
+        \tikztodo[\linewidth]{5cm}{Countdown Timer - remember seconds conversion}
+
+        \vspace{0.5em}
+        {\footnotesize Remember, the timer \texttt{PRE} and \texttt{ACC} are in \emph{milliseconds}--that doesn't mean much to an operator.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Countdown Timer In Use}
+
+    \begin{figure}
+        \centering
+        \includegraphics[angle=90, width=0.5\linewidth, alt={Ladder logic diagram rung featuring four vertical parallel mathematical blocks used to compute a logout countdown timer. The top block is a SUB instruction labeled Logout timer milliseconds remaining, subtracting Machine.Login.LogoutTMR.ACC from Machine.Login.LogoutTMR.PRE to store the result in Machine.Login.LogoutTimer_MillisecondsRemaining. Below it is a DIV instruction labeled Logout timer minutes remaining, dividing Machine.Login.LogoutTimer_MillisecondsRemaining by 60000 to store the result in Machine.Login.LogoutTimer_MinutesRemaining. The third block is a MOD instruction labeled Remainder of milliseconds remaining/60000, taking the modulo of Machine.Login.LogoutTimer_MillisecondsRemaining and 60000 to store in Machine.Login.LogoutTimer_DivisionRemainder. The bottom block is a DIV instruction labeled Logout timer seconds remaining, dividing Machine.Login.LogoutTimer_DivisionRemainder by 1000 to store the result in Machine.Login.LogoutTimer_SecondsRemaining.}]{MG5_CountdownTimer.png}
+
+        \vspace{0.5em}
+        {\footnotesize This countdown shows an operator how long they have before they are logged out. It displays in minutes \emph{and} seconds.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Most Important Micro Concept}
+
+    \centering
+    \Large{This presentation includes \emph{many} screenshots from an actual, functional machine program--what is present in \emph{all} of them?}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Logic Documentation}
+
+    \begin{itemize}
+        \item All PLC platforms inlcude a way to \emph{document} the code--usually called \emph{commenting}
+        \item Most platforms allow for rung comments \emph{and} tag comments (descriptions)
+        \item \textbf{USE THEM BOTH!}
+        \item The benefits are two-fold: a technician troubleshooting at 2am will have an easier time understanding what the program is doing, and in 5 years \emph{you} will remember what you did!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Using Comments}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, alt={Ladder logic diagram rung with a yellow banner reading PRODUCTION RATE IDLE TIMER WHEN THE MACHINE IS NOT OPERATING IN AUTO THE TIMER DISABLES THE PRODUCTION RATE TIMER EXCLUDES BREAKS LUNCHES OFF SHIFTS FROM THE PRODUCTION RATE CALCULATION. On the left is a normally open contact labeled Auto Mode tagged Machine.Mode.Auto.LT in series with a Less Than or Equal comparison block labeled Fixture 1 Side A Current Auto Step comparing Fixture[1,0].Auto.Step to 20. These lead to a timer on delay block named TON highlighted as Fixture 1 Side A Off Timer Stops the production rate timer when the machine is idle, with the timer tag Fixture[1,0].ProductionRate.IdleTMR, a preset value of 600000, and an accumulated value of 0.}]{MG5_Comments.png}
+
+        \vspace{0.5em}
+        {\footnotesize Comments \emph{greatly} simplify troubleshooting--use them everywhere you can.\par}
+    \end{figure}
+\end{frame}
 
 \section{Macro-Level Programming}
 

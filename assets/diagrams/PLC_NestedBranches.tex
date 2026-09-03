@@ -1,0 +1,35 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={Circuit diagram featuring three parallel horizontal paths on the left that merge before connecting to two parallel outputs on the right. The top branch on the left contains two capacitors in series labeled AutoLT and HomeSW. The middle branch contains a single capacitor labeled ManualLT. The bottom branch contains two capacitors in series labeled Override and ControlPower. After these three input paths join, the circuit splits into two parallel output branches: the top path contains an empty source labeled YellowLT, and the bottom path contains an empty source labeled InMotion, which then rejoins the main output line.}
+    ]
+
+    %======================================================================================================
+    % Main Layer
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
+        ]
+        
+            \draw (0,0) to[C,l={AutoLT}] ++(3,0) to[C,l={HomeSW}] ++(3,0) -- ++(3,0) to[esource, l={YellowLT}] ++(3,0);
+            
+            \draw (0,0) -- ++(0,-2) to[C, l={ManualLT}] ++(3,0) -- ++(3,0) -- ++(0,2);
+
+            \draw (0,-2) -- ++(0,-2) to[C, l={Override}] ++(3,0) to[C,l={ControlPower}] ++(3,0) -- ++(0,2);
+
+            \draw (9,0) -- ++(0,-2) to[esource, l={InMotion}] ++(3,0) -- ++(0,2);
+            
+        \end{scope}
+    \end{pgfonlayer}
+    
+\end{circuitikz}

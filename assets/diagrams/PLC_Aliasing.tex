@@ -1,0 +1,33 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={Circuit diagram featuring a single horizontal path starting on the left with a capacitor labeled StartPB and tagged Local:1:I.Data.0 above it. The path continues along a straight wire to connect to an empty source on the right labeled YellowLT and tagged Local:1:O.Data.3 above it.}
+    ]
+
+    %======================================================================================================
+    % Main Layer
+    %======================================================================================================
+    \begin{pgfonlayer}{main}
+
+        %======================================================================================================
+        % Scope sets options for both lines - BakerBlack
+        %======================================================================================================
+        \begin{scope}[
+            draw=BakerBlack,
+            text=BakerBlack,
+            color=BakerBlack,
+            font=\small
+        ]
+        
+            \draw (0,0) to[C,l={StartPB}] ++(3,0) -- ++(3,0) to[esource,l={YellowLT}] ++(3,0);
+            
+        \end{scope}
+    \end{pgfonlayer}
+
+    \node[text=LakeBlue, font=\small] at ($(1.5,0) + (0,1.25)$) {<Local:1:I.Data.0>};
+
+    \node[text=LakeBlue, font=\small] at ($(7.5,0) + (0,1.25)$) {<Local:1:O.Data.3>};
+    
+\end{circuitikz}
