@@ -11,7 +11,7 @@
 % ============================================================================
 % Document Properties - used on title slide and PDF metadata fields
 % ============================================================================
-\def\PresTitle{Structured PLC Programming}  % Required - top line of title slide
+\def\PresTitle{Micro-Level PLC Programming}  % Required - top line of title slide
 \def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
 \def\PresAuthor{Brad Peirson}               % Required - below dividing line
 \def\PresInstitute{College of Information Technology and Engineering}       % Optional
@@ -386,7 +386,7 @@
     \begin{columns}
         \begin{column}{0.48\linewidth}
             \begin{itemize}
-                \item Direct aliasing asigns a physical I/O point to an intnernal tag
+                \item Direct aliasing assigns a physical I/O point to an internal tag
                 \item This is \emph{not recommended}
                 \item I/O are \emph{physical devices}--physical devices occasionally break
                 \item The system must be taken offline to change the alias and move the tag to another I/O point
@@ -410,7 +410,7 @@
         \item \emph{Mapping} is the preferred method of assigning I/O points to tags
         \item Two subroutines are created--one for input mapping, one for output mapping
         \item One I/O point per rung
-        \item A simple \texttt{XIO} and \texttt{OTE} combination is used to assign the I/O to the tag
+        \item A simple \texttt{XIC} and \texttt{OTE} combination is used to assign the I/O to the tag
     \end{itemize}
 \end{frame}
 
@@ -439,7 +439,7 @@
         \item Mapping also allows something aliasing does not--\emph{debouncing}
         \item Debouncing allows us to intentionally delay the time between a physical input turning on and the tag it's tied to turning on
         \item Not required for \emph{all} input points
-        \item Good for filtering out ``nuissance'' trips caused by noise
+        \item Good for filtering out ``nuisance'' trips caused by noise
         \item Good for any input that has a tendency to ``blink''--allows us to be \emph{sure} it's on before we use it
     \end{itemize}
 \end{frame}
@@ -468,7 +468,7 @@
         }
 
         \vspace{0.5em}
-        {\footnotesize This setup is also intended to act as a par-present sensor--if we extend the cylinder and the switch doesn't turn on that means the cylinder extended too far, and there is no part.\par}
+        {\footnotesize This setup is also intended to act as a part-present sensor--if we extend the cylinder and the switch doesn't turn on that means the cylinder extended too far, and there is no part.\par}
     \end{figure}
 \end{frame}
 
@@ -502,7 +502,7 @@
     \frametitle{Analog Scaling}
 
     \begin{itemize}
-        \item Analog inputs come is as integers--whole numbers that represent a voltage or current value from the sensor
+        \item Analog inputs come in as integers--whole numbers that represent a voltage or current value from the sensor
         \item Most analog cards are 12-bit--the value received by the PLC will be 0-4096
         \item You \emph{can} use this value, but it doesn't mean much to anyone else looking at the code
         \item It is \emph{much} better to scale it to engineering units \emph{before} using it in logic
@@ -525,7 +525,8 @@
     \frametitle{Setting the Scale (1 of 2)}
     \begin{itemize}
         \item Math would tell us the scaling factor would be: $\text{Engineering Units} = \texttt{UnitRange} \times \frac{\texttt{AnalogValue}}{\texttt{MaxValue}}$
-        \item But this is only ever going to get you close--not all sensors and cards are equal
+        \item This only works \emph{if} the signal starts at 0
+        \item It is also only ever going to get you close--not all sensors and cards are equal
         \item Best practice is to actually \emph{measure} the conversion factor
         \item In this case, a spreadsheet is your best friend\dots
     \end{itemize}
@@ -627,10 +628,192 @@
 
     \begin{figure}
         \centering
-        \includegraphics[width=0.75\linewidth, alt={Ladder logic diagram rung with a yellow banner reading AUTO MODE SELECT. On the left are two parallel normally open contacts: an upper contact for Auto Mode tagged Machine.Mode.Auto.PB and a lower seal in contact for Auto Mode tagged Machine.Mode.Auto.LT. These parallel branches connect in series to three contacts: a normally closed contact for Manual Mode tagged Machine.Mode.Manual.PB, a normally closed contact for Deselect Any Operating Mode tagged Machine.Mode.ModeReset.PB, and a normally open contact for Machine Safety Control tagged Machine.Safety.ControlPower[0].LT. The main rung terminates at an output coil on the right labeled Auto Mode with tag Machine.Mode.Auto.LT.}]{MG5_SealIn.png}
+        %\includegraphics[width=0.75\linewidth, alt={Ladder logic diagram rung with a yellow banner reading AUTO MODE SELECT. On the left are two parallel normally open contacts: an upper contact for Auto Mode tagged Machine.Mode.Auto.PB and a lower seal in contact for Auto Mode tagged Machine.Mode.Auto.LT. These parallel branches connect in series to three contacts: a normally closed contact for Manual Mode tagged Machine.Mode.Manual.PB, a normally closed contact for Deselect Any Operating Mode tagged Machine.Mode.ModeReset.PB, and a normally open contact for Machine Safety Control tagged Machine.Safety.ControlPower[0].LT. The main rung terminates at an output coil on the right labeled Auto Mode with tag Machine.Mode.Auto.LT.}]{MG5_SealIn.png}
+
+        \resizebox{0.75\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_SealIn.tex}
+        }
 
         \vspace{0.5em}
-        {\footnotesize \texttt{Machine.Mode.Auto.LT} will remain energized until someone presses the manual button, the mode deselect button, or the machine safety is tripped.\par}
+        {\footnotesize Auto will remain energized until someone presses the manual button, and manual will remain energized until someone presses the auto button. Both will turn off if power is lost.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Momentary as Toggle}
+
+    \begin{itemize}
+        \item Buttons are available in momentary and maintained configurations
+        \item HMI configuration software includes the same options
+        \item We can write ladder logic to treat a momentary button as a toggle
+        \item Can be used with hardware buttons, but most useful with HMIs--simplifies development knowing \emph{all} HMI buttons are momentary
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Toggle Logic - First Scan}
+
+    \begin{figure}
+        \centering
+        
+        \input{../../assets/diagrams/PLC_MomentaryToggle1.tex}
+
+        \vspace{0.5em}
+        {\footnotesize Rung 1: The button is pressed, the oneshot is true, the single scan bit energizes.\\ Rung 2: The single scan bit is true, but auto is still false so auto will energize. \par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Toggle Logic - Second Scan}
+
+    \begin{figure}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_MomentaryToggle2.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize Rung 1: The button is still pressed but the oneshot is now false, the single scan bit turns off.\\ Rung 2: The single scan bit is false but auto is already energized, so it stays energized. \par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Toggle Logic - Second Button Press}
+
+    \begin{figure}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_MomentaryToggle3.tex}
+        }
+
+        \vspace{0.5em}
+        {\footnotesize Rung 1: The button is pressed, the oneshot is true, the single scan bit will energize.\\ Rung 2: The single scan bit is true, but so is auto--there is no true branch so auto will de-energize. \par}
+    \end{figure}
+\end{frame}
+
+\subsection{Free-Running Timers}
+
+\begin{frame}
+    \frametitle{Free-Running Timers}
+
+    \begin{itemize}
+        \item A free-running timer is simply a timer that resets itself
+        \item The \texttt{DN} bit will only be on for one scan--not good for a lot
+        \item But \emph{incredibly useful} for things that need to happen at regular intervals
+        \item For example, log a temperature reading once an hour
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Free-Running Timer Logic (1 of 4)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_FreeRunningTimer1.tex}
+
+        \vspace{0.5em}
+        {\footnotesize When the PLC first boots the timer is not done, so it will be enabled.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Free-Running Timer Logic (2 of 4)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_FreeRunningTimer2.tex}
+
+        \vspace{0.5em}
+        {\footnotesize The timer finishes as normal and the \texttt{DN} bit energizes.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Free-Running Timer Logic (3 of 4)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_FreeRunningTimer3.tex}
+
+        \vspace{0.5em}
+        {\footnotesize The \texttt{DN} bit is true for \emph{exactly one scan}--just long enough to reset the timer. It's also long enough for us to use \texttt{DN} to trigger other things, like data logging.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Free-Running Timer Logic (4 of 4)}
+
+    \begin{figure}
+        \centering
+        \input{../../assets/diagrams/PLC_FreeRunningTimer4.tex}
+
+        \vspace{0.5em}
+        {\footnotesize On the very next scan the \texttt{DN} bit is false, so the timer starts timiing again.\par}
+    \end{figure}
+\end{frame}
+
+\subsection{Blink Timers}
+
+\begin{frame}
+    \frametitle{Blink Timers}
+
+    \begin{itemize}
+        \item Some PLC brands include pre-defined bits that blink at specific intervals
+        \item That would be a hardware specific solution--we want our code to be as universal as possible
+        \item There are several good ways to set use timers to create a blinking bit
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Two-Timer Blink}
+
+    \begin{itemize}
+        \item The two-timer blink method is effectively two free-running timers
+        \item The first timer enables the second
+        \item The second timer resets the first
+        \item The blink happens while the first timer is timing
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Two-Timer Blink Logic (1 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_Blink_TwoTimer1.tex}
+        }
+
+        \vspace{0.5em} 
+        {\footnotesize On the first scan the second timer hasn't finished so the first timer starts.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Two-Timer Blink Logic (2 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_Blink_TwoTimer2.tex}
+        }
+        
+        \vspace{0.5em}
+        {\footnotesize The first timer finishes, which enables the second timer and energizes the blink bit.\par}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Two-Timer Blink Logic (3 of 3)}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.5\linewidth}{!}{
+            \input{../../assets/diagrams/PLC_Blink_TwoTimer3.tex}
+        }
+        
+        \vspace{0.5em}
+        {\footnotesize When the second timer finishes its \texttt{DN} bit is on for exactly one scan--just long enough to reset both timers.\par}
     \end{figure}
 \end{frame}
 
@@ -693,6 +876,8 @@
     \end{figure}
 \end{frame}
 
+\subsection{The Most Important Micro Concept}
+
 \begin{frame}
     \frametitle{The Most Important Micro Concept}
 
@@ -704,7 +889,7 @@
     \frametitle{Logic Documentation}
 
     \begin{itemize}
-        \item All PLC platforms inlcude a way to \emph{document} the code--usually called \emph{commenting}
+        \item All PLC platforms include a way to \emph{document} the code--usually called \emph{commenting}
         \item Most platforms allow for rung comments \emph{and} tag comments (descriptions)
         \item \textbf{USE THEM BOTH!}
         \item The benefits are two-fold: a technician troubleshooting at 2am will have an easier time understanding what the program is doing, and in 5 years \emph{you} will remember what you did!
@@ -723,15 +908,17 @@
     \end{figure}
 \end{frame}
 
-\section{Macro-Level Programming}
+% Decided the macro stuff should be later in the course - want to keep the structure here as a reminder
 
-\subsection{Organization Foundation}
+% \section{Macro-Level Programming}
 
-\subsection{GM 5-Rung Architecture}
+% \subsection{Organization Foundation}
 
-\subsection{Full State Machine}
+% \subsection{GM 5-Rung Architecture}
 
-\subsection{Integer Step Sequencer}
+% \subsection{Full State Machine}
+
+% \subsection{Integer Step Sequencer}
 
 \begin{frame}
     \centering

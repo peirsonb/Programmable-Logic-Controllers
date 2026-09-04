@@ -3,11 +3,11 @@
     voltage dir=RP,
     >=latex,
     %>={Latex[length=5mm, width=2mm]},
-    alt={}
+    alt={Ladder logic diagram titled Seal-In Logic featuring two rungs bounded by vertical power rails with green highlighting on the left rail indicating power flow. The top rung consists of an examine if closed contact labeled AutoPB in series with an examine if open contact labeled ManualPB leading to an output coil labeled Auto. A parallel seal-in branch containing an examine if closed contact labeled Auto wraps around the AutoPB contact. The bottom rung features an examine if closed contact labeled ManualPB in series with an examine if open contact labeled AutoPB leading to an output coil labeled Manual. A parallel seal-in branch containing an examine if closed contact labeled Manual wraps around the ManualPB contact.}
     ]
 
     % Define the number of rungs in the diagram
-    \def\numRungs{2}
+    \def\numRungs{3}
 
     % Calculate the length of the vertical power rails dynamically based on number of rungs
     \pgfmathsetmacro{\railLength}{-2 * \numRungs}
@@ -76,35 +76,14 @@
             %=================================================================
             % Rung 1
             %=================================================================
-            \draw (C-0-0) -- (C-3-0) pic (TON) {TON};
-            \draw (TON-OUT) -- (C-5-0);
+            \draw (C-0-0) to[C, l={AutoPB}] (C-1-0) to[vC, l={ManualPB}] (C-2-0) -- (C-4-0) to[esource, l={Auto}] (C-5-0);
+            \draw ($(C-0-0)+(0.25,0)$) -- ++(0,-2) to[C, l={Auto}] ($(C-1-1)-(0.25,0)$) -- ++(0,2);
 
-            \node[anchor=south] at (TON-TOP) {TON};
-            \node[anchor=north] at (TON-TOP) {\texttt{RunTimer}};
-            \node[anchor=west] at (TON-PRE) {20000};
-            \node[anchor=west] at (TON-ACC) {6789};
-
-            \draw ($(C-2-0)+(2,0)$) coordinate(h1) -- ++(0,-3) coordinate(h2) -- ++(0.5,0) pic (SUB) {SrcDest};
-            \draw (SUB-OUT) -- ++(0.5,0) coordinate(h3) -- ++(0,3) coordinate(h4);
-
-            \node[anchor=south] at (SUB-TOP) {SUB};
-            \node[anchor=west] at (SUB-SRCA) {\texttt{RunTimer.PRE}};
-            \node[anchor=west] at (SUB-AVAL) {20000};
-            \node[anchor=west] at (SUB-SRCB) {\texttt{RunTimer.ACC}};
-            \node[anchor=west] at (SUB-BVAL) {6789};
-            \node[anchor=west] at (SUB-DEST) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (SUB-DVAL) {13211};
-
-            \draw (h2) -- ++(0,-4.75) coordinate(h5) -- ++(0.5,0) pic (DIV) {SrcDest};
-            \draw (DIV-OUT) -- ++(0.5,0) coordinate(h6) -- ++(0,4.75) coordinate(h7);
-
-            \node[anchor=south] at (DIV-TOP) {DIV};
-            \node[anchor=west] at (DIV-SRCA) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (DIV-AVAL) {13211};
-            \node[anchor=west] at (DIV-SRCB) {1000};
-            \node[anchor=west] at (DIV-BVAL) {1000};
-            \node[anchor=west] at (DIV-DEST) {\texttt{TimeLeft\_S}};
-            \node[anchor=west] at (DIV-DVAL) {13.211};
+            %=================================================================
+            % Rung 2
+            %=================================================================
+            \draw (C-0-2) to[C, l={ManualPB}] (C-1-2) to[vC, l={AutoPB}] (C-2-2) -- (C-4-2) to[esource, l={Manual}] (C-5-2);
+            \draw ($(C-0-2)+(0.25,0)$) -- ++(0,-2) to[C, l={Manual}] ($(C-1-3)-(0.25,0)$) -- ++(0,2);
 
         \end{scope}
     \end{pgfonlayer}
@@ -132,14 +111,7 @@
             %==================================================================
             \draw (0,0) -- (0,\railLength);
         
-            %=================================================================
-            % Rung 1
-            %=================================================================
-            \draw (C-0-0) -- (TON-IN);
-
-            \draw (h1) -- (h2) -- (SUB-IN);
-
-            \draw (h2) -- (h5) -- (DIV-IN);
+            
 
         \end{scope}
     \end{pgfonlayer}

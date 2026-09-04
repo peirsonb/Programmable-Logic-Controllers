@@ -7,7 +7,7 @@
     ]
 
     % Define the number of rungs in the diagram
-    \def\numRungs{2}
+    \def\numRungs{1}
 
     % Calculate the length of the vertical power rails dynamically based on number of rungs
     \pgfmathsetmacro{\railLength}{-2 * \numRungs}
@@ -76,35 +76,13 @@
             %=================================================================
             % Rung 1
             %=================================================================
-            \draw (C-0-0) -- (C-3-0) pic (TON) {TON};
+            \draw (C-0-0) to[vC, l={\texttt{Timer.DN}}] (C-1-0) -- (C-3-0) pic (TON) {TON};
             \draw (TON-OUT) -- (C-5-0);
 
             \node[anchor=south] at (TON-TOP) {TON};
-            \node[anchor=north] at (TON-TOP) {\texttt{RunTimer}};
-            \node[anchor=west] at (TON-PRE) {20000};
-            \node[anchor=west] at (TON-ACC) {6789};
-
-            \draw ($(C-2-0)+(2,0)$) coordinate(h1) -- ++(0,-3) coordinate(h2) -- ++(0.5,0) pic (SUB) {SrcDest};
-            \draw (SUB-OUT) -- ++(0.5,0) coordinate(h3) -- ++(0,3) coordinate(h4);
-
-            \node[anchor=south] at (SUB-TOP) {SUB};
-            \node[anchor=west] at (SUB-SRCA) {\texttt{RunTimer.PRE}};
-            \node[anchor=west] at (SUB-AVAL) {20000};
-            \node[anchor=west] at (SUB-SRCB) {\texttt{RunTimer.ACC}};
-            \node[anchor=west] at (SUB-BVAL) {6789};
-            \node[anchor=west] at (SUB-DEST) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (SUB-DVAL) {13211};
-
-            \draw (h2) -- ++(0,-4.75) coordinate(h5) -- ++(0.5,0) pic (DIV) {SrcDest};
-            \draw (DIV-OUT) -- ++(0.5,0) coordinate(h6) -- ++(0,4.75) coordinate(h7);
-
-            \node[anchor=south] at (DIV-TOP) {DIV};
-            \node[anchor=west] at (DIV-SRCA) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (DIV-AVAL) {13211};
-            \node[anchor=west] at (DIV-SRCB) {1000};
-            \node[anchor=west] at (DIV-BVAL) {1000};
-            \node[anchor=west] at (DIV-DEST) {\texttt{TimeLeft\_S}};
-            \node[anchor=west] at (DIV-DVAL) {13.211};
+            \node[anchor=north] at (TON-TOP) {\texttt{Timer}};
+            \node[anchor=west] at (TON-PRE) {2000};
+            \node[anchor=west] at (TON-ACC) {237};
 
         \end{scope}
     \end{pgfonlayer}
@@ -132,14 +110,9 @@
             %==================================================================
             \draw (0,0) -- (0,\railLength);
         
-            %=================================================================
-            % Rung 1
-            %=================================================================
-            \draw (C-0-0) -- (TON-IN);
+            \draw (C-0-0) -- (C-3-0);
 
-            \draw (h1) -- (h2) -- (SUB-IN);
-
-            \draw (h2) -- (h5) -- (DIV-IN);
+            \draw (TON-EN1) -- (TON-EN2);
 
         \end{scope}
     \end{pgfonlayer}

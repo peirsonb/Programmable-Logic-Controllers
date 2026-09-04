@@ -3,7 +3,7 @@
     voltage dir=RP,
     >=latex,
     %>={Latex[length=5mm, width=2mm]},
-    alt={}
+    alt={Ladder logic diagram titled Toggle Logic - Second Button Press featuring two rungs bounded by vertical power rails with green highlighting indicating active power flow. The top rung contains an examine if closed contact labeled AutoPB in series with a one shot instruction labeled OneShot leading to an output coil labeled AutoSS, with a green highlight spanning the entire length of the top rung. The bottom rung contains a top branch with an examine if closed contact labeled AutoSS in series with an examine if open contact labeled Auto leading to an output coil labeled Auto, wrapped over a lower branch with an examine if open contact labeled AutoSS in series with an examine if closed contact labeled Auto, with both branches and the output coil on the bottom rung remaining completely unhighlighted.}
     ]
 
     % Define the number of rungs in the diagram
@@ -76,35 +76,13 @@
             %=================================================================
             % Rung 1
             %=================================================================
-            \draw (C-0-0) -- (C-3-0) pic (TON) {TON};
-            \draw (TON-OUT) -- (C-5-0);
+            \draw (C-0-0) to[C, l={AutoPB}] (C-1-0) pic (ONS) {ONS};
+            \draw (ONS-OUT) -- (C-4-0) to[esource, l={AutoSS}] (C-5-0);
+            \draw (C-0-1) to[C, l={AutoSS}] (C-1-1) to[vC, l={Auto}] (C-2-1) -- (C-4-1) to[esource, l={Auto}] (C-5-1);
+            \draw ($(C-0-1)+(0.25,0)$) coordinate(h1) -- ++(0,-2) coordinate(h2) to[vC, l={AutoSS}] (C-1-2) to[C, l={Auto}] ($(C-2-2)-(0.25,0)$) coordinate(h3) -- ++(0,2) coordinate(h4);
 
-            \node[anchor=south] at (TON-TOP) {TON};
-            \node[anchor=north] at (TON-TOP) {\texttt{RunTimer}};
-            \node[anchor=west] at (TON-PRE) {20000};
-            \node[anchor=west] at (TON-ACC) {6789};
-
-            \draw ($(C-2-0)+(2,0)$) coordinate(h1) -- ++(0,-3) coordinate(h2) -- ++(0.5,0) pic (SUB) {SrcDest};
-            \draw (SUB-OUT) -- ++(0.5,0) coordinate(h3) -- ++(0,3) coordinate(h4);
-
-            \node[anchor=south] at (SUB-TOP) {SUB};
-            \node[anchor=west] at (SUB-SRCA) {\texttt{RunTimer.PRE}};
-            \node[anchor=west] at (SUB-AVAL) {20000};
-            \node[anchor=west] at (SUB-SRCB) {\texttt{RunTimer.ACC}};
-            \node[anchor=west] at (SUB-BVAL) {6789};
-            \node[anchor=west] at (SUB-DEST) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (SUB-DVAL) {13211};
-
-            \draw (h2) -- ++(0,-4.75) coordinate(h5) -- ++(0.5,0) pic (DIV) {SrcDest};
-            \draw (DIV-OUT) -- ++(0.5,0) coordinate(h6) -- ++(0,4.75) coordinate(h7);
-
-            \node[anchor=south] at (DIV-TOP) {DIV};
-            \node[anchor=west] at (DIV-SRCA) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (DIV-AVAL) {13211};
-            \node[anchor=west] at (DIV-SRCB) {1000};
-            \node[anchor=west] at (DIV-BVAL) {1000};
-            \node[anchor=west] at (DIV-DEST) {\texttt{TimeLeft\_S}};
-            \node[anchor=west] at (DIV-DVAL) {13.211};
+            \node[anchor=center] at (ONS-INS) {ONS};
+            \node[anchor=south] at (ONS-VAR) {OneShot};
 
         \end{scope}
     \end{pgfonlayer}
@@ -132,14 +110,7 @@
             %==================================================================
             \draw (0,0) -- (0,\railLength);
         
-            %=================================================================
-            % Rung 1
-            %=================================================================
-            \draw (C-0-0) -- (TON-IN);
-
-            \draw (h1) -- (h2) -- (SUB-IN);
-
-            \draw (h2) -- (h5) -- (DIV-IN);
+            \draw (C-0-0) -- (C-5-0);
 
         \end{scope}
     \end{pgfonlayer}

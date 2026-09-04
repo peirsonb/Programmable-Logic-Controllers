@@ -7,7 +7,7 @@
     ]
 
     % Define the number of rungs in the diagram
-    \def\numRungs{2}
+    \def\numRungs{5}
 
     % Calculate the length of the vertical power rails dynamically based on number of rungs
     \pgfmathsetmacro{\railLength}{-2 * \numRungs}
@@ -76,42 +76,33 @@
             %=================================================================
             % Rung 1
             %=================================================================
-            \draw (C-0-0) -- (C-3-0) pic (TON) {TON};
-            \draw (TON-OUT) -- (C-5-0);
+            \draw (C-0-0) to[vC, l={\texttt{BlinkOn.DN}}] (C-1-0) -- (C-3-0) pic (TON1) {TON};
+            \draw (TON1-OUT) -- (C-5-0);
 
-            \node[anchor=south] at (TON-TOP) {TON};
-            \node[anchor=north] at (TON-TOP) {\texttt{RunTimer}};
-            \node[anchor=west] at (TON-PRE) {20000};
-            \node[anchor=west] at (TON-ACC) {6789};
+            \node[anchor=south] at (TON1-TOP) {TON};
+            \node[anchor=north] at (TON1-TOP) {\texttt{BlinkOff}};
+            \node[anchor=west] at (TON1-PRE) {500};
+            \node[anchor=west] at (TON1-ACC) {506};
 
-            \draw ($(C-2-0)+(2,0)$) coordinate(h1) -- ++(0,-3) coordinate(h2) -- ++(0.5,0) pic (SUB) {SrcDest};
-            \draw (SUB-OUT) -- ++(0.5,0) coordinate(h3) -- ++(0,3) coordinate(h4);
+            %=================================================================
+            % Rung 3 (timer boxes take 2)
+            %=================================================================
+            \draw (C-0-2) to[C, l={\texttt{BlinkOn.DN}}] (C-1-2) to[vC, l={\texttt{BlinkOff.DN}}] (C-2-2) -- (C-3-2) pic (TON2) {TON};
+            \draw (TON2-OUT) -- (C-5-2);
 
-            \node[anchor=south] at (SUB-TOP) {SUB};
-            \node[anchor=west] at (SUB-SRCA) {\texttt{RunTimer.PRE}};
-            \node[anchor=west] at (SUB-AVAL) {20000};
-            \node[anchor=west] at (SUB-SRCB) {\texttt{RunTimer.ACC}};
-            \node[anchor=west] at (SUB-BVAL) {6789};
-            \node[anchor=west] at (SUB-DEST) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (SUB-DVAL) {13211};
+            \node[anchor=south] at (TON2-TOP) {TON};
+            \node[anchor=north] at (TON2-TOP) {\texttt{BlinkOn}};
+            \node[anchor=west] at (TON2-PRE) {500};
+            \node[anchor=west] at (TON2-ACC) {357};
 
-            \draw (h2) -- ++(0,-4.75) coordinate(h5) -- ++(0.5,0) pic (DIV) {SrcDest};
-            \draw (DIV-OUT) -- ++(0.5,0) coordinate(h6) -- ++(0,4.75) coordinate(h7);
-
-            \node[anchor=south] at (DIV-TOP) {DIV};
-            \node[anchor=west] at (DIV-SRCA) {\texttt{TimeLeft\_ms}};
-            \node[anchor=west] at (DIV-AVAL) {13211};
-            \node[anchor=west] at (DIV-SRCB) {1000};
-            \node[anchor=west] at (DIV-BVAL) {1000};
-            \node[anchor=west] at (DIV-DEST) {\texttt{TimeLeft\_S}};
-            \node[anchor=west] at (DIV-DVAL) {13.211};
+            \draw (C-0-4) to[C, l={\texttt{BlinkOff.DN}}] (C-1-4) -- (C-4-4) to[esource, l={\texttt{BlinkBit}}] (C-5-4);
 
         \end{scope}
     \end{pgfonlayer}
 
-    %=================================================================
+    % =================================================================
     % Background layer
-    %=================================================================
+    % =================================================================
     \begin{pgfonlayer}{bg}
         
         %==================================================================
@@ -132,14 +123,16 @@
             %==================================================================
             \draw (0,0) -- (0,\railLength);
         
-            %=================================================================
-            % Rung 1
-            %=================================================================
-            \draw (C-0-0) -- (TON-IN);
+            \draw (C-0-0) -- (C-3-0);
 
-            \draw (h1) -- (h2) -- (SUB-IN);
+            \draw (TON1-EN1) -- (TON1-EN2);
+            \draw (TON1-DN1) -- (TON1-DN2);
 
-            \draw (h2) -- (h5) -- (DIV-IN);
+            \draw (TON2-EN1) -- (TON2-EN2);
+
+            \draw (C-0-2) -- (C-3-2);
+
+            \draw (C-0-4) -- (C-5-4);
 
         \end{scope}
     \end{pgfonlayer}

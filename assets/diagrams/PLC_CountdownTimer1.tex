@@ -98,39 +98,37 @@
         \end{scope}
     \end{pgfonlayer}
 
-    %=================================================================
+    % =================================================================
     % Background layer
-    %=================================================================
-    % \begin{pgfonlayer}{bg}
+    % =================================================================
+    \begin{pgfonlayer}{bg}
         
-    %     %==================================================================
-    %     % Highlight Scope
-    %     % This layer exists for highlighting true logic, the scope sets the
-    %     % highlight options without having to repeat them every \draw
-    %     % draw=UpNorthGreen, line width=10pt, opacity=0.4
-    %     %==================================================================
-    %     \begin{scope}[
-    %         draw=UpNorthGreen,
-    %         line width=10pt,
-    %         opacity=0.4
-    %     ]
+        %==================================================================
+        % Highlight Scope
+        % This layer exists for highlighting true logic, the scope sets the
+        % highlight options without having to repeat them every \draw
+        % draw=UpNorthGreen, line width=10pt, opacity=0.4
+        %==================================================================
+        \begin{scope}[
+            draw=UpNorthGreen,
+            line width=10pt,
+            opacity=0.4
+        ]
 
-    %         %==================================================================
-    %         % Left vertical rung - leave this alone, it should ALWAYS be green
-    %         % It automatically draws itself to the length defined at the top
-    %         %==================================================================
-    %         \draw (0,0) -- (0,\railLength);
+            %==================================================================
+            % Left vertical rung - leave this alone, it should ALWAYS be green
+            % It automatically draws itself to the length defined at the top
+            %==================================================================
+            \draw (0,0) -- (0,\railLength);
         
-    %         %=================================================================
-    %         % Rung 1
-    %         %=================================================================
-    %         \draw (C-0-0) -- (TON-IN);
-    %         % \draw (MOV1-OUT) -- (C-5-0);
+            %=================================================================
+            % Rung 1
+            %=================================================================
+            \draw (C-0-0) -- (TON-IN);
 
-    %         %\draw (h1) -- (h2) -- ({SUB-IN});
-    %         % \draw (CPT-OUT) -- (h3) -- (h4);
+            \draw (h1) -- (h2) -- (SUB-IN);
 
-    %     \end{scope}
-    % \end{pgfonlayer}
+        \end{scope}
+    \end{pgfonlayer}
 
 \end{circuitikz}
