@@ -1,0 +1,51 @@
+\begin{circuitikz}[
+    american,
+    voltage dir=RP,
+    >=latex,
+    %>={Latex[length=5mm, width=2mm]},
+    alt={}
+    ]
+
+    \begin{pgfonlayer}{ft}
+
+        \draw[
+            BakerBlack, 
+            ultra thick
+        ]
+        (0,7.5) -- (0,0) -- (6.5,0);
+    
+        \foreach \y in {1,2,...,7}{
+
+            \pgfmathsetmacro\ylab{\y * 0.5}
+
+            \draw[
+                BakerBlack
+            ]
+            (0.125,\y)
+            -- (-0.125,\y)
+            node[
+                text=BakerBlack,
+                left
+            ]
+            {\ylab};
+
+        }
+    \end{pgfonlayer}
+
+    \begin{pgfonlayer}{main}
+    
+        \fill[
+            draw=BakerADARed,
+            fill=BakerADARed,
+            fill opacity=0.4,
+            thick
+        ]
+        (0,0)
+        .. controls (2.5,4) and (4.5,2) ..
+        (6,6)
+        -- (6,0)
+        -- (0,0);
+
+    \end{pgfonlayer}
+
+\end{circuitikz}

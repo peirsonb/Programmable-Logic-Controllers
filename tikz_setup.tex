@@ -29,6 +29,7 @@
 \pgfdeclarelayer{bg}
 \pgfsetlayers{bg, main, ft}
 
+% Usage: \hexpic[]{height}{Alt text}{image path}
 \newcommand{\hexpic}[4][]{%
   \begin{tikzpicture}[baseline=(hex.base)]
     \node (hex) [
