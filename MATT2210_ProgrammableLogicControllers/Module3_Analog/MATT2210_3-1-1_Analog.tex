@@ -1,0 +1,265 @@
+% ============================================================================
+% Accessibility
+% ============================================================================
+\DocumentMetadata{
+  lang = en-US, 
+  pdfstandard = ua-2, 
+  tagging = on, 
+  tagging-setup = {math/setup=mathml-SE}
+}
+
+% ============================================================================
+% Document Properties - used on title slide and PDF metadata fields
+% ============================================================================
+\def\PresTitle{Micro-Level PLC Programming}  % Required - top line of title slide
+\def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
+\def\PresAuthor{Brad Peirson}               % Required - below dividing line
+\def\PresInstitute{College of Information Technology and Engineering}       % Optional
+\def\PresDate{}                             % Optional
+\def\PresKeywords{}                         % Optional - used for hyperref
+
+% Presentation Formatting
+% ============================================================================
+\input{../../ltxtalk_preamble.tex}
+
+% ============================================================================
+% Document Content
+% ============================================================================
+\begin{document}
+
+\maketitle              % Redefined in the preamble to generate a full frame
+
+\begin{frame}
+    \frametitle{Agenda}
+    \begingroup
+        % Tighten the spacing between paragraphs/TOC lines
+        \setlength{\parskip}{0.3em} 
+        
+        % Optionally tighten the line spacing within an entry
+        %\baselineskip=1.2em 
+        
+        \setcounter{tocdepth}{1} % Show only sections
+    \tableofcontents
+    \setcounter{tocdepth}{2} % Reset back to default so subsections are tracked
+    \endgroup
+\end{frame}
+
+\begin{frame}
+    \frametitle{Student Learning Outcomes}
+    \begin{itemize}[<+- | alert@+>]
+        \item[1.]{Create programs in Ladder Logic using the following instructions in an application}
+        \item[2.]{Program PLC timers and counters}
+    \end{itemize}
+\end{frame}
+
+\section{Digital vs. Analog}
+
+\begin{frame}
+    \frametitle{Digital Defined}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Data or signals that have a fixed number of discrete values within their range
+                \item Devices that use such data/signals
+            \end{itemize}
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\linewidth}{A wall-mounted digital clock with bright red LED numbers displaying the time ten twenty-eight with smaller digits showing eighteen seconds. The clock has a rectangular metal frame and is mounted near the corner of a white ceiling and wall, next to a small white junction box with connecting wires. The glowing red light from the display casts a soft pink hue on the adjacent wall surface.}{../../assets/images/Digital_clock_in_district_court_in_Gliwice,_Silesian_Voivodeship,_Poland,_February_2022}
+
+                {\tiny "Digital clock" by MichalPL, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Digital_clock_in_district_court_in_Gliwice,_Silesian_Voivodeship,_Poland,_February_2022.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Digital Signals (1 of 2)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item \emph{Binary} is a special case of digital--the range is 0-1
+                \item All binary signals are digital, not all digital signals are binary
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\linewidth}{!}{
+                    \input{../../assets/plots/DigitalSignals.tex}
+                }
+            \end{figure}
+        \end{column}        
+    \end{columns}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Digital Signals (2 of 2)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Digital signals \emph{can} have decimal points, even a \emph{lot} of decimal points
+                \item But they can still only be a fixed number of values
+                \item For example this signal can be 2 or 2.5, nothing between
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{0.75\linewidth}{!}{
+                    \input{../../assets/plots/DigitalSignals.tex}
+                }
+            \end{figure}
+        \end{column}        
+    \end{columns}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Defined}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Data or signals that vary continuously over a range of values
+                \item Devices that use this type of data/signal
+            \end{itemize}
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\linewidth}{A vertical mercury thermometer mounted on a marble base shaped like a tall trapezoid with a tapered top set against a wooden background. The thermometer features a white face labeled with a capital C at the top for Celsius and numerical markings ranging from below zero to thirty degrees, with orange zeros and black numbers for ten, twenty, and thirty. The glass tube in the center has a reflective metallic bulb at the bottom, and the liquid level rises to indicate a temperature around twenty-one degrees.}{../../assets/images/Mercury_Thermometer}
+
+                {\tiny "Mercury-in-glass thermometer" by Anonimski, \href{https://creativecommons.org/licenses/by-sa/3.0}{CC BY-SA 3.0}, via \href{https://commons.wikimedia.org/wiki/File:Mercury_Thermometer.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Signals}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Digital signals \emph{can} have decimal points, even a \emph{lot} of decimal points
+                \item But they can still only be a fixed number of values
+                \item For example this signal can be 2 or 2.5, nothing between
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \resizebox{\linewidth}{!}{
+                    \input{../../assets/plots/AnalogSignals.tex}
+                }
+            \end{figure}
+        \end{column}        
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Why Analog?}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Motors use 69\% of all electricity in the U.S. industrial sector$^1$
+                \item Motors running at full speed use more energy than motors running at reduced speed
+            \end{itemize}
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                %\hexpic[]{0.875\linewidth}{}{../../assets/images/Ac-elektromotor-robuster-asynchronmotor}
+
+                \includegraphics[width=\linewidth]{../../assets/images/Ac-elektromotor-robuster-asynchronmotor}
+
+                {\tiny ``Asynchronous electric motor" by Egzon123, \href{https://creativecommons.org/licenses/by-sa/3.0}{CC BY-SA 3.0}, via \href{https://commons.wikimedia.org/wiki/File:Ac-elektromotor-robuster-asynchronmotor.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+    {\scriptsize $^1$Department of Energy, ``Industrial Electric Motor Market Assessment" (2020).\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Controlling Motor Speed}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item When a motor doesn't \emph{need} to run at full speed you \emph{could} use a gearbox\dots
+                \item \dots but that doesn't save any energy
+            \end{itemize}
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\linewidth}{}{../../assets/images/ZF_Gearbox_Bauma_2004}
+
+                {\tiny ``ZF gearbox at the Bauma trade fair 2004" by Aconcagua, \href{https://creativecommons.org/licenses/by-sa/3.0}{CC BY-SA 3.0}, via \href{https://commons.wikimedia.org/wiki/File:ZF_Gearbox_Bauma_2004.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Saving Motor Energy}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Save energy (\$) by reducing motor speed
+                \item VFDs \emph{always} have an analog input
+                \item Most have 2: voltage and current
+                \item Can accept either potentiometer or PLC analog output
+            \end{itemize}
+        \end{column}        
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\linewidth}{}{../../assets/images/Mitsubishi_frekvenčni_pretvornik}
+
+                {\tiny ``Mitsubishi frequency converter type D700" by Ignac.mihevc at Slovenian Wikipedia, \href{https://creativecommons.org/licenses/by-sa/3.0}{CC BY-SA 3.0}, via \href{https://commons.wikimedia.org/wiki/File:Mitsubishi_frekven\%C4\%8Dni_pretvornik.jpg}{Wikimedia Commons}\par}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Analog Types}
+
+\section{Analog Devices}
+
+\section{PID Control}
+
+\begin{frame}
+    \centering
+    {\Huge \textbf{\textcolor{BakerADARed}{Questions?}}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Copyright Notice}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.625\linewidth, alt={Creative Commons Attribution NonCommercial ShareAlike logo displaying four circular icons arranged horizontally over a black banner. From left to right, the icons feature the CC logo, a person pictogram for Attribution labeled BY below, a slashed dollar sign for NonCommercial labeled NC below, and a counterclockwise circular arrow for ShareAlike labeled SA below.}]{by-nc-sa.png}
+    \end{figure}
+
+    \vspace{0.5em}
+    \centering
+    \PresTitle \textcopyright 2026 by Brad Peirson is licensed under \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0}. To view a copy of this license, visit \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+\end{frame}
+
+\end{document}
+
+% \begin{frame}
+%     \frametitle{Test Todo}
+
+%     % Usage: \tikztodo[width]{height}{description/notes}
+%     \tikztodo[0.7\textwidth]{4cm}{Convert block diagram of feedback loop}
+% \end{frame}

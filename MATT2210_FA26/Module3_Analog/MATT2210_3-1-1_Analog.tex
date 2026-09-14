@@ -11,7 +11,7 @@
 % ============================================================================
 % Document Properties - used on title slide and PDF metadata fields
 % ============================================================================
-\def\PresTitle{Micro-Level PLC Programming}  % Required - top line of title slide
+\def\PresTitle{Analog Principles and Operation}  % Required - top line of title slide
 \def\PresSubtitle{Programmable Logic Controllers}         % Optional - second line
 \def\PresAuthor{Brad Peirson}               % Required - below dividing line
 \def\PresInstitute{College of Information Technology and Engineering}       % Optional
@@ -233,7 +233,669 @@
 
 \section{Analog Types}
 
+\begin{frame}
+    \frametitle{Analog Signal Types}
+
+    \begin{columns}[t]
+        \begin{column}{0.48\linewidth}
+            \begin{block}{Voltage}
+                \begin{itemize}
+                    \item \textbf{0 VDC-10 VDC}
+                    \item 0 VDC-5 VDC
+                    \item -10 VDC-10 VDC
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{block}{Current}
+                \begin{itemize}
+                    \item 0 mA-20 mA
+                    \item \textbf{4 mA-20 mA}
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Which Are the Most Common}
+
+    \centering
+    \Large{Which types are the most common?}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Example}
+
+    \begin{itemize}
+        \item Two different analog sensors--identical except for their signal output
+        \item Temperature range: 0$^\circ$F-212$^\circ$F
+        \item One sensor produces a 0 VDC-10 VDC signal
+        \item One sensor produces a 4 mA-20 mA signal
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Scaling (1 of 2)}
+
+    \begin{itemize}
+        \item Analog devices will produce an output that directly relates to the property being measured
+        \item Almost always linear: 1 V = 3$^\circ$F, 2 V = 6$^\circ$F, 3 V = 9$^\circ$F, etc.
+        \item To convert divide the range of the sensor by the range of the analog signal
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Scaling (2 of 2)}
+
+    \begin{itemize}
+        \item $212^\circ\text{F} \div 10\,\text{VDC}=21.2^\circ \text{F/V}$
+        \item $212^\circ\text{F} \div 16\,\text{mA}=13.25^\circ \text{F/mA}$
+        \begin{itemize}
+            \item Remember, it starts at 4, the range is only 16
+        \end{itemize}
+        \item Also remember that analog signals are \emph{analog}--that means they're infinite
+        \item These are values per unit, there an infinite number of values between
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature Sensor (1 of 6)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Temp ($^\circ$F) & Volts & Temp ($^\circ$F) & Milliamps\\
+            \hline
+             -42.40 & 0 & -26.5 & 4\\
+             \hline
+             -21.20 & 0 & -13.5 & 4\\
+             \hline
+             \hline
+             0 & 0 & 0 & 4\\
+             \hline
+             21.2 & 1 & 13.25 & 5\\
+             \hline
+             31.8 & 1.5 & 53 & 8\\
+             \hline
+             106 & 5 & 106 & 12\\
+             \hline
+             159 & 7.5 & 159 & 16\\
+             \hline
+             201.4 & 9.5 & 198.75 & 19\\
+             \hline
+             212 & 10 & 212 & 20\\
+             \hline
+             \hline
+             233.2 & 10 & 225.25 & 20\\
+             \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature Sensor (2 of 6)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Temp ($^\circ$F) & Volts & Temp ($^\circ$F) & Milliamps\\
+            \hline
+             -42.40 & 0 & -26.5 & 4\\
+             \hline
+             -21.20 & 0 & -13.5 & 4\\
+             \hline
+             \hline
+             0 & 0 & 0 & 4\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \centering
+    {\footnotesize If the temperature decreases past the bottom of the sensor range the sensor will stay at the bottom value\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature Sensor (3 of 6)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Temp ($^\circ$F) & Volts & Temp ($^\circ$F) & Milliamps\\
+             \hline
+             212 & 10 & 212 & 20\\
+             \hline
+             \hline
+             233.2 & 10 & 225.25 & 20\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \centering
+    {\footnotesize At the exact top of the sensor range the sensor will send out its maximum value\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature Sensor (4 of 6)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Temp ($^\circ$F) & Volts & Temp ($^\circ$F) & Milliamps\\
+             \hline
+             212 & 10 & 212 & 20\\
+             \hline
+             \hline
+             233.2 & 10 & 225.25 & 20\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \centering
+    {\footnotesize The sensor will continue to send out its maximum value for any value above the sensor range\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature Sensor (5 of 6)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Temp ($^\circ$F) & Volts & Temp ($^\circ$F) & Milliamps\\
+            \hline
+             -42.40 & 0 & -26.5 & 4\\
+             \hline
+             -21.20 & 0 & -13.5 & 4\\
+             \hline
+             \hline
+             0 & 0 & 0 & 4\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \centering
+    {\footnotesize Exactly \emph{at} the bottom of the sensor range a 0 VDC-10 VDC sensor will register 0 VDC\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature Sensor (6 of 6)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Temp ($^\circ$F) & Volts & Temp ($^\circ$F) & Milliamps\\
+            \hline
+             -42.40 & 0 & -26.5 & 4\\
+             \hline
+             -21.20 & 0 & -13.5 & 4\\
+             \hline
+             \hline
+             0 & 0 & 0 & 4\\
+             \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \centering
+    {\footnotesize Exactly \emph{at} the bottom of the sensor range a 4 mA-20 mA sensor will register 4 mA\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Which to Pick}
+
+    \centering
+    \Large{Which of these is preferred?}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Signal Selection}
+
+    \begin{columns}[t]
+        \begin{column}{0.48\linewidth}
+            \begin{block}{0 VDC-10 VDC}
+                \begin{itemize}
+                    \item Easy unit conversion
+                    \item 0 is bottom, 10 is the top
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{block}{4 mA-20 mA}
+                \begin{itemize}
+                    \item Current not as susceptible to noise as voltage
+                    \item Easy to diagnose--will \emph{always} return at least 4 mA
+                    \item If you ever get a 0 something is wrong
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \section{Analog Devices}
+
+\begin{frame}
+    \frametitle{Analog Inputs}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Converts physical properties to analog signal
+                \item A-to-D converter converts current/voltage to a binary number
+                \item Some require external power source
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\linewidth}{An industrial temperature sensor lying diagonally on a speckled grey surface. The sensor consists of a long, thin, metallic silver probe extending from a cylindrical gray connection head, which features a round top cover with visible text including PT 100 and Gefran. Four insulated wires, two bright red and two blue, extend out from a threaded port at the top of the connection head.}{../../assets/images/Pt-100_temperature_sensor_with_cables}
+
+                {\tiny "Pt-100 temperature sensor with cables" by Bitjungle, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Pt-100_temperature_sensor_with_cables.jpg}{Wikimedia Commons}\par}
+            \end{figure}            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Outputs}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \begin{itemize}
+                \item Converts analog signals to physical properties
+                \item A-to-D converter converts analog signal to current/voltage
+                \item Some require external power source
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \begin{figure}
+                \centering
+                \hexpic[]{0.875\linewidth}{An industrial control valve assembly integrated into a system of stainless steel piping. The valve body at the bottom is connected by flanged joints, supporting a vertical green column topped with a large, rounded blue pneumatic actuator dome. Mounted around the central housing are various components, including a square dark grey Fisher valve positioner box, a black filter regulator, a cylindrical grey module, and two small round pressure gauges on the side. Blue and orange tubing runs between the components against an off-white wall background.}{../../assets/images/Control_valve_with_positioner}
+
+                {\tiny "A Fisher control valve with positioner" by Bitjungle, \href{https://creativecommons.org/licenses/by-sa/4.0}{CC BY-SA 4.0}, via \href{https://commons.wikimedia.org/wiki/File:Control_valve_with_positioner.jpg}{Wikimedia Commons}\par}
+            \end{figure}            
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog to Digital (A-to-D) Converter}
+
+    \begin{itemize}
+        \item Analog \emph{really} is infinite
+        \item PLCs (and all computers) are digital--everything is 1's and 0's
+        \item A-to-D converters convert the current/voltage to binary
+        \item Each bit represents a certain number of volts/amps
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Maximum Analog Value (1 of 2)}
+
+    \begin{itemize}
+        \item The maximum value of the binary number from the A-to-D depends on the \emph{bit resolution} of the converter
+        \item Let's take the example temperature sensors and plug them into a Micrologix 1000
+        \item The Micrologix 1000 has a 10-bit analog resolution
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Maximum Analog Value (2 of 2)}
+
+    \begin{table}
+        \centering
+        \tagpdfsetup{table/header-rows={1}}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+            \hline
+            Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+            \hline
+            Total & \textcolor{BakerADARed}{1023} & 511 & 255 & 127 & 63 & 31 & 15 & 7 & 3 & 1\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \vspace{1em}
+    \centering
+    {\footnotesize 1023 is the largest number that can fit in 10 bits\par}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Resolution}
+
+    \begin{itemize}
+        \item The A-to-D has a bit resolution--the number of bits it uses to store the analog conversion
+        \item This means that each bit correlates to a specific number of volts/amps 
+        \item This \emph{also} means that each bit correlates to a specific real-world value
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Resolution - Volts}
+
+    \begin{itemize}
+        \item $10\,\text{V} \div 1023 = 0.009775\,\text{V/bit}$
+        \item $21.2^\circ\text{F/V} \times 0.009775\,\text{V/bit} = 0.20723^\circ\text{F/bit}$
+        \item This is the \emph{resolution}--this PLC can't see increments smaller than 0.20723$^\circ\text{F}$
+    \end{itemize}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Volts & 5 & 2.5 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019 & 0.0098\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Analog Resolution - mA}
+
+    \begin{itemize}
+        \item $20\,\text{V} \div 1023 = 0.01955\,\text{mA/bit}$
+        \item Note: this time we need the \emph{max}--we use 20, not 16
+        \item $13.25^\circ\text{F/mA} \times 0.01955\,\text{mA/bit} = 0.259^\circ\text{F/bit}$
+        \item This is the \emph{resolution}--this PLC can't see increments smaller than 0.259$^\circ\text{F}$
+    \end{itemize}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                mA & 10 & 5 & 2.502 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature to Analog 1 (1 of 2)}
+
+    \centering
+    \Large{What 10-bit number represents 106$^\circ$F?}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+                \hline
+                Volts & 5 & 2.5 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019 & 0.0098\\
+                \hline
+                mA & 10 & 5 & 2.502 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature to Analog 1 (2 of 2)}
+
+    \begin{itemize}
+        \item we know that 106$^\circ$F is half the scale--5 V/12 mA
+        \item Start adding up bits to get to those values and do the binary conversion
+        \item 0-10 V sensor: 512
+        \item 4-20 mA sensor: 614
+    \end{itemize}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+                \hline
+                Volts & \textcolor{BakerADARed}{5} & 2.5 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019 & 0.0098\\
+                \hline
+                mA & \textcolor{BakerADARed}{10} & 5 & 2.502 & \textcolor{BakerADARed}{1.251} & \textcolor{BakerADARed}{0.6256} & 0.3128 & 0.1564 & \textcolor{BakerADARed}{0.0782} & \textcolor{BakerADARed}{0.0391} & 0.019\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature to Analog 2 (1 of 2)}
+
+    \centering
+    \Large{What 10-bit number represents 72$^\circ$F?}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+                \hline
+                Volts & 5 & 2.5 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019 & 0.0098\\
+                \hline
+                mA & 10 & 5 & 2.502 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature to Analog 2 (2 of 2)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \[
+                \begin{aligned}
+                    72^\circ\text{F} \div 212^\circ\text{F}&=0.34\\
+                    0.34 \times 10\,\text{V}&=3.4\,\text{V}\\
+                    3.4\,\text{V}&=342
+                \end{aligned}
+            \]
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \[
+                \begin{aligned}
+                    0.34 \times 16\,\text{mA}&=5.44\,\text{mA}\\
+                    5.44\,\text{mA} + 4\,\text{mA} &= 9.44\,\text{mA}\\
+                    9.44\,\text{mA}&=481
+                \end{aligned}
+            \]
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+                \hline
+                Volts & 5 & \textcolor{BakerADARed}{2.5} & 1.251 & \textcolor{BakerADARed}{0.6256} & 0.3128 & \textcolor{BakerADARed}{0.1564} & 0.0782 & \textcolor{BakerADARed}{0.0391} & \textcolor{BakerADARed}{0.019} & 0.0098\\
+                \hline
+                mA & 10 & \textcolor{BakerADARed}{5} & \textcolor{BakerADARed}{2.502} & \textcolor{BakerADARed}{1.251} & \textcolor{BakerADARed}{0.6256} & 0.3128 & 0.1564 & 0.0782 & 0.0391 & \textcolor{BakerADARed}{0.019}\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature to Analog 3 (1 of 2)}
+
+    \centering
+    \Large{What 10-bit number represents 0$^\circ$F?}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+                \hline
+                Volts & 5 & 2.5 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019 & 0.0098\\
+                \hline
+                mA & 10 & 5 & 2.502 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Temperature to Analog 3 (2 of 2)}
+
+    \begin{columns}
+        \begin{column}{0.48\linewidth}
+            \centering
+            For 0-10V, 0 is 0
+        \end{column}
+        \begin{column}{0.48\linewidth}
+            \centering
+            0$^\circ$F = 4 mA\\
+            4 mA = 204
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+
+    \begin{table}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \tagpdfsetup{table/header-rows={1}}
+            \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+                \hline
+                Bit & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0\\
+                \hline
+                Bit Value & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\\
+                \hline
+                Volts & 5 & 2.5 & 1.251 & 0.6256 & 0.3128 & 0.1564 & 0.0782 & 0.0391 & 0.019 & 0.0098\\
+                \hline
+                mA & 10 & 5 & \textcolor{BakerADARed}{2.502} & \textcolor{BakerADARed}{1.251} & 0.6256 & 0.3128 & \textcolor{BakerADARed}{0.1564} & \textcolor{BakerADARed}{0.0782} & 0.0391 & 0.019\\
+                \hline
+            \end{tabular}
+        }
+        {\scriptsize Note: table values have been heavily rounded for formatting\par}
+    \end{table}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Application}
+
+    \begin{itemize}
+        \item In the real world that math almost \emph{never} works
+        \item These are all physical devices, no physical device is perfect
+        \item It will get you close but usually not close enough
+    \end{itemize}
+\end{frame}
+
+\subsection{Analog Scaling}
+
+\begin{frame}
+    \frametitle{Analog Scaling}
+
+    \begin{itemize}
+        \item Analog inputs come in as integers--whole numbers that represent a voltage or current value from the sensor
+        \item Most analog cards are 12-bit--the value received by the PLC will be 0-4096
+        \item You \emph{can} use this value, but it doesn't mean much to anyone else looking at the code
+        \item It is \emph{much} better to scale it to engineering units \emph{before} using it in logic
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Allen-Bradley Scaling}
+
+    \begin{itemize}
+        \item Allen-Bradley's preferred method in the Logix 5000 PLCs is to scale the value in the definition of the analog card itself
+        \item Not all cards and input devices are equal--if you swap temperature sensors and it's off compared to the old one the scaling needs to be changed
+        \item If the scaling is in the card definition, the system needs to be taken offline to change it
+        \item Plus, not all manufacturers do it this way--we like ``hardware agnostic" programming methods
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Setting the Scale (1 of 2)}
+    \begin{itemize}
+        \item Math would tell us the scaling factor would be: $\text{Engineering Units} = \texttt{UnitRange} \times \frac{\texttt{AnalogValue}}{\texttt{MaxValue}}$
+        \item This only works \emph{if} the signal starts at 0
+        \item It is also only ever going to get you close--not all sensors and cards are equal
+        \item Best practice is to actually \emph{measure} the conversion factor
+        \item In this case, a spreadsheet is your best friend\dots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Setting the Scale (2 of 2)}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth, alt={A scatter plot titled Analog Scaling displaying Analog Value on the vertical axis, ranging from 2700 to 3900, against Temperature (F) on the horizontal axis, ranging from 70 to 95. Five dark blue data points show an upward linear trend with a dotted trendline passing through them. The linear regression equation is displayed in the upper right corner as y = 42.277x - 112.3 with an R-squared value of 0.9864.}]{AnalogScaling_Regression.png}
+
+        \vspace{0.5em}
+        {\footnotesize Set the sensor to 5-6 known real-world values and read the analog input value. Plot them in a spreadsheet and run a \emph{linear regression}--which the software will do automatically with one click. The regression equation is the scaling factor.\par}
+    \end{figure}
+\end{frame}
 
 \section{PID Control}
 
